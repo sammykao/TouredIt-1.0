@@ -12,8 +12,8 @@ const website_controls = require('./../controller/website')
 // Ex: router.get('/user', controller.function <- so when 
 // localhost:3001/user called with get request we want to return a function or page);
 
-router.get('/getClient', website_controls.insertClientAccounts);
-router.post('/newClient', website_controls.retrieveClientInfo);
+router.get('/clie', portal_controls.client_data)
+website_controls.insertClientAccounts
 
 //Export for app.js
 module.exports = router;

@@ -13,7 +13,7 @@ const website_controls = require('./../controller/website')
 // localhost:3001/user called with get request we want to return a function or page);
 
 router.get('/getClient', website_controls.insertClientAccounts);
-router.post('/newClient', website_controls.retrieveClientInfo);
+router.get('/newClientwebsite_controls.retrieveClientInfo
 
 //Export for app.js
 module.exports = router;

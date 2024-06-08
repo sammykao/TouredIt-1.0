@@ -42,13 +42,9 @@ exports.retrieveClientInfo = async (req, res) => {
         const query = "SELECT email, name, phone FROM clients WHERE email = $1";
         const values = [account.email];
 
-        const result = await db.query(query, values);
+        const result = await db.query(query, values);5
 
-        if (result == 0) {
-            res.status(404).json({ message: "Account Not Found"});
-        } else {
-            res.status(201).json({ account: result.rows[0] });
-        }
+        res.status(201).json({ message: 'Account created', account: result.rows[0] });
         
     } catch (error) {
         res.status(500).json({ message: error.message });

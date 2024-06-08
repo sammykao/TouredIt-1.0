@@ -32,23 +32,19 @@ exports.retrieveClientInfo = async (req, res) => {
     try {
         const account = req.body; // Assuming req.body contains the new account data
 
-        // Perform validation on the  account
+        // Perform validation on the new account
         if (!account.email) {
             res.status(400).json({ message: 'Invalid account data' });
             return;
         }
 
-        // Retrieve the account from the database
+        // Insert the account into the database
         const query = "SELECT email, name, phone FROM clients WHERE email = $1";
-        const values = [account.email];
+        const values = [account.email, account.name, account.phone];
 
-        const result = await db.query(query, values);
+        const result = await db.query(query, values);5
 
-        if (result == 0) {
-            res.status(404).json({ message: "Account Not Found"});
-        } else {
-            res.status(201).json({ account: result.rows[0] });
-        }
+        res.status(201).json({ message: 'Account created', account: result.rows[0] });
         
     } catch (error) {
         res.status(500).json({ message: error.message });

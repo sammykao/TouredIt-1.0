@@ -47,8 +47,7 @@ exports.retrieveClientInfo = async (req, res) => {
         if (result == 0) {
             res.status(404).json({ message: "Account Not Found"});
         } else {
-            res.status(201).json({ account: result.rows[0] });
-        }
+            res.status(201).json({ message: 'Account created', account: result.rows[0] });
         
     } catch (error) {
         res.status(500).json({ message: error.message });
