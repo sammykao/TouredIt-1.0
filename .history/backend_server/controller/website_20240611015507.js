@@ -124,11 +124,11 @@ exports.getGuideInfo = async (req, res) => {
         // Query to get the guide's info along with campus activities and hobbies
         const query = `
             SELECT 
-                tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
+                tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
-                tg.profile_image_url, tg.num_tours,
-                COALESCE(array_agg(ca.name), ARRAY[]::VARCHAR[]) AS activities,
-                COALESCE(array_agg(h.name), ARRAY[]::VARCHAR[]) AS hobbies
+                tg.profile_image_url, tg.num_tours, tg.created_at, tg.updated_at, tg.approved,
+                ca.activity_name, 
+                h.hobby_name
             FROM 
                 tour_guides tg
             LEFT JOIN 
@@ -136,9 +136,7 @@ exports.getGuideInfo = async (req, res) => {
             LEFT JOIN 
                 hobbies h ON tg.id = h.guide_id
             WHERE 
-                tg.email = $1
-            GROUP BY 
-                tg.id`;
+                tg.email = $1`;
 
         const values = [guide.email];
 
@@ -149,6 +147,7 @@ exports.getGuideInfo = async (req, res) => {
         } else {
             // Initialize guide info
             const guideInfo = {
+                id: result.rows[0].id,
                 name: result.rows[0].name,
                 email: result.rows[0].email,
                 school: result.rows[0].school,
@@ -161,10 +160,22 @@ exports.getGuideInfo = async (req, res) => {
                 secondary_minor: result.rows[0].secondary_minor,
                 profile_image_url: result.rows[0].profile_image_url,
                 num_tours: result.rows[0].num_tours,
-                activities: result.rows[0].activities,
-                hobbies: result.rows[0].hobbies
+                created_at: result.rows[0].created_at,
+                updated_at: result.rows[0].updated_at,
+                approved: result.rows[0].approved,
+                activities: [],
+                hobbies: []
             };
 
+            // Group activities and hobbies
+            result.rows.forEach(row => {
+                if (row.activity_name) {
+                    guideInfo.activities.push(row.activity_name);
+                }
+                if (row.hobby_name) {
+                    guideInfo.hobbies.push(row.hobby_name);
+                }
+            });
 
             res.status(200).json({ guide: guideInfo });
         }

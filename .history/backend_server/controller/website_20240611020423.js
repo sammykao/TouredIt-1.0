@@ -161,6 +161,7 @@ exports.getGuideInfo = async (req, res) => {
                 secondary_minor: result.rows[0].secondary_minor,
                 profile_image_url: result.rows[0].profile_image_url,
                 num_tours: result.rows[0].num_tours,
+                approved: result.rows[0].approved,
                 activities: result.rows[0].activities,
                 hobbies: result.rows[0].hobbies
             };
