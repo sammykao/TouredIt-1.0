@@ -57,18 +57,6 @@ exports.retrieveClientInfo = async (req, res) => {
 };
 
 exports.updateClientInfo = async (req, res) => {
-    try {
-        const account = req.body; // Assuming req.body contains the new account data
+    const account = req.body
 
-        // Perform validation on the  account
-        if (!account.email) {
-            res.status(400).json({ message: 'Invalid account data' });
-            return;
-        }
-
-
-        
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
 };

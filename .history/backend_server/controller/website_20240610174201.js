@@ -66,9 +66,20 @@ exports.updateClientInfo = async (req, res) => {
             return;
         }
 
+        // Retrieve the account from the database
+        const query = "SELECT email, name, phone FROM clients WHERE email = $1";
+        const values = [account.email];
 
+        const result = await db.query(query, values);
+
+        if (result == 0) {
+            res.status(404).json({ message: "Account Not Found"});
+        } else {
+            res.status(201).json({ account: result.rows[0] });
+        }
         
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+
 };
