@@ -177,45 +177,6 @@ exports.getGuideInfo = async (req, res) => {
 };
 
 exports.getGuidesByFilter = async (req, res) => {
-    try {
-        const filters = req.body;
 
-        let query = `
-            SELECT 
-                tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
-                tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
-                tg.profile_image_url, tg.num_tours,
-                COALESCE(array_agg(ca.name), ARRAY[]::VARCHAR[]) AS activities,
-                COALESCE(array_agg(h.name), ARRAY[]::VARCHAR[]) AS hobbies
-            FROM 
-                tour_guides tg
-            LEFT JOIN 
-                campus_activities ca ON tg.id = ca.guide_id
-            LEFT JOIN 
-                hobbies h ON tg.id = h.guide_id
-            WHERE 1=1`;
-        
-        let values = [];
-        let counter = 1;
-
-        for (let key in filters) {
-            if (filters[key] !== null && filters[key] !== undefined) {
-                query += ` AND ${key} = $${counter}`;
-                values.push(filters[key]);
-                counter++;
-            }
-        }
-
-        query += ' GROUP BY tg.id';
-
-        const result = await db.query(query, values);
-
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "No guides found with the specified filters" });
-        } else {
-            res.status(200).json({ guides: result.rows });
-        }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+    
+}

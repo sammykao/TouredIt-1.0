@@ -178,9 +178,16 @@ exports.getGuideInfo = async (req, res) => {
 
 exports.getGuidesByFilter = async (req, res) => {
     try {
-        const filters = req.body;
 
-        let query = `
+        const guide = req.body; // Says search, but filter by colleges for now
+
+        if (!guide.email) {
+            res.status(400).json({ message: 'Must provide an email to get guide' });
+            return;
+        }
+
+        // Query to get the guide's info along with campus activities and hobbies
+        const query = `
             SELECT 
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
@@ -193,29 +200,17 @@ exports.getGuidesByFilter = async (req, res) => {
                 campus_activities ca ON tg.id = ca.guide_id
             LEFT JOIN 
                 hobbies h ON tg.id = h.guide_id
-            WHERE 1=1`;
+            WHERE 
+                tg.email = $1
+            GROUP BY 
+                tg.id`;
+
+    
+
         
-        let values = [];
-        let counter = 1;
 
-        for (let key in filters) {
-            if (filters[key] !== null && filters[key] !== undefined) {
-                query += ` AND ${key} = $${counter}`;
-                values.push(filters[key]);
-                counter++;
-            }
-        }
-
-        query += ' GROUP BY tg.id';
-
-        const result = await db.query(query, values);
-
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "No guides found with the specified filters" });
-        } else {
-            res.status(200).json({ guides: result.rows });
-        }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+
 };
