@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // Routes
 const router = require('./router/router');
 // Errors
-const error_handling = require('./error_hadnling/error_handling');
+const error_handling = require('./error_handling/error_handling');
 const db = require('./database/db');
 // Configurations
 dotenv.config();
@@ -42,6 +42,7 @@ db.connect((err) => {
 
 // Routes
 app.use('/api', router);
+
 
 // basic welcome test route
 app.get('/', (req, res) => {

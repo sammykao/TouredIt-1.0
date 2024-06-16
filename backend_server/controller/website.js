@@ -127,14 +127,14 @@ exports.getGuideInfo = async (req, res) => {
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
                 tg.profile_image_url, tg.num_tours,
-                COALESCE(array_agg(ca.name), ARRAY[]::VARCHAR[]) AS activities,
-                COALESCE(array_agg(h.name), ARRAY[]::VARCHAR[]) AS hobbies
+                COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
+                COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
             FROM 
                 tour_guides tg
             LEFT JOIN 
-                campus_activities ca ON tg.id = ca.guide_id
+                campus_involvement ca ON tg.id = ca.tourguide_id
             LEFT JOIN 
-                hobbies h ON tg.id = h.guide_id
+                hobbies h ON tg.id = h.tourguide_id
             WHERE 
                 tg.email = $1
             GROUP BY 
@@ -165,7 +165,6 @@ exports.getGuideInfo = async (req, res) => {
                 hobbies: result.rows[0].hobbies
             };
 
-
             res.status(200).json({ guide: guideInfo });
         }
 
@@ -185,14 +184,14 @@ exports.getGuidesByFilter = async (req, res) => {
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
                 tg.profile_image_url, tg.num_tours,
-                COALESCE(array_agg(ca.name), ARRAY[]::VARCHAR[]) AS activities,
-                COALESCE(array_agg(h.name), ARRAY[]::VARCHAR[]) AS hobbies
+                COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
+                COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
             FROM 
                 tour_guides tg
             LEFT JOIN 
-                campus_activities ca ON tg.id = ca.guide_id
+                campus_involvement ca ON tg.id = ca.tourguide_id
             LEFT JOIN 
-                hobbies h ON tg.id = h.guide_id
+                hobbies h ON tg.id = h.tourguide_id
             WHERE 1=1`;
         
         let values = [];
