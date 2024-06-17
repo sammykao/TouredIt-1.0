@@ -161,7 +161,7 @@ exports.updateGuideAccounts = async (req, res) => {
                 email = $2
             Returning
                 *`;
-            const values = [account.email, account.name, account.school, account.phone, account.hometown, account.bio, account.major, account.secondary_major, account.minor, account.secondary_minor, account.profile_image_url];
+            const values = [ account.name, account.email, account.school, account.phone, account.hometown, account.bio, account.major, account.secondary_major, account.minor, account.secondary_minor, account.profile_image_url];
 
         const result = await db.query(query, values);
 
@@ -169,7 +169,7 @@ exports.updateGuideAccounts = async (req, res) => {
             res.status(404).json({ message: "Account Not Found" });
         } else {
             res.status(200).json({ message: 'Account updated', account: result.rows[0] });
-        }
+        }b
         
     } catch (error) {
         res.status(500).json({ message: error.message });
