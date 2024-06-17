@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors');
+const serverless = require('serverless-http');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 
@@ -18,18 +18,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// cors middleware config
-const whitelist = ['http://localhost:3000'];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-};
-app.use(cors(corsOptions));
 
 // Connect to PostgreSQL db
 db.connect((err) => {
@@ -56,3 +44,5 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports.handler = serverless(app);
