@@ -19,11 +19,13 @@ exports.insertGuideAccounts = async (req, res) => {
         // Insert the account into the database
         const query =  `
             INSERT INTO 
-                tour_guides (name, email, school, hometown, phone, bio, major, secondary_major, minor, secondary_minor, profile_image_url) 
+                tour_guides (name, email, school, hometown, phone, bio, major, secondary_major, minor, secondary_minor, profile_image_url, instagram, linkedin) 
             VALUES 
-                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) 
+                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) 
             RETURNING *`;
-        const values = [account.email, account.name, account.school, account.phone, account.hometown, account.bio, account.major, account.secondary_major, account.minor, account.secondary_minor, account.profile_image_url];
+        const values = [account.email, account.name, account.school, account.phone, account.hometown,
+            account.bio, account.major, account.secondary_major, account.minor, account.secondary_minor, 
+            account.profile_image_url, account.instagram, account.linkedin];
 
         const result = await db.query(query, values);
 
@@ -156,12 +158,17 @@ exports.updateGuideAccounts = async (req, res) => {
                 secondary_major  = COALESCE($8, secondary_major), 
                 minor  = COALESCE($9, minor), 
                 secondary_minor  = COALESCE($10, secondary_minor), 
-                profile_image_url  = COALESCE($11, profile_image_url)
+                profile_image_url  = COALESCE($11, profile_image_url),
+                instagram = ($12, instagram),
+                linkedin = ($13, linkedin)
+
             WHERE 
                 email = $2
             Returning
                 *`;
-            const values = [ account.name, account.email, account.school, account.phone, account.hometown, account.bio, account.major, account.secondary_major, account.minor, account.secondary_minor, account.profile_image_url];
+            const values = [ account.name, account.email, account.school, account.phone, 
+                account.hometown, account.bio, account.major, account.secondary_major, 
+                account.minor, account.secondary_minor, account.profile_image_url, account.instagram, account.linkedin];
 
         const result = await db.query(query, values);
 
@@ -195,7 +202,7 @@ exports.retrieveGuideInfo = async (req, res) => {
             SELECT 
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
-                tg.profile_image_url, tg.num_tours,
+                tg.profile_image_url, tg.num_tours, tg.instagram, tg.linkedin,
                 COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
                 COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
             FROM 
@@ -229,6 +236,8 @@ exports.retrieveGuideInfo = async (req, res) => {
                 minor: result.rows[0].minor,
                 secondary_minor: result.rows[0].secondary_minor,
                 profile_image_url: result.rows[0].profile_image_url,
+                instagram: result.rows[0].instagram,
+                linkedin: result.rows[0].linkedin,
                 num_tours: result.rows[0].num_tours,
                 activities: result.rows[0].activities,
                 hobbies: result.rows[0].hobbies

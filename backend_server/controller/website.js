@@ -126,7 +126,7 @@ exports.getGuideInfo = async (req, res) => {
             SELECT 
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
-                tg.profile_image_url, tg.num_tours,
+                tg.profile_image_url, tg.num_tours, tg.instagram, tg.linkedin,
                 COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
                 COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
             FROM 
@@ -160,6 +160,8 @@ exports.getGuideInfo = async (req, res) => {
                 minor: result.rows[0].minor,
                 secondary_minor: result.rows[0].secondary_minor,
                 profile_image_url: result.rows[0].profile_image_url,
+                instagram: result.rows[0].instagram,
+                linkedin: result.rows[0].linkedin,
                 num_tours: result.rows[0].num_tours,
                 activities: result.rows[0].activities,
                 hobbies: result.rows[0].hobbies
@@ -183,7 +185,7 @@ exports.getGuidesByFilter = async (req, res) => {
             SELECT 
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
-                tg.profile_image_url, tg.num_tours,
+                tg.profile_image_url, tg.num_tours, tg.instagram, tg.linkedin,
                 COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
                 COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
             FROM 
