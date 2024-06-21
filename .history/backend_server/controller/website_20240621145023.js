@@ -245,8 +245,8 @@ exports.getSchoolInfo = async (req, res) => {
         const school = req.body; // Assuming you pass school id as a parameter
 
         // Query school info from the database
-        const query = "SELECT * FROM schools WHERE name = $1";
-        const values = [school.name];
+        const query = "SELECT * FROM schools WHERE id = $1";
+        const values = [schoolId];
 
         const result = await db.query(query, values);
 

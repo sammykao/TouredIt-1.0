@@ -20,8 +20,8 @@ router.post('/allGuides', website_controls.getAllGuides);
 router.post('/guideInfo', website_controls.getGuideInfo);
 router.post('/filterGuides', website_controls.getGuidesByFilter);
 router.post('/schoolNames', website_controls.getAllSchoolNames);
-router.post('/schoolInfo', website_controls.getSchoolInfo);
-router.post('/allSchools', website_controls.getAllSchoolInfos);
+router.post('/', website_controls.getSchoolInfo);
+router.post('/', website_controls.getAllSchoolInfos);
 
 
 

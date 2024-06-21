@@ -221,59 +221,14 @@ exports.getGuidesByFilter = async (req, res) => {
     }
 };
 
-
 exports.getAllSchoolNames = async (req, res) => {
-    try {
-        // Query all school names from the database
-        const query = "SELECT name FROM schools";
-        const result = await db.query(query);
 
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "No schools found" });
-        } else {
-            const schoolNames = result.rows.map(school => school.name);
-            res.status(200).json({ schools: schoolNames });
-        }
 
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+
 };
 
-exports.getSchoolInfo = async (req, res) => {
-    try {
-        const school = req.body; // Assuming you pass school id as a parameter
+export.getSchoolInfo = async (req, res) => {
 
-        // Query school info from the database
-        const query = "SELECT * FROM schools WHERE name = $1";
-        const values = [school.name];
 
-        const result = await db.query(query, values);
-
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "School Not Found" });
-        } else {
-            res.status(200).json({ school: result.rows[0] });
-        }
-
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-exports.getAllSchoolInfos = async (req, res) => {
-    try {
-        // Query all school information from the database
-        const query = "SELECT * FROM schools";
-        const result = await db.query(query);
-
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "No schools found" });
-        } else {
-            res.status(200).json({ schools: result.rows });
-        }
-
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+    
+}

@@ -126,9 +126,9 @@ exports.getGuideInfo = async (req, res) => {
             SELECT 
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
-                tg.profile_image_url, tg.num_tours, tg.instagram, tg.linkedin,
-                COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
-                COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
+                tg.profile_image_url, tg.num_tours,
+                COALESCE(array_agg(ca.name), ARRAY[]::VARCHAR[]) AS activities,
+                COALESCE(array_agg(h.name), ARRAY[]::VARCHAR[]) AS hobbies
             FROM 
                 tour_guides tg
             LEFT JOIN 
@@ -160,8 +160,6 @@ exports.getGuideInfo = async (req, res) => {
                 minor: result.rows[0].minor,
                 secondary_minor: result.rows[0].secondary_minor,
                 profile_image_url: result.rows[0].profile_image_url,
-                instagram: result.rows[0].instagram,
-                linkedin: result.rows[0].linkedin,
                 num_tours: result.rows[0].num_tours,
                 activities: result.rows[0].activities,
                 hobbies: result.rows[0].hobbies
@@ -185,9 +183,9 @@ exports.getGuidesByFilter = async (req, res) => {
             SELECT 
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
-                tg.profile_image_url, tg.num_tours, tg.instagram, tg.linkedin,
+                tg.profile_image_url, tg.num_tours,
                 COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
-                COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
+                COALESCE(array_agg(h.name), ARRAY[]::VARCHAR[]) AS hobbies
             FROM 
                 tour_guides tg
             LEFT JOIN 
@@ -216,63 +214,6 @@ exports.getGuidesByFilter = async (req, res) => {
         } else {
             res.status(200).json({ guides: result.rows });
         }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-
-exports.getAllSchoolNames = async (req, res) => {
-    try {
-        // Query all school names from the database
-        const query = "SELECT name FROM schools";
-        const result = await db.query(query);
-
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "No schools found" });
-        } else {
-            const schoolNames = result.rows.map(school => school.name);
-            res.status(200).json({ schools: schoolNames });
-        }
-
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-exports.getSchoolInfo = async (req, res) => {
-    try {
-        const school = req.body; // Assuming you pass school id as a parameter
-
-        // Query school info from the database
-        const query = "SELECT * FROM schools WHERE name = $1";
-        const values = [school.name];
-
-        const result = await db.query(query, values);
-
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "School Not Found" });
-        } else {
-            res.status(200).json({ school: result.rows[0] });
-        }
-
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-exports.getAllSchoolInfos = async (req, res) => {
-    try {
-        // Query all school information from the database
-        const query = "SELECT * FROM schools";
-        const result = await db.query(query);
-
-        if (result.rows.length === 0) {
-            res.status(404).json({ message: "No schools found" });
-        } else {
-            res.status(200).json({ schools: result.rows });
-        }
-
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

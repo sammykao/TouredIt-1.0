@@ -246,7 +246,7 @@ exports.getSchoolInfo = async (req, res) => {
 
         // Query school info from the database
         const query = "SELECT * FROM schools WHERE name = $1";
-        const values = [school.name];
+        const values = [schoolId];
 
         const result = await db.query(query, values);
 
