@@ -10,29 +10,29 @@ const website_controls = require('./../controller/website')
 */
 //Super router, make sure that we have our functions from our module we create#
 // Ex: router.get('/user', controller.function <- so when 
-// localhost:3001/api/getClietn called with get request we want to return a function or page);
+// localhost:3001/api/getClient called with get request we want to return a function or page);
 
 // client side
-router.post('/accountInfo', website_controls.retrieveClientInfo);
-router.post('/newClient', website_controls.insertClientAccounts);
-router.post('/updateClient', website_controls.updateClientInfo);
-router.post('/allGuides', website_controls.getAllGuides);
-router.post('/guideInfo', website_controls.getGuideInfo);
-router.post('/filterGuides', website_controls.getGuidesByFilter);
-router.post('/schoolNames', website_controls.getAllSchoolNames);
-router.post('/schoolInfo', website_controls.getSchoolInfo);
-router.post('/allSchools', website_controls.getAllSchoolInfos);
+router.get('/accountInfo', website_controls.retrieveClientInfo);
+router.get('/newClient', website_controls.insertClientAccounts);
+router.get('/updateClient', website_controls.updateClientInfo);
+router.get('/allGuides', website_controls.getAllGuides);
+router.get('/guideInfo', website_controls.getGuideInfo);
+router.get('/filterGuides', website_controls.getGuidesByFilter);
+router.get('/schoolNames', website_controls.getAllSchoolNames);
+router.get('/schoolInfo', website_controls.getSchoolInfo);
+router.get('/allSchools', website_controls.getAllSchoolInfos);
 
 
 
 // guide portal 
-router.post('/retGuideInfo', portal_controls.retrieveGuideInfo);
-router.post('/newGuide', portal_controls.insertGuideAccounts);
-router.post('/updateGuide', portal_controls.updateGuideAccounts);
-router.post('/newHobby', portal_controls.addHobbies);
-router.post('/newInvolvement', portal_controls.addInvolvement);
-router.post('/remHobby', portal_controls.deleteHobby);
-router.post('/remInvolvement', portal_controls.deleteInvolvement);
+router.get('/retGuideInfo', portal_controls.retrieveGuideInfo);
+router.get('/newGuide', portal_controls.insertGuideAccounts);
+router.get('/updateGuide', portal_controls.updateGuideAccounts);
+router.get('/newHobby', portal_controls.addHobbies);
+router.get('/newInvolvement', portal_controls.addInvolvement);
+router.get('/remHobby', portal_controls.deleteHobby);
+router.get('/remInvolvement', portal_controls.deleteInvolvement);
 
 
 

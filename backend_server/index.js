@@ -40,9 +40,9 @@ app.get('/', (req, res) => {
 app.use(error_handling);
 
 // Start server
-// const PORT = process.env.PORT || 3001;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 module.exports.handler = serverless(app);
