@@ -23,7 +23,7 @@ exports.insertGuideAccounts = async (req, res) => {
             VALUES 
                 ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) 
             RETURNING *`;
-        const values = [account.email, account.name, account.school, account.phone, account.hometown,
+        const values = [account.name, account.email, account.school, account.phone, account.hometown,
             account.bio, account.major, account.secondary_major, account.minor, account.secondary_minor, 
             account.profile_image_url, account.instagram, account.linkedin];
 
