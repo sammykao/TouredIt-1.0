@@ -1,38 +1,32 @@
-import { Home, Profile, SignIn, SignUp } from "@/pages";
-import SelectSchool from "./pages/select-school";
+import WhyTouredIt from "./pages/why-touredit";
+import ContactUs from "./pages/contact-us";
+import FindMatch from "./pages/find-match";
+import Stats from "./pages/stats";
+
+
+
 
 export const routes = [
   {
-    name: "home",
-    path: "/home",
-    element: <Home />,
+    name: "Find a Match",
+    path:  "/find-match",
+    element: <FindMatch />,
   },
   {
-    name: "profile",
-    path: "/profile",
-    element: <Profile />,
+    name: "Why TouredIt",
+    path: "/why-touredit",
+    element: <WhyTouredIt />,
   },
   {
-    name: "Sign In",
-    path: "/sign-in",
-    element: <SignIn />,
+    name: "Contact Us",
+    path:  "/contact-us",
+    element: <ContactUs />,
   },
   {
-    name: "Sign Up",
-    path: "/sign-up",
-    element: <SignUp />,
-  },
-  {
-    name: "Select School",
-    path:  "/select-school",
-    element: <SelectSchool />,
-  },
-  /*{
-    name: "Docs",
-    href: "https://www.material-tailwind.com/docs/react/installation",
-    target: "_blank",
+    name: "Guide Portal",
+    href: "https://www.touredit.com",
     element: "",
-  },*/
+  },
 ];
 
 export default routes;
