@@ -108,7 +108,7 @@ exports.addMetrics = async (req, res) => {
 
         // Insert the account into the database
         const query = `
-            INSERT INTO tourguide_metrics (tourguide_id, num_tours, earnings, rating) VALUES ($1, $2, $3, $4) RETURNING *`;
+            INSERT INTO tourguide_metrics (tourguide_id, num_tours, earnings, rating) VALUES ($1, $2, $3, $4 ) RETURNING *`;
             const values = [account.tourguide_id, account.activity_name, account.description];
 
         const result = await db.query(query, values);
