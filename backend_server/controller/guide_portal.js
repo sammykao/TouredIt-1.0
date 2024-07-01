@@ -84,6 +84,63 @@ exports.addInvolvement = async (req, res) => {
     }
 };
 
+exports.addAvailability = async (req, res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the account data thats being updated
+
+        // Insert the account into the database
+        const query = `
+            INSERT INTO availability (tourguide_id, day, period) VALUES ($1, $2, $3) RETURNING *`;
+            const values = [account.tourguide_id, account.activity_name, account.description];
+
+        const result = await db.query(query, values);
+
+        res.status(201).json({ message: 'Availability added', account: result.rows[0] });
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.addMetrics = async (req, res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the account data thats being updated
+
+        // Insert the account into the database
+        const query = `
+            INSERT INTO tourguide_metrics (tourguide_id, num_tours, earnings, rating) VALUES ($1, $2, $3, $4) RETURNING *`;
+            const values = [account.tourguide_id, account.activity_name, account.description];
+
+        const result = await db.query(query, values);
+
+        res.status(201).json({ message: 'Availability added', account: result.rows[0] });
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.deleteAvailability = async (req,res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the account data thats being updated
+
+        // Insert the account into the database
+        const query = `
+            DELETE FROM availability where id = $1`;
+            const values = [account.id];
+
+        const result = await db.query(query, values);
+
+        res.status(201).json({ message: 'Availability was deleted', account: result.rows[0] });
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+
 exports.deleteHobby = async (req,res) => {
     try {
         const account = req.body; // Assuming req.body contains the account data thats being updated
@@ -130,6 +187,146 @@ exports.deleteInvolvement = async (req,res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+};
+
+exports.retrieveAvailability = async (req, res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the new account data
+
+        // Perform validation on the  account
+        // if (!account.email) {
+        //     res.status(400).json({ message: 'Invalid account data' });
+        //     return;
+        // }
+
+        // Retrieve the account from the database
+        const query = "SELECT id, day, period FROM availability WHERE tourguide_id = $1";
+        const values = [account.tourguide_id];
+
+        const result = await db.query(query, values);
+
+        if (result == 0) {
+            res.status(404).json({ message: "No availability found"});
+        } else {
+            res.status(201).json({ account: result.rows[0] });
+        }
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+};
+
+exports.retrieveHobbies = async (req, res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the new account data
+
+        // Perform validation on the  account
+        // if (!account.email) {
+        //     res.status(400).json({ message: 'Invalid account data' });
+        //     return;
+        // }
+
+        // Retrieve the account from the database
+        const query = "SELECT id, hobby_name, description FROM hobbies WHERE tourguide_id = $1";
+        const values = [account.tourguide_id];
+
+        const result = await db.query(query, values);
+
+        if (result == 0) {
+            res.status(404).json({ message: "No hobbies found"});
+        } else {
+            res.status(201).json({ account: result.rows[0] });
+        }
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+};
+
+exports.retrieveInvolvement = async (req, res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the new account data
+
+        // Perform validation on the  account
+        // if (!account.email) {
+        //     res.status(400).json({ message: 'Invalid account data' });
+        //     return;
+        // }
+
+        // Retrieve the account from the database
+        const query = "SELECT id, activity_name, description FROM campus_involvement WHERE tourguide_id = $1";
+        const values = [account.tourguide_id];
+
+        const result = await db.query(query, values);
+
+        if (result == 0) {
+            res.status(404).json({ message: "No involvements found"});
+        } else {
+            res.status(201).json({ account: result.rows[0] });
+        }
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+};
+
+exports.retrieveTours = async (req, res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the new account data
+
+        // Perform validation on the  account
+        // if (!account.email) {
+        //     res.status(400).json({ message: 'Invalid account data' });
+        //     return;
+        // }
+
+        // Retrieve the account from the database
+        const query = "SELECT event_date, event_time, school, completed, feedback, confirmed FROM tours WHERE tourguide_id = $1";
+        const values = [account.tourguide_id];
+
+        const result = await db.query(query, values);
+
+        if (result == 0) {
+            res.status(404).json({ message: "No tours found"});
+        } else {
+            res.status(201).json({ account: result.rows[0] });
+        }
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+};
+
+exports.retrieveTours = async (req, res) => {
+    try {
+        const account = req.body; // Assuming req.body contains the new account data
+
+        // Perform validation on the  account
+        // if (!account.email) {
+        //     res.status(400).json({ message: 'Invalid account data' });
+        //     return;
+        // }
+
+        // Retrieve the account from the database
+        const query = "SELECT num_tours, earnings, rating FROM tourguide_metrics WHERE tourguide_id = $1";
+        const values = [account.tourguide_id];
+
+        const result = await db.query(query, values);
+
+        if (result == 0) {
+            res.status(404).json({ message: "No metrics found"});
+        } else {
+            res.status(201).json({ account: result.rows[0] });
+        }
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
 };
 
 
@@ -252,3 +449,5 @@ exports.retrieveGuideInfo = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
