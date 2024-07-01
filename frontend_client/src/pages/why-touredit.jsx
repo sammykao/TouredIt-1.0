@@ -62,7 +62,7 @@ export function WhyTouredIt() {
                     A Connection to Success
                   </dt>
                   <dd class="mt-2 text-base leading-7 text-gray-800">Connect with your guide and future classmate.
-                    They can help you or your child succeed once they get on campus. This is the first step to you or your child's networking journey
+                    They can help you or your child succeed once they get on campus. This is the first step to you or your child's networking journey.
                   </dd>
                 </div>
                 <div class="relative pl-16">
@@ -170,14 +170,21 @@ export function WhyTouredIt() {
                   <p className="mt-6">
                     If there's no guide or no match you like on the website, reach out and we'll personally pair you with the perfect match.
                     Our guide network is big and constantly expanding, but sometimes there's availability issues or niche interests. We get it!
-                    We'll reach out in a few days and send you potential options to tour with
+                    We'll reach out in a few days and send you potential options to tour with.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+              <a
+                href="/find-match"
+                className="rounded-md bg-blue-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Try It Out <span aria-hidden="true">→</span>
+              </a>
+        </div>
         <div
           className="absolute inset-x-0 top-[calc(100%-100rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-100rem)]"
           aria-hidden="true"
