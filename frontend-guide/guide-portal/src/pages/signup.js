@@ -4,6 +4,7 @@ import React from "react";
  
 const Signup = () => {
     return (
+
             <div class="formCont">
       <h1>We want you to become a guide!</h1>
       <p>Join us today to become apart of our amazing team of guides</p>
