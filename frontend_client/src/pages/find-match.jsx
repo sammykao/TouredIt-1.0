@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SelectSchool = () => {
+const FindMatch = () => {
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState('');
   const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ const SelectSchool = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/schoolNames');
+        const response = await axios.post('http://localhost:3001/api/schoolNames');
         setSchools(response.data.schools);
         setLoading(false);
       } catch (error) {
@@ -46,6 +46,7 @@ const SelectSchool = () => {
   }
 
   return (
+    
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-4">Select Your School</h2>
@@ -72,4 +73,4 @@ const SelectSchool = () => {
   );
 };
 
-export default SelectSchool;
+export default FindMatch;

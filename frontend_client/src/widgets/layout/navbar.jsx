@@ -10,7 +10,10 @@ import {
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-export function Navbar({ brandName, routes, action }) {
+
+
+
+export function Navbar({ routes, action }) {
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -21,7 +24,7 @@ export function Navbar({ brandName, routes, action }) {
   }, []);
 
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mb-2 mt-2 flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-8">
       {routes.map(({ name, path, icon, href, target }) => (
         <Typography
           key={name}
@@ -61,23 +64,24 @@ export function Navbar({ brandName, routes, action }) {
   );
 
   return (
-    <MTNavbar color="transparent" className="p-3">
+    <MTNavbar color="transparent" className="p-1/2">
       <div className="container mx-auto flex items-center justify-between text-white">
         <Link to="/">
-          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold">
-            {brandName}
-          </Typography>
+
+          <img
+              src="./../public/img/touredit-logo.png"
+              alt="Logo"
+              className="cursor-pointer  w-48 lg:w-60"
+              style={{ padding: 0 }}
+            />
         </Link>
         <div className="hidden lg:block">{navList}</div>
-        <div className="hidden gap-2 lg:flex">
-          <a
-            href="https://www.material-tailwind.com/blocks?ref=mtkr"
-            target="_blank"
-          >
+        <div className="hidden gap-2 ml-20 p-4 lg:flex">
+          <Link to="/sign-in" >
             <Button variant="text" size="sm" color="white" fullWidth>
-              pro version
+              Sign In
             </Button>
-          </a>
+          </Link>
           {React.cloneElement(action, {
             className: "hidden lg:inline-block",
           })}
@@ -102,15 +106,11 @@ export function Navbar({ brandName, routes, action }) {
       >
         <div className="container mx-auto">
           {navList}
-          <a
-            href="https://www.material-tailwind.com/blocks/react?ref=mtkr"
-            target="_blank"
-            className="mb-2 block"
-          >
+          <Link to="sign-in">
             <Button variant="text" size="sm" fullWidth>
-              pro version
+              Sign In
             </Button>
-          </a>
+          </Link>
           {React.cloneElement(action, {
             className: "w-full block",
           })}
@@ -121,21 +121,16 @@ export function Navbar({ brandName, routes, action }) {
 }
 
 Navbar.defaultProps = {
-  brandName: "Material Tailwind React",
   action: (
-    <a
-      href="https://www.creative-tim.com/product/material-tailwind-kit-react"
-      target="_blank"
-    >
+    <Link to="sign-up">
       <Button variant="gradient" size="sm" fullWidth>
-        free download
+        Sign Up
       </Button>
-    </a>
+    </Link>
   ),
 };
 
 Navbar.propTypes = {
-  brandName: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.node,
 };
