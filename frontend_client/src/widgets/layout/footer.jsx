@@ -48,7 +48,6 @@ export function Footer({ title, description, socials, menus, copyright }) {
                       <Typography
                         as="a"
                         href={item.path}
-                        target="_blank"
                         rel="noreferrer"
                         variant="small"
                         className="mb-2 block font-normal text-blue-gray-800 hover:text-blue-gray-700"

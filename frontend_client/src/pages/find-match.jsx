@@ -10,7 +10,7 @@ const FindMatch = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/schoolNames');
+        const response = await axios.post('http://localhost:3001/api/schoolNames');
         setSchools(response.data.schools);
         setLoading(false);
       } catch (error) {
