@@ -1,6 +1,40 @@
 import { Textarea, Input, Typography, Button } from "@material-tailwind/react";
 
 export function ContactUs() {
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        message: ''
+    });
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post('http://localhost:3001/api/send-email', formData);
+            console.log('Message sent.');
+        } catch (error){
+            console.log('Error: ', error)
+        }
+
+        setFormData({
+            first_name: '',
+            last_name: '',
+            email: '',
+            message: ''
+        });
+    };
+
   return (
     <>
       <div className="relative isolate px-6 pt-14 lg:px-8 min-h-screen pb-24 bg-gray-500">
@@ -33,7 +67,7 @@ export function ContactUs() {
               <div className="flex flex-col">
                 <Typography
                   variant="small"
-                  className="mb-2 text-left font-medium !text-gray-900"
+                  className="mb-4 text-left font-medium !text-gray-900"
                 >
                   First Name
                 </Typography>
@@ -41,8 +75,10 @@ export function ContactUs() {
                   color="gray"
                   size="lg"
                   placeholder="First Name"
-                  name="first-name"
+                  name="first_name"
                   className="focus:border-t-gray-900"
+                  value={formData.first_name}
+                  onChange={handleChange} 
                   containerProps={{
                     className: "min-w-full",
                   }}
@@ -54,7 +90,7 @@ export function ContactUs() {
               <div className="flex flex-col">
                 <Typography
                   variant="small"
-                  className="mb-2 text-left font-medium !text-gray-900"
+                  className="mb-4 text-left font-medium !text-gray-900"
                 >
                   Last Name
                 </Typography>
@@ -62,8 +98,10 @@ export function ContactUs() {
                   color="gray"
                   size="lg"
                   placeholder="Last Name"
-                  name="last-name"
+                  name="last_name"
                   className="focus:border-t-gray-900"
+                  value={formData.last_name}
+                  onChange={handleChange} 
                   containerProps={{
                     className: "!min-w-full",
                   }}
@@ -76,7 +114,7 @@ export function ContactUs() {
             <div className="flex flex-col">
               <Typography
                 variant="small"
-                className="mb-2 text-left font-medium !text-gray-900"
+                className="mb-4 text-left font-medium !text-gray-900"
               >
                 Your Email
               </Typography>
@@ -86,6 +124,8 @@ export function ContactUs() {
                 placeholder="name@email.com"
                 name="email"
                 className="focus:border-t-gray-900"
+                value={formData.email}
+                  onChange={handleChange} 
                 containerProps={{
                   className: "!min-w-full",
                 }}
@@ -97,7 +137,7 @@ export function ContactUs() {
             <div className="flex flex-col">
               <Typography
                 variant="small"
-                className="mb-2 text-left font-medium !text-gray-900"
+                className="mb-4 text-left font-medium !text-gray-900"
               >
                 Your Message
               </Typography>
@@ -106,6 +146,8 @@ export function ContactUs() {
                 color="gray"
                 placeholder="Message"
                 name="message"
+                value={formData.message}
+                onChange={handleChange} 
                 className="focus:border-t-gray-900"
                 containerProps={{
                   className: "!min-w-full",
@@ -115,7 +157,7 @@ export function ContactUs() {
                 }}
               />
             </div>
-            <Button className="w-full" color="gray">
+            <Button className="w-full" color="gray" onClick={handleSubmit}>
               Send message
             </Button>
           </form>
