@@ -37,7 +37,7 @@ router.get('/newAvailability', portal_controls.addAvailability);
 router.get('/newMetrics', portal_controls.addMetrics);
 router.get('/remAvailability', portal_controls.deleteAvailability);
 router.get('/retAvailability', portal_controls.retrieveAvailability);
-router.get('/retHobby', portal_controls.retrieveHobby);
+router.get('/retHobby', portal_controls.retrieveHobbies);
 router.get('/retInvolvement', portal_controls.retrieveInvolvement);
 router.get('/retTours', portal_controls.retrieveTours);
 router.get('/retMetrics', portal_controls.retrieveMetrics);
