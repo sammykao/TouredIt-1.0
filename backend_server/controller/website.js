@@ -1,4 +1,9 @@
-const db = require("./../database/db")
+const db = require("./../database/db");
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+
+
+dotenv.config();
 
 
 exports.insertClientAccounts = async (req, res) => {
@@ -276,4 +281,43 @@ exports.getAllSchoolInfos = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+};
+
+// config settings for email
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+  
+  
+
+// sending email
+exports.sendEmail = (req, res) => {
+  const { first_name, email, last_name, message } = req.body;
+
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME, // sender address
+    to: 'joshua.bernstein@touredit.com', // receiver address
+    subject: "Website Contact Form",
+    html: `<p>You have a new contact request from:</p>
+           <ul>
+             <li>Name: ${first_name} ${last_name}</li>
+             <li>Email: ${email}</li>
+           </ul>
+           <p>Message:</p>
+           <p>${message}</p>`
+  };
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+      res.status(500).send({message: 'Error sending email', error: err});
+    } else {
+      console.log(info);
+      res.status(200).send({message: 'Email sent successfully'});
+    }
+  });
 };

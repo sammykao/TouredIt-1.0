@@ -301,7 +301,7 @@ exports.retrieveTours = async (req, res) => {
 
 };
 
-exports.retrieveTours = async (req, res) => {
+exports.retrieveMetrics = async (req, res) => {
     try {
         const account = req.body; // Assuming req.body contains the new account data
 
