@@ -183,7 +183,7 @@ export function ContactUs() {
                                 name="message"
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="focus:border-t-gray-900"
+                                className="focus:border-t-black"
                                 containerProps={{
                                     className: "!min-w-full",
                                 }}

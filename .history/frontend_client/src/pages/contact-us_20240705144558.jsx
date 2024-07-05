@@ -108,7 +108,7 @@ export function ContactUs() {
                                     size="lg"
                                     placeholder="First Name"
                                     name="first_name"
-                                    className="focus:border-t-gray-900"
+                                    className="focus:border-t-black"
                                     value={formData.first_name}
                                     onChange={handleChange}
                                     containerProps={{
@@ -132,7 +132,7 @@ export function ContactUs() {
                                     size="lg"
                                     placeholder="Last Name"
                                     name="last_name"
-                                    className="focus:border-t-gray-900"
+                                    className="focus:border-t-black"
                                     value={formData.last_name}
                                     onChange={handleChange}
                                     containerProps={{
@@ -157,7 +157,7 @@ export function ContactUs() {
                                 size="lg"
                                 placeholder="name@email.com"
                                 name="email"
-                                className="focus:border-t-gray-900"
+                                className="focus:border-t-black"
                                 value={formData.email}
                                 onChange={handleChange}
                                 containerProps={{
@@ -183,7 +183,7 @@ export function ContactUs() {
                                 name="message"
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="focus:border-t-gray-900"
+                                className="focus:border-t-black"
                                 containerProps={{
                                     className: "!min-w-full",
                                 }}
@@ -193,7 +193,7 @@ export function ContactUs() {
                             />
                             {errors.message && <span className="text-red-500">{errors.message}</span>}
                         </div>
-                        <Button type="submit" className="w-full" color="gray" onclick={handleSubmit}>
+                        <Button type="submit" className="w-full" color="gray" onclick>
                             Send message
                         </Button>
                     </form>
