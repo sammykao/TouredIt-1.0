@@ -1,3 +1,4 @@
+// src/widgets/layout/navbar.jsx
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -9,11 +10,10 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
-
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 export function Navbar({ routes, action }) {
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -67,24 +67,51 @@ export function Navbar({ routes, action }) {
     <MTNavbar color="transparent" className="p-1/2">
       <div className="container mx-auto flex items-center justify-between text-white">
         <Link to="/">
-
           <img
-              src="./../public/img/touredit-logo.png"
-              alt="Logo"
-              className="cursor-pointer  w-48 lg:w-60"
-              style={{ padding: 0 }}
-            />
+            src="./../public/img/touredit-logo.png"
+            alt="Logo"
+            className="cursor-pointer w-48 lg:w-60"
+            style={{ padding: 0 }}
+          />
         </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="hidden gap-2 ml-20 p-4 lg:flex">
-          <Link to="/sign-in" >
-            <Button variant="text" size="sm" color="white" fullWidth>
-              Sign In
-            </Button>
-          </Link>
-          {React.cloneElement(action, {
-            className: "hidden lg:inline-block",
-          })}
+          {!isAuthenticated ? (
+            <>
+              <Button
+                variant="text"
+                size="sm"
+                color="white"
+                onClick={() => loginWithRedirect()}
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="gradient"
+                size="sm"
+                color="white"
+                onClick={() => loginWithRedirect({ screen_hint: "signup" })}
+              >
+                Sign Up
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/profile">
+                <Button variant="text" size="sm" color="white">
+                  Profile
+                </Button>
+              </Link>
+              <Button
+                variant="text"
+                size="sm"
+                color="white"
+                onClick={() => logout({ returnTo: window.location.origin })}
+              >
+                Logout
+              </Button>
+            </>
+          )}
         </div>
         <IconButton
           variant="text"
@@ -106,14 +133,42 @@ export function Navbar({ routes, action }) {
       >
         <div className="container mx-auto">
           {navList}
-          <Link to="sign-in">
-            <Button variant="text" size="sm" fullWidth>
-              Sign In
-            </Button>
-          </Link>
-          {React.cloneElement(action, {
-            className: "w-full block",
-          })}
+          {!isAuthenticated ? (
+            <>
+              <Button
+                variant="text"
+                size="sm"
+                fullWidth
+                onClick={() => loginWithRedirect()}
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="gradient"
+                size="sm"
+                fullWidth
+                onClick={() => loginWithRedirect({ screen_hint: "signup" })}
+              >
+                Sign Up
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/profile">
+                <Button variant="text" size="sm" fullWidth>
+                  Profile
+                </Button>
+              </Link>
+              <Button
+                variant="text"
+                size="sm"
+                fullWidth
+                onClick={() => logout({ returnTo: window.location.origin })}
+              >
+                Logout
+              </Button>
+            </>
+          )}
         </div>
       </MobileNav>
     </MTNavbar>
@@ -122,11 +177,9 @@ export function Navbar({ routes, action }) {
 
 Navbar.defaultProps = {
   action: (
-    <Link to="sign-up">
-      <Button variant="gradient" size="sm" fullWidth>
-        Sign Up
-      </Button>
-    </Link>
+    <Button variant="gradient" size="sm" fullWidth>
+      Sign Up
+    </Button>
   ),
 };
 

@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Footer } from "@/widgets/layout";
 
-export function Stats() {
+export function Profile() {
   return (
     <>
       <section className="relative block h-[50vh]">
@@ -123,12 +123,8 @@ export function Stats() {
 
         </div>
       </section>
-      <div className="bg-white">
-        <Footer />
-      </div>
-
     </>
   );
 }
 
-export default Stats;
+export default Profile;

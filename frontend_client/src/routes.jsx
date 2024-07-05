@@ -1,7 +1,6 @@
 import WhyTouredIt from "./pages/why-touredit";
 import ContactUs from "./pages/contact-us";
 import FindMatch from "./pages/find-match";
-import Stats from "./pages/stats";
 
 
 
