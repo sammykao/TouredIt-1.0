@@ -1,4 +1,3 @@
-// src/widgets/layout/navbar.jsx
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -10,11 +9,17 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useAuth0 } from "@auth0/auth0-react";
 
-export function Navbar({ routes, action }) {
-  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+export function Navbar({ routes }) {
   const [openNav, setOpenNav] = React.useState(false);
+
+  const action = (
+    <Link to="sign-up">
+      <Button variant="gradient" size="sm" fullWidth>
+        Sign Up
+      </Button>
+    </Link>
+  );
 
   React.useEffect(() => {
     window.addEventListener(
@@ -76,42 +81,14 @@ export function Navbar({ routes, action }) {
         </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="hidden gap-2 ml-20 p-4 lg:flex">
-          {!isAuthenticated ? (
-            <>
-              <Button
-                variant="text"
-                size="sm"
-                color="white"
-                onClick={() => loginWithRedirect()}
-              >
-                Sign In
-              </Button>
-              <Button
-                variant="gradient"
-                size="sm"
-                color="white"
-                onClick={() => loginWithRedirect({ screen_hint: "signup" })}
-              >
-                Sign Up
-              </Button>
-            </>
-          ) : (
-            <>
-              <Link to="/profile">
-                <Button variant="text" size="sm" color="white">
-                  Profile
-                </Button>
-              </Link>
-              <Button
-                variant="text"
-                size="sm"
-                color="white"
-                onClick={() => logout({ returnTo: window.location.origin })}
-              >
-                Logout
-              </Button>
-            </>
-          )}
+          <Link to="/sign-in">
+            <Button variant="text" size="sm" color="white" fullWidth>
+              Sign In
+            </Button>
+          </Link>
+          {React.cloneElement(action, {
+            className: "hidden lg:inline-block",
+          })}
         </div>
         <IconButton
           variant="text"
@@ -133,59 +110,22 @@ export function Navbar({ routes, action }) {
       >
         <div className="container mx-auto">
           {navList}
-          {!isAuthenticated ? (
-            <>
-              <Button
-                variant="text"
-                size="sm"
-                fullWidth
-                onClick={() => loginWithRedirect()}
-              >
-                Sign In
-              </Button>
-              <Button
-                variant="gradient"
-                size="sm"
-                fullWidth
-                onClick={() => loginWithRedirect({ screen_hint: "signup" })}
-              >
-                Sign Up
-              </Button>
-            </>
-          ) : (
-            <>
-              <Link to="/profile">
-                <Button variant="text" size="sm" fullWidth>
-                  Profile
-                </Button>
-              </Link>
-              <Button
-                variant="text"
-                size="sm"
-                fullWidth
-                onClick={() => logout({ returnTo: window.location.origin })}
-              >
-                Logout
-              </Button>
-            </>
-          )}
+          <Link to="sign-in">
+            <Button variant="text" size="sm" fullWidth>
+              Sign In
+            </Button>
+          </Link>
+          {React.cloneElement(action, {
+            className: "w-full block",
+          })}
         </div>
       </MobileNav>
     </MTNavbar>
   );
 }
 
-Navbar.defaultProps = {
-  action: (
-    <Button variant="gradient" size="sm" fullWidth>
-      Sign Up
-    </Button>
-  ),
-};
-
 Navbar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  action: PropTypes.node,
 };
 
 Navbar.displayName = "/src/widgets/layout/navbar.jsx";
