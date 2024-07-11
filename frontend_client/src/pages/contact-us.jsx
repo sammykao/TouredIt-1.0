@@ -51,9 +51,8 @@ export function ContactUs() {
         }
 
         try {
-            console.log('Sending data to the server:', formData);
-            const response = await axios.post('http://localhost:3001/api/sendMail', formData);
-            console.log('Message sent:', response.data);
+            await axios.post('http://localhost:3001/api/sendMail', formData);
+            console.log('Message sent');
         } catch (error) {
             console.error('Error sending message:', error);
         }

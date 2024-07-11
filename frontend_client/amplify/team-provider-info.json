@@ -10,6 +10,11 @@
       "StackName": "amplify-touredit-dev-b06b0",
       "StackId": "arn:aws:cloudformation:us-east-2:381491927243:stack/amplify-touredit-dev-b06b0/0db69c30-3d64-11ef-8696-02fc9320fbcd",
       "AmplifyAppId": "d1hc8xtolxajmo"
+    },
+    "categories": {
+      "auth": {
+        "toureditc038c9f1": {}
+      }
     }
   }
 }
