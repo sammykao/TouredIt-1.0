@@ -9,6 +9,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { isAuthenticated } from "../auth/loggedIn";
 
 export function Navbar({ routes }) {
   const [openNav, setOpenNav] = React.useState(false);
@@ -81,14 +82,26 @@ export function Navbar({ routes }) {
         </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="hidden gap-2 ml-20 p-4 lg:flex">
-          <Link to="/sign-in">
-            <Button variant="text" size="sm" color="white" fullWidth>
-              Sign In
-            </Button>
-          </Link>
-          {React.cloneElement(action, {
-            className: "hidden lg:inline-block",
-          })}
+          {isAuthenticated() ? (
+            <>
+              <Link to="/profile">
+                <Button color="light-gray" size="sm" fullWidth>
+                  Profile
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/sign-in">
+                <Button variant="text" size="sm" color="white" fullWidth>
+                  Sign In
+                </Button>
+              </Link>
+              {React.cloneElement(action, {
+                className: "hidden lg:inline-block",
+              })}
+            </>
+          )}
         </div>
         <IconButton
           variant="text"
@@ -110,14 +123,26 @@ export function Navbar({ routes }) {
       >
         <div className="container mx-auto">
           {navList}
-          <Link to="sign-in">
-            <Button variant="text" size="sm" fullWidth>
-              Sign In
-            </Button>
-          </Link>
-          {React.cloneElement(action, {
-            className: "w-full block",
-          })}
+          {isAuthenticated() ? (
+            <>
+              <Link to="/profile">
+                <Button color="light-gray" size="sm" fullWidth>
+                  Profile
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="sign-in">
+                <Button variant="text" size="sm" fullWidth>
+                  Sign In
+                </Button>
+              </Link>
+              {React.cloneElement(action, {
+                className: "w-full block",
+              })}
+            </>
+          )}
         </div>
       </MobileNav>
     </MTNavbar>

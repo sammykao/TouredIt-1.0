@@ -4,10 +4,6 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import "../public/css/tailwind.css";
-import { Amplify } from 'aws-amplify';
-import awsExports from './aws-exports';
-
-Amplify.configure(awsExports);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

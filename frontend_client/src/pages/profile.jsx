@@ -4,125 +4,81 @@ import {
   BriefcaseIcon,
   BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
-import { Footer } from "@/widgets/layout";
 
 export function Profile() {
   return (
     <>
-      <section className="relative block h-[50vh]">
-        <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('/img/background-3.png')] bg-cover bg-center scale-105" />
-        <div className="absolute top-0 h-full w-full bg-black/60 bg-cover bg-center" />
-      </section>
-      <section className="relative bg-white py-16">
-        <div className="relative mb-6 -mt-40 flex w-full px-4 min-w-0 flex-col break-words bg-white">
-          <div className="container mx-auto">
-            <div className="flex flex-col lg:flex-row justify-between">
-              <div className="relative flex gap-6 items-start">
-                <div className="-mt-20 w-40">
-                  <Avatar
-                    src="/img/team-5.png"
-                    alt="Profile picture"
-                    variant="circular"
-                    className="h-full w-full"
-                  />
-                </div>
-                <div className="flex flex-col mt-2">
-                  <Typography variant="h4" color="blue-gray">
-                    Jenna Stones
-                  </Typography>
-                  <Typography variant="paragraph" color="gray" className="!mt-0 font-normal">jena@mail.com</Typography>
-                </div>
-              </div>
-
-              <div className="mt-10 mb-10 flex lg:flex-col justify-between items-center lg:justify-end lg:mb-0 lg:px-4 flex-wrap lg:-mt-5">
-                <Button className="bg-gray-900 w-fit lg:ml-auto">Conntect</Button>
-                <div className="flex justify-start py-4 pt-8 lg:pt-4">
-                  <div className="mr-4 p-3 text-center">
-                    <Typography
-                      variant="lead"
-                      color="blue-gray"
-                      className="font-bold uppercase"
-                    >
-                      22
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      className="font-normal text-blue-gray-500"
-                    >
-                      Friends
-                    </Typography>
-                  </div>
-                  <div className="mr-4 p-3 text-center">
-                    <Typography
-                      variant="lead"
-                      color="blue-gray"
-                      className="font-bold uppercase"
-                    >
-                      10
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      className="font-normal text-blue-gray-500"
-                    >
-                      Photos
-                    </Typography>
-                  </div>
-                  <div className="p-3 text-center lg:mr-4">
-                    <Typography
-                      variant="lead"
-                      color="blue-gray"
-                      className="font-bold uppercase"
-                    >
-                      89
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      className="font-normal text-blue-gray-500"
-                    >
-                      Comments
-                    </Typography>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div className="-mt-4 container space-y-2">
-              <div className="flex items-center gap-2">
-                <MapPinIcon className="-mt-px h-4 w-4 text-blue-gray-500" />
-                <Typography className="font-medium text-blue-gray-500">
-                  Los Angeles, California
-                </Typography>
-              </div>
-              <div className="flex items-center gap-2">
-                <BriefcaseIcon className="-mt-px h-4 w-4 text-blue-gray-500" />
-                <Typography className="font-medium text-blue-gray-500">
-                  Solution Manager - Creative Tim Officer
-                </Typography>
-              </div>
-              <div className="flex items-center gap-2">
-                <BuildingLibraryIcon className="-mt-px h-4 w-4 text-blue-gray-500" />
-                <Typography className="font-medium text-blue-gray-500">
-                  University of Computer Science
-                </Typography>
-              </div>
-            </div>
-            <div className="mb-10 py-6">
-              <div className="flex w-full flex-col items-start lg:w-1/2">
-                <Typography className="mb-6 font-normal text-blue-gray-500">
-                  An artist of considerable range, Jenna the name taken by
-                  Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                  performs and records all of his own music, giving it a
-                  warm, intimate feel with a solid groove structure. An
-                  artist of considerable range.
-                </Typography>
-                <Button variant="text">Show more</Button>
-              </div>
-            </div>
+       <div className="relative isolate px-6 pt-16 lg:px-8 min-h-screen pb-24 bg-gray-500">
+       <section className="mt-24 flex p-4 gap-4 bg-white rounded-3xl">
+          <div className="px-4 sm:px-0">
+            <h3 className="text-base font-semibold leading-7 text-gray-900">Applicant Information</h3>
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details and application.</p>
           </div>
-
-
-        </div>
+          <div className="mt-6 border-t border-gray-100">
+            <dl className="divide-y divide-gray-100">
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Full name</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Margot Foster</dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Application for</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Backend Developer</dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Salary expectation</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">$120,000</dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">About</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur
+                  qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud
+                  pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
+                <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
+                    <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                      <div className="flex w-0 flex-1 items-center">
+                        <PaperClipIcon aria-hidden="true" className="h-5 w-5 flex-shrink-0 text-gray-400" />
+                        <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                          <span className="truncate font-medium">resume_back_end_developer.pdf</span>
+                          <span className="flex-shrink-0 text-gray-400">2.4mb</span>
+                        </div>
+                      </div>
+                      <div className="ml-4 flex-shrink-0">
+                        <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                          Download
+                        </a>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                      <div className="flex w-0 flex-1 items-center">
+                        <PaperClipIcon aria-hidden="true" className="h-5 w-5 flex-shrink-0 text-gray-400" />
+                        <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                          <span className="truncate font-medium">coverletter_back_end_developer.pdf</span>
+                          <span className="flex-shrink-0 text-gray-400">4.5mb</span>
+                        </div>
+                      </div>
+                      <div className="ml-4 flex-shrink-0">
+                        <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                          Download
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </dd>
+              </div>
+            </dl>
+          </div>
       </section>
+      </div>
     </>
   );
 }
