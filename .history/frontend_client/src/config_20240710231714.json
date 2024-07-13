@@ -1,0 +1,5 @@
+{
+    "region": "us-east-2",
+    "userPoolId": "us-east-2_uISq8DVYM",
+    "clientId": "YOUR_COGNITO_APP_CLIENT_ID"
+}
