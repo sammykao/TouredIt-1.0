@@ -117,9 +117,9 @@ export function Profile() {
                   <div className="flex-1 sm:px-6">
                     <div className="flex items-center justify-between">
                       <h3 className="text-md font-medium">{tour.guide}</h3>
-                      <p className="text-lg text-gray-700">{new Date(tour.date).toLocaleDateString()}</p>
+                      <p className="text-sm text-gray-500">{new Date(tour.date).toLocaleDateString()}</p>
                     </div>
-                    <p className="text-md text-gray-500">{tour.school}</p>
+                    <p className="text text-gray-500">{tour.school}</p>
                   </div>
                 </li>
               ))}

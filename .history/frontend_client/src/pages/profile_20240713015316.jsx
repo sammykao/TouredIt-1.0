@@ -113,13 +113,13 @@ export function Profile() {
           {toursInfo.length > 0 ? (
             <ul className="divide-y divide-gray-200">
               {toursInfo.map((tour, index) => (
-                <li key={index} className="py-4 flex space-x-3">
-                  <div className="flex-1 sm:px-6">
+                <li key={index} className="py-8 flex space-x-3">
+                  <div className="flex-1 sm:px:space-y-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-md font-medium">{tour.guide}</h3>
-                      <p className="text-lg text-gray-700">{new Date(tour.date).toLocaleDateString()}</p>
+                      <h3 className="text-sm font-medium">{tour.guide}</h3>
+                      <p className="text-sm text-gray-500">{new Date(tour.date).toLocaleDateString()}</p>
                     </div>
-                    <p className="text-md text-gray-500">{tour.school}</p>
+                    <p className="text-sm text-gray-500">{tour.school}</p>
                   </div>
                 </li>
               ))}

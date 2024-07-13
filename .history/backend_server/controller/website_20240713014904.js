@@ -347,6 +347,7 @@ exports.getClientTours = async (req, res) => {
         
         const values = [email];
         const result = await db.query(query, values);
+        console.log(result);
         if (result.rows.length === 0) {
             res.status(404).json({ message: "No tours found for the specified client" });
         } else {
@@ -354,6 +355,7 @@ exports.getClientTours = async (req, res) => {
         }
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };

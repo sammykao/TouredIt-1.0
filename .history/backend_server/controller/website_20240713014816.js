@@ -343,10 +343,12 @@ exports.getClientTours = async (req, res) => {
             INNER JOIN
                 clients c ON t.client_id = c.id
             WHERE 
-                c.email = $1`;
+                t.email = $1`;
         
-        const values = [email];
+        const values = [id];
+
         const result = await db.query(query, values);
+
         if (result.rows.length === 0) {
             res.status(404).json({ message: "No tours found for the specified client" });
         } else {

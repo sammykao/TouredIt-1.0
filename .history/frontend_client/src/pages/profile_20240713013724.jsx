@@ -25,8 +25,9 @@ export function Profile() {
         setLoading(false);
         return;
       });
+    
     // Fetch tours data
-    axios.post("http://localhost:3001/api/clientTours", { email })
+    axios.post("http://localhost:3001/api/get", { id })
       .then(response => {
         setToursInfo(response.data.tours);
       })
@@ -114,12 +115,13 @@ export function Profile() {
             <ul className="divide-y divide-gray-200">
               {toursInfo.map((tour, index) => (
                 <li key={index} className="py-4 flex space-x-3">
-                  <div className="flex-1 sm:px-6">
+                  <Avatar size="sm" className="bg-blue-500 text-white" src={tour.guideProfileImage} />
+                  <div className="flex-1 space-y-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-md font-medium">{tour.guide}</h3>
-                      <p className="text-lg text-gray-700">{new Date(tour.date).toLocaleDateString()}</p>
+                      <h3 className="text-sm font-medium">{tour.guideName}</h3>
+                      <p className="text-sm text-gray-500">{new Date(tour.date).toLocaleDateString()}</p>
                     </div>
-                    <p className="text-md text-gray-500">{tour.school}</p>
+                    <p className="text-sm text-gray-500">{tour.campus}</p>
                   </div>
                 </li>
               ))}
