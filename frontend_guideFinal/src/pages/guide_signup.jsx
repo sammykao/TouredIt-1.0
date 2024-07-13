@@ -1,6 +1,8 @@
 import React from "react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Typography } from "@material-tailwind/react";
 
 
 
@@ -23,6 +25,51 @@ const [postData, setPostData] = useState({
 });
 const [responseData, setResponseData] = useState(null); // State to hold response data
 const [error, setError] = useState(null); // State to hold error message
+
+
+
+const [schools, setSchools] = useState([]);
+  const [filteredSchools, setFilteredSchools] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await axios.post('http://localhost:3001/api/schoolNames');
+        setSchools(response.data.schools);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching schools:', error);
+        setError('Error fetching schools. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    fetchSchools();
+  }, []);
+
+  const handleSchoolChange = (e) => {
+    const inputValue = e.target.value;
+    setSelectedSchool(inputValue);
+    if (inputValue) {
+      const filtered = schools.filter((school) =>
+        school.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      setFilteredSchools(filtered);
+    } else {
+      setFilteredSchools([]);
+    }
+  };
+
+  const handleSchoolSelect = (aSchool) => {
+    setSelectedSchool(aSchool);
+    setPostData((prevState) => ({
+      ...prevState,
+      school: aSchool,
+    }));
+    setFilteredSchools([]);
+  };
 
 const handleInputChange = (e) => {
   const { name, value } = e.target;
@@ -168,9 +215,10 @@ const handleSubmit = async (e) => {
 
 
 
-    <div className="flex justify-center items-center h-screen mb-12 mt-12">
-
+    <div className="flex justify-center items-center h-screen mb-12 mt-10">
+        
     <form  onSubmit={handleSubmit} class="w-full max-w-lg ">
+    <p class="mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">Signup!</p>
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
@@ -206,14 +254,36 @@ const handleSubmit = async (e) => {
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="school">
         School*
       </label>
-      <input 
+      {/* <input 
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
           name="school" 
           type="text" 
           placeholder="University"
           onChange={handleInputChange}
           required
+          /> */}
+          <input
+            type="text"
+            value={selectedSchool}
+            onChange={handleSchoolChange}
+            name="school"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+
+            placeholder="Start typing to search for a school..."
           />
+          {filteredSchools.length > 0 && (
+            <ul className="border border-gray-300 rounded mt-2 max-h-60 overflow-y-auto bg-gray-200">
+              {filteredSchools.map((school, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleSchoolSelect(school)}
+                  className="p-2 cursor-pointer hover:bg-gray-200"
+                >
+                  {school}
+                </li>
+              ))}
+            </ul>
+          )}
     </div>
     </div>
   
@@ -242,9 +312,11 @@ const handleSubmit = async (e) => {
           name="phone" 
           type="text" 
           placeholder="123-456-7890"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           onChange={handleInputChange}
           required
           />
+        <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-1"> Example: 555-555-5555</Typography>
     </div>
   </div>
   
@@ -355,7 +427,7 @@ const handleSubmit = async (e) => {
     <div class="w-full px-3">
 
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-        Profile Picture* (temporary)
+        Profile Picture*
       </label>
       <input  
       name="profile_image_url" 
@@ -365,7 +437,7 @@ const handleSubmit = async (e) => {
       />
     </div>
   </div>
-  <div className="mb-6 my-auto">
+  {/* <div className="mb-6 my-auto">
   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
     Hobby/Hobbies
   </label>
@@ -403,9 +475,9 @@ const handleSubmit = async (e) => {
       )}
     </div>
   ))}
-  </div>
+  </div> */}
 
-<div className="mb-6 my-auto">
+{/* <div className="mb-6 my-auto">
   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
     Campus Involvement
   </label>
@@ -443,7 +515,7 @@ const handleSubmit = async (e) => {
       )}
     </div>
   ))}
-</div>
+</div> */}
 
 
 

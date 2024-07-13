@@ -195,7 +195,7 @@ function Profile() {
           <ul className="text-gray-700">
                 {responseData.guide.hobbies.map((props, key) => (
                     <li class="flex border-y py-2">
-                        <span class="font-bold w-72">Email:</span>
+                        <span class="font-bold w-72">Hobby:</span>
                         <span class="text-gray-700">{responseData.guide.hobbies}</span>
                     </li>
                 ))}
@@ -209,6 +209,15 @@ function Profile() {
           <div className="mt-2">
           <Typography className="text-lg font-semibold text-gray-800 mb-4">Campus Involvement</Typography>
           </div>
+          <ul className="text-gray-700">
+                {responseData.guide.activities.map((props, key) => (
+                    <li class="flex border-y py-2">
+                        <span class="font-bold w-72">Activity:</span>
+                        <span class="text-gray-700">{responseData.guide.hobbies}</span>
+                    </li>
+                ))}
+              
+            </ul>
         </div>
       </div>
       </div>
