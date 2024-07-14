@@ -208,7 +208,7 @@ const FindGuide = () => {
         ) : (
           <div className="w-full mb-6 text-center">
             <p>
-              We don't have any guides at this school at the moment. If you would like to tour {school}, 
+              We will match you with a personalized guide. If you would like to tour {school}, 
               please fill out this form, and we will find a guide there for you based on your input.
             </p>
             <div className="mt-4 p-6 bg-white border border-gray-300 rounded-lg">

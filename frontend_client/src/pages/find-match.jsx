@@ -76,7 +76,10 @@ const FindMatch = () => {
           }}
         />
       </div>
-      <br></br>
+      <div className='my-28'>
+      </div>
+      <div className='my-28'>
+      </div>
       <br></br>
       <div className="bg-white px-4 py-4 overflow-hidden mt-24 shadow rounded-lg border max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-4">Select Your School</h2>
@@ -104,9 +107,11 @@ const FindMatch = () => {
         </div>
         <button
           onClick={handleValidation}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          size="xs"
+          variant="gradient"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
         >
-          Validate Choice
+          Find a match
         </button>
       </div>
       <div

@@ -1,7 +1,6 @@
 import WhyTouredIt from "./pages/why-touredit";
 import ContactUs from "./pages/contact-us";
 import FindMatch from "./pages/find-match";
-import FindGuide from "./pages/find-guide";
 
 
 
@@ -26,11 +25,7 @@ export const routes = [
     name: "Guide Portal",
     href: "https://www.touredit.com",
     element: "",
-  },
-  {
-    path: "/find-guide",
-    element: <FindGuide />,
-  },
+  }
 ];
 
 export default routes;
