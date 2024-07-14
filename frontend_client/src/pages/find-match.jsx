@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const FindMatch = () => {
   const [schools, setSchools] = useState([]);
@@ -7,6 +8,7 @@ const FindMatch = () => {
   const [selectedSchool, setSelectedSchool] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSchools = async () => {
@@ -48,8 +50,8 @@ const FindMatch = () => {
       return;
     }
 
-    // Perform validation logic or navigate to next step
-    alert(`Selected school: ${selectedSchool}`);
+    // Navigate to the FindGuide page and pass the selected school
+    navigate('/find-guide', { state: { school: selectedSchool } });
   };
 
   if (loading) {
