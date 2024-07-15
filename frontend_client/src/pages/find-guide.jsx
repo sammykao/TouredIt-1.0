@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Textarea, Input, Typography, Button } from "@material-tailwind/react";
 
@@ -18,6 +19,7 @@ const FindGuide = () => {
     interests: '',
     comments: ''
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGuides = async () => {
@@ -65,6 +67,10 @@ const FindGuide = () => {
     }
   };
 
+  const handleDetails = (email) => {
+    navigate('/book-guide', { state: { email } }); // Navigate to GuideDetails page with email
+  };
+
   const toggleForm = () => {
     setShowForm((prev) => !prev);
   };
@@ -93,10 +99,15 @@ const FindGuide = () => {
           <>
             <ul className="list-disc list-inside">
               {guides.map((guide) => (
-                <li key={guide.id} className="py-2">
-                  <strong>{guide.name}</strong> - {guide.email}
-                  <br />
-                  <span>{guide.bio}</span>
+                <li key={guide.id} className="py-2 flex justify-between items-center">
+                  <div>
+                    <strong>{guide.name}</strong> - {guide.email}
+                    <br />
+                    <span>{guide.bio}</span>
+                  </div>
+                  <Button onClick={() => handleDetails(guide.email)} className="ml-4 bg-blue-600 text-white rounded-lg">
+                    Book Guide
+                  </Button>
                 </li>
               ))}
             </ul>

@@ -7,6 +7,7 @@ import SignUp from "@/pages/sign-up";
 import Footer from "@/tools/layout/footer"
 import Profile from "@/pages/profile";
 import FindGuide from "@/pages/find-guide";
+import BookGuide from "@/pages/book-guide";
 import { isAuthenticated } from "./tools/auth/loggedIn";
 
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/sign-up" element={isAuthenticated() ?  <Navigate replace to="/home" /> : <SignUp />} />
           <Route path="/profile" element={isAuthenticated() ?  <Profile /> : <Navigate replace to="/home" />} />
           <Route path="/find-guide" element={<FindGuide />} />
+          <Route path="/book-guide" element={<BookGuide />} />
         </Routes>
         <Footer />
     </>
