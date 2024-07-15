@@ -23,7 +23,7 @@ exports.insertGuideAccounts = async (req, res) => {
             VALUES 
                 ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) 
             RETURNING *`;
-        const values = [account.name, account.email, account.school, account.phone, account.hometown,
+        const values = [account.name, account.email, account.school, account.hometown, account.phone,
             account.bio, account.major, account.secondary_major, account.minor, account.secondary_minor, 
             account.profile_image_url, account.instagram, account.linkedin];
 
@@ -153,8 +153,8 @@ exports.deleteHobby = async (req,res) => {
 
         // Insert the account into the database
         const query = `
-            DELETE FROM hobbies where id = $1`;
-            const values = [account.id];
+            DELETE FROM hobbies where hobby_id = $1`;
+            const values = [account.hobby_id];
 
         const result = await db.query(query, values);
 
@@ -228,7 +228,7 @@ exports.retrieveHobbies = async (req, res) => {
         // }
 
         // Retrieve the account from the database
-        const query = "SELECT id, hobby_name, description FROM hobbies WHERE tourguide_id = $1";
+        const query = "SELECT hobby_id, hobby_name, tourguide_id, description FROM hobbies WHERE tourguide_id = $1";
         const values = [account.tourguide_id];
 
         const result = await db.query(query, values);
@@ -236,7 +236,7 @@ exports.retrieveHobbies = async (req, res) => {
         if (result == 0) {
             res.status(404).json({ message: "No hobbies found"});
         } else {
-            res.status(201).json({ account: result.rows[0] });
+            res.status(201).json({ hobbies: result.rows });
         }
         
     } catch (error) {
@@ -400,8 +400,12 @@ exports.retrieveGuideInfo = async (req, res) => {
                 tg.id, tg.name, tg.email, tg.school, tg.hometown, tg.phone, tg.bio,
                 tg.major, tg.secondary_major, tg.minor, tg.secondary_minor,
                 tg.profile_image_url, tg.num_tours, tg.instagram, tg.linkedin,
-                COALESCE(array_agg(ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
-                COALESCE(array_agg(h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies
+                COALESCE(array_agg(DISTINCT ca.activity_name), ARRAY[]::VARCHAR[]) AS activities,
+                COALESCE(array_agg(DISTINCT ca.description), ARRAY[]::VARCHAR[]) AS activity_descriptions,
+                COALESCE(array_agg(DISTINCT ca.id), ARRAY[]::INT[]) AS activity_ids,
+                COALESCE(array_agg(DISTINCT h.hobby_name), ARRAY[]::VARCHAR[]) AS hobbies,
+                COALESCE(array_agg(DISTINCT h.description), ARRAY[]::VARCHAR[]) AS hobby_descriptions,
+                COALESCE(array_agg(DISTINCT h.hobby_id), ARRAY[]::INT[]) AS hobby_ids
             FROM 
                 tour_guides tg
             LEFT JOIN 
@@ -422,13 +426,14 @@ exports.retrieveGuideInfo = async (req, res) => {
         } else {
             // Initialize guide info
             const guideInfo = {
+                id: result.rows[0].id,
                 name: result.rows[0].name,
                 email: result.rows[0].email,
                 school: result.rows[0].school,
                 hometown: result.rows[0].hometown,
                 phone: result.rows[0].phone,
                 bio: result.rows[0].bio,
-                major: result.rows[0].major,
+                major: result.rows[0].major, 
                 secondary_major: result.rows[0].secondary_major,
                 minor: result.rows[0].minor,
                 secondary_minor: result.rows[0].secondary_minor,
@@ -436,8 +441,16 @@ exports.retrieveGuideInfo = async (req, res) => {
                 instagram: result.rows[0].instagram,
                 linkedin: result.rows[0].linkedin,
                 num_tours: result.rows[0].num_tours,
-                activities: result.rows[0].activities,
-                hobbies: result.rows[0].hobbies
+                activities: result.rows[0].activities.map((activity, index) => ({
+                    activity_name: activity,
+                    description: result.rows[0].activity_descriptions[index],
+                    activity_id: result.rows[0].activity_ids[index]
+                })),
+                hobbies: result.rows[0].hobbies.map((hobby, index) => ({
+                 hobby_name: hobby,
+                 description: result.rows[0].hobby_descriptions[index],
+                 hobby_id: result.rows[0].hobby_ids[index]
+                }))
             };
 
             res.status(200).json({ guide: guideInfo });

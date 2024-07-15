@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+
 import {
     Card,
     Input,
@@ -13,6 +16,8 @@ function Profile() {
   const [responseData, setResponseData] = useState(null); // State to hold response data
   const [error, setError] = useState(null); // State to hold error message
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +46,8 @@ function Profile() {
       const data = await response.json();
       setResponseData(data); // Store response data in state
       setError(null); // Clear any previous errors
+      const newImageUrl = `http://localhost:3001/images/${data.guide.profile_image_url}`;
+      setImageUrl(newImageUrl);
       setFormSubmitted(true); // Set formSubmitted to true
       // Reset the form after successful submission
       setPostData({
@@ -69,7 +76,7 @@ function Profile() {
             type="text"
             name="email"
             placeholder='name@mail.com'
-            class='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+            className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
             value={postData.email}
             onChange={handleInputChange}
             required
@@ -89,7 +96,7 @@ function Profile() {
 
       {responseData && (
         <div>
-            <div className='bg-blue-gray-700 rounded-lg shadow-md' >
+            <div className='bg-blue-gray-700 shadow-md' >
             <Typography
            className='text-3xl font-semibold bg-blue-gray-700 text-white ml-12 p-4 '
          >Welcome {responseData.guide.name.substring(0, responseData.guide.name.indexOf(" "))}!</Typography>
@@ -99,21 +106,22 @@ function Profile() {
         <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-8">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <img className="h-24 w-24 rounded-full object-cover" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80" alt="Profile" />
+              <img className="h-24 w-24 rounded-full object-cover" src={imageUrl} alt="Profile" />
             </div>
             <div className="ml-4">
               <h1 className="text-2xl font-bold text-gray-800">{responseData.guide.name}</h1>
               <p className="text-sm text-gray-600">{responseData.guide.bio}</p>
               <div className="mt-2">
-                <a href="#" className="text-blue-500 hover:underline">Stats</a>
+                <Link to="/profile" className='hover:text-gray-500' >Home</Link>
                 <span className="mx-1 text-gray-400">•</span>
-                <a href="#" className="text-blue-500 hover:underline">Update Availability</a>
+                <Link to="/profile" className='hover:text-gray-500' >Update Availability</Link>
                 <span className="mx-1 text-gray-400">•</span>
-                <a href="#" className="text-blue-500 hover:underline">Update Hobbies</a>
+                <Link to="/update-activities" className='hover:text-gray-500' >Update Activities</Link>
                 <span className="mx-1 text-gray-400">•</span>
-                <a href="#" className="text-blue-500 hover:underline">Update Involvement</a>
+                <Link to="/update-hobbies" className='hover:text-gray-500' >Update hobbies</Link>
                 <span className="mx-1 text-gray-400">•</span>
-                <a href="#" className="text-blue-500 hover:underline">Tours</a>
+                <Link to="/profile" className='hover:text-gray-500' >Tours</Link>
+                <span className="mx-1 text-gray-400">•</span>
               </div>
             </div>
           </div>
@@ -133,53 +141,53 @@ function Profile() {
             <Typography className="text-lg font-semibold text-gray-800 mb-4">Personal Information</Typography>
             <div>
             <ul className="text-gray-700">
-            <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Full Name:</span>
-                    <span class="text-gray-700">{responseData.guide.name}</span>
+            <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Full Name:</span>
+                    <span className="text-gray-700">{responseData.guide.name}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Email:</span>
-                    <span class="text-gray-700">{responseData.guide.email}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Email:</span>
+                    <span className="text-gray-700">{responseData.guide.email}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">School:</span>
-                    <span class="text-gray-700">{responseData.guide.school}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">School:</span>
+                    <span className="text-gray-700">{responseData.guide.school}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Hometown:</span>
-                    <span class="text-gray-700">{responseData.guide.hometown}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Hometown:</span>
+                    <span className="text-gray-700">{responseData.guide.hometown}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Phone:</span>
-                    <span class="text-gray-700">{responseData.guide.phone}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Phone:</span>
+                    <span className="text-gray-700">{responseData.guide.phone}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Bio:</span>
-                    <span class="text-gray-700">{responseData.guide.bio}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Bio:</span>
+                    <span className="text-gray-700">{responseData.guide.bio}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Major:</span>
-                    <span class="text-gray-700">{responseData.guide.major}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Major:</span>
+                    <span className="text-gray-700">{responseData.guide.major}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Secondary Major (if applicable):</span>
-                    <span class="text-gray-700">{responseData.guide.secondary_major}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Secondary Major (if applicable):</span>
+                    <span className="text-gray-700">{responseData.guide.secondary_major}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Minor (if applicable):</span>
-                    <span class="text-gray-700">{responseData.guide.minor}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Minor (if applicable):</span>
+                    <span className="text-gray-700">{responseData.guide.minor}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Secondary Minor (if applicable):</span>
-                    <span class="text-gray-700">{responseData.guide.secondary_minor}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Secondary Minor (if applicable):</span>
+                    <span className="text-gray-700">{responseData.guide.secondary_minor}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">Instagram:</span>
-                    <span class="text-gray-700">{responseData.guide.instagram}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">Instagram:</span>
+                    <span className="text-gray-700">{responseData.guide.instagram}</span>
               </li>
-              <li class="flex border-y py-2">
-                    <span class="font-bold w-72">LinkedIn:</span>
-                    <span class="text-gray-700">{responseData.guide.linkedin}</span>
+              <li className="flex border-y py-2">
+                    <span className="font-bold w-72">LinkedIn:</span>
+                    <span className="text-gray-700">{responseData.guide.linkedin}</span>
               </li>
             </ul>
           </div>
@@ -189,14 +197,20 @@ function Profile() {
       <div className="bg-gray-100 p-4">
         <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-8">
 
-          <div className="mt-2">
-          <Typography className="text-lg font-semibold text-gray-800 mb-4">Hobbies</Typography>
+        <div className="mt-2">
+          <Typography className="text-lg font-semibold text-gray-700 mb-4">
+          <li className="flex py-2">
+            <span className="font-bold w-72">Hobbies</span>
+            <span className="font-bold w-72">Name</span>
+            <span className="font-bold w-72">Description</span>
+            </li></Typography>
           </div>
           <ul className="text-gray-700">
-                {responseData.guide.hobbies.map((props, key) => (
-                    <li class="flex border-y py-2">
-                        <span class="font-bold w-72">Hobby:</span>
-                        <span class="text-gray-700">{responseData.guide.hobbies}</span>
+                {responseData.guide.hobbies.map((hobby, key) => (
+                    <li className="flex border-y py-2">
+                        <span className="font-bold w-72">Hobby:</span>
+                        <span className="text-gray-700 w-72">{hobby.hobby_name}</span>
+                        <span className="text-gray-700 mr-44">{hobby.description}</span>
                     </li>
                 ))}
               
@@ -206,14 +220,20 @@ function Profile() {
       <div className="bg-gray-100 p-4">
         <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-8">
 
-          <div className="mt-2">
-          <Typography className="text-lg font-semibold text-gray-800 mb-4">Campus Involvement</Typography>
+        <div className="mt-2">
+          <Typography className="text-lg font-semibold text-gray-700 mb-4">
+          <li className="flex py-2">
+            <span className="font-bold w-72">Activities</span>
+            <span className="font-bold w-72">Name</span>
+            <span className="font-bold w-72">Description</span>
+            </li></Typography>
           </div>
           <ul className="text-gray-700">
-                {responseData.guide.activities.map((props, key) => (
-                    <li class="flex border-y py-2">
-                        <span class="font-bold w-72">Activity:</span>
-                        <span class="text-gray-700">{responseData.guide.hobbies}</span>
+                {responseData.guide.activities.map((activity, key) => (
+                    <li className="flex border-y py-2">
+                        <span className="font-bold w-72">Activity:</span>
+                        <span className="text-gray-700 w-72">{activity.activity_name}</span>
+                        <span className="text-gray-700 mr-44">{activity.description}</span>
                     </li>
                 ))}
               

@@ -3,9 +3,17 @@ const serverless = require('serverless-http');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Import cors middleware
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/'})
+const fs = require('fs')
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
+
+const { uploadFile, getFileStream } = require('./image/image')
 
 // Routes
 const router = require('./router/router');
+const image = require('./image/image');
 // Errors
 const error_handling = require('./error_handling/error_handling');
 const db = require('./database/db');
@@ -36,6 +44,24 @@ db.connect((err) => {
 
 // Routes
 app.use('/api', router);
+
+app.get('/images/:key', (req, res) => {
+  console.log(req.params)
+  const key = req.params.key
+  const readStream = getFileStream(key)
+
+  readStream.pipe(res)
+})
+
+app.post('/images', upload.single('image'), async (req,res) => {
+  const file = req.file
+  console.log(file)
+  const result = await uploadFile(file)
+  await unlinkFile(file.path)
+  console.log(result)
+  const description = req.body.description
+  res.send({imagePath: `${result.Key}`})
+})
 
 // basic welcome test route
 app.get('/', (req, res) => {

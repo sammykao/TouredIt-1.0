@@ -5,6 +5,16 @@ import axios from 'axios';
 import { Typography } from "@material-tailwind/react";
 
 
+async function postImage({image, description}) {
+  const formData = new FormData();
+  formData.append("image", image)
+  formData.append("description", description)
+
+  const result = await axios.post('http://localhost:3001/images', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+  return result.data
+}
+
+
 
 export function GuideSignUp() {
 
@@ -32,6 +42,10 @@ const [schools, setSchools] = useState([]);
   const [filteredSchools, setFilteredSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState('');
   const [loading, setLoading] = useState(true);
+  const [file, setFile] = useState()
+
+  const [description, setDescription] = useState("")
+  const [images, setImages] = useState([])
 
   useEffect(() => {
     const fetchSchools = async () => {
@@ -85,12 +99,10 @@ const redirectGuide = async (e) => {
 
 const handleFileChange = (e) => {
   const file = e.target.files[0];
+  setFile(file)
   if (file) {
     console.log('Selected file name:', file.name);
-    setPostData((prevState) => ({
-      ...prevState,
-      profile_image_url: file.name,
-    }));
+    
   }
 };
 
@@ -135,13 +147,26 @@ const [hobbyList, setHobbyList] = useState([{ hobby: "" }]);
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  
+
   try {
+
+    const result = await postImage({image: file, description})
+    console.log(result.imagePath)
+    const updatedPostData = {
+      ...postData,
+      profile_image_url: result.imagePath,
+    };
+
+    setImages([result.image, ...images])
+
+
     const response = await fetch('http://localhost:3001/api/newGuide', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(postData),
+      body: JSON.stringify(updatedPostData),
     });
 
     if (!response.ok) {
@@ -254,14 +279,6 @@ const handleSubmit = async (e) => {
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="school">
         School*
       </label>
-      {/* <input 
-          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-          name="school" 
-          type="text" 
-          placeholder="University"
-          onChange={handleInputChange}
-          required
-          /> */}
           <input
             type="text"
             value={selectedSchool}
@@ -432,6 +449,7 @@ const handleSubmit = async (e) => {
       <input  
       name="profile_image_url" 
       type="file"
+      accept="image/*"
       onChange={handleFileChange}
       required
       />
