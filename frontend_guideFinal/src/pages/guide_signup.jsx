@@ -236,9 +236,9 @@ const handleSubmit = async (e) => {
              >Login here</button>
             </Link>
               </p>
-            </div></div></div>
-
-
+            </div>
+          </div>
+        </div>
 
     <div className="flex justify-center items-center h-screen mb-12 mt-10">
         
@@ -455,88 +455,6 @@ const handleSubmit = async (e) => {
       />
     </div>
   </div>
-  {/* <div className="mb-6 my-auto">
-  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-    Hobby/Hobbies
-  </label>
-  {hobbyList.map((singleHobby, index) => (
-    <div key={index} className="mb-4">
-      <div className="flex justify-between">
-        <input
-          className="appearance-none block w-3/4 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          name="hobby"
-          type="text"
-          id={`hobby-${index}`}
-          value={singleHobby.hobby}
-          placeholder="drawing"
-          onChange={(e) => handleHobbyChange(e, index)}
-          required
-        />
-        {hobbyList.length !== 1 && (
-          <button
-            type="button"
-            onClick={() => handleHobbyRemove(index)}
-            className="remove-btn ml-2 px-3 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded"
-          >
-            Remove
-          </button>
-        )}
-    </div>
-      {hobbyList.length - 1 === index && hobbyList.length < 6 && (
-        <button
-          type="button"
-          onClick={handleHobbyAdd}
-          className="add-btn mt-2 px-3 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded"
-        >
-          Add a Hobby
-        </button>
-      )}
-    </div>
-  ))}
-  </div> */}
-
-{/* <div className="mb-6 my-auto">
-  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-    Campus Involvement
-  </label>
-  {involvementList.map((singleInvolvement, index) => (
-    <div key={index} className="mb-4">
-      <div className="flex justify-between">
-        <input
-          className="appearance-none block w-3/4 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          name="involvement"
-          type="text"
-          id={`involvement-${index}`}
-          value={singleInvolvement.involvment}
-          placeholder="greek life"
-          onChange={(e) => handleInvolvementChange(e, index)}
-          required
-        />
-        {involvementList.length !== 1 && (
-          <button
-            type="button"
-            onClick={() => handleInvolvementRemove(index)}
-            className="remove-btn ml-2 px-3 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded"
-          >
-            Remove
-          </button>
-        )}
-      </div>
-      {involvementList.length - 1 === index && involvementList.length < 6 && (
-        <button
-          type="button"
-          onClick={handleInvolvementAdd}
-          className="add-btn mt-2 px-3 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded"
-        >
-          Add an Involvement
-        </button>
-      )}
-    </div>
-  ))}
-</div> */}
-
-
-
   <button 
             type="submit"
             className="bg-gray-900 hover:bg-gray-800 text-white font-bold w-full py-2 px-4 rounded focus:outline-none focus:shadow-outline"
