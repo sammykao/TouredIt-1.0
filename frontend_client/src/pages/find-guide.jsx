@@ -12,6 +12,7 @@ const FindGuide = () => {
   const { school } = location.state || {};
   const [guides, setGuides] = useState([]);
   const [filteredGuides, setFilteredGuides] = useState([]);
+  const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -160,15 +161,23 @@ const FindGuide = () => {
               {filteredGuides.map((guide) => (
                 <div
                   key={guide.id}
-                  className='border shadow-lg rounded-lg hover:scale-105 duration-300 bg-white'
+                  className='border shadow-lg rounded-lg hover:scale-105 duration-300 bg-white flex flex-col'
                 >
-                  <div className='p-4'>
-                    <img src={guide.profile_image_url} alt={guide.name} />
-                    <p className='font-bold'>{guide.name}</p>
-                    <p className='text-sm'>{guide.major}</p>
-                    <p className='mt-2'>{guide.bio}</p>
+                  <div className='flex p-4'>
+                    <div className='flex-1 flex flex-col items-center pt-4'>
+                      <p className='font-bold text-xl text-center'>{guide.name}</p>
+                      <p className='text-sm text-center'>{guide.major}</p>
+                    </div>
+                    <img 
+                      src={`http://localhost:3001/images/${guide.profile_image_url}`} 
+                      alt={guide.name} 
+                      className="rounded-full w-24 h-24 border border-gray-300 ml-4" 
+                    />
                   </div>
-                  <div className='flex justify-center p-4'>
+                  <div className='flex flex-col items-center justify-center p-4 h-40'>
+                    <p className='text-center'>{guide.bio}</p>
+                  </div>
+                  <div className='flex justify-center p-4 mt-4'>
                     <Button
                       onClick={() => handleDetails(guide.email)}
                       className="bg-blue-600 text-white rounded-lg"
@@ -179,6 +188,7 @@ const FindGuide = () => {
                 </div>
               ))}
             </div>
+
             <div className="px-6 bg-white py-6 mt-24 shadow rounded-lg border max-w-4xl mx-auto">
               <p className="mt-4 text-center">
                 Couldn't find the guide you were looking for? Fill out this {' '}
