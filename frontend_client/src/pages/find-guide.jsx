@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Textarea, Input, Typography, Button } from "@material-tailwind/react";
+import { Textarea, Input, Typography, Button, Select, Option } from "@material-tailwind/react";
+
+// Import the categories and majors data
+import categoriesData from './majors.json';
 
 const FindGuide = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { school } = location.state || {};
   const [guides, setGuides] = useState([]);
+  const [filteredGuides, setFilteredGuides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [formData, setFormData] = useState({
     school: '',
     major: '',
@@ -22,11 +27,12 @@ const FindGuide = () => {
 
   useEffect(() => {
     const fetchGuides = async () => {
-      if (!school) return; // If no school, do nothing
+      if (!school) return;
 
       try {
         const response = await axios.post('http://localhost:3001/api/allGuides', { school });
         setGuides(response.data.guides);
+        setFilteredGuides(response.data.guides);
       } catch (error) {
         console.error('Error fetching guides:', error);
       } finally {
@@ -48,7 +54,7 @@ const FindGuide = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/api/sendMail', formData);
+      await axios.post('http://localhost:3001/api/sendCustomRequest', formData);
       console.log('Request submitted:', formData);
       setFormData({
         school: '',
@@ -65,12 +71,29 @@ const FindGuide = () => {
       alert('There was an error submitting your request. Please try again later.');
     }
   };
+
   const handleDetails = (email) => {
     navigate('/book-guide', { state: { email } }); // Navigate to GuideDetails page with email
   };
 
   const toggleForm = () => {
     setShowForm((prev) => !prev);
+  };
+
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+    if (value === '') {
+      setFilteredGuides(guides);
+    } else {
+      const majorsInCategory = categoriesData[value];
+      const filtered = guides.filter(guide => 
+        majorsInCategory.some(major => 
+          guide.major.toLowerCase().includes(major.toLowerCase())
+        )
+      );
+      console.log(selectedCategory);
+      setFilteredGuides(filtered);
+    }
   };
 
   if (loading) {
@@ -102,7 +125,6 @@ const FindGuide = () => {
     );
   }
 
-
   return (
     <div className="relative isolate px-6 pt-14 lg:px-8 min-h-screen pb-24 bg-gray-500">
       <div
@@ -117,19 +139,33 @@ const FindGuide = () => {
           }}
         />
       </div>
-        <h2 className="text-3xl font-bold mb-4 text-center mt-32 justify-center">Guides for {school}</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center mt-24 justify-center">Guides for {school}</h2>
         {guides.length > 0 ? (
           <>
+            <div className="mb-4 bg-white max-w-md mx-auto p-4 rounded-xl">
+              <Select
+                label="Filter by Major"
+                onChange={handleCategoryChange}
+              >
+                <Option value="" selected>All Categories</Option>
+                {Object.keys(categoriesData).map((category) => (
+                  <Option key={category} value={category} selected={category === selectedCategory}>
+                    {category}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+            
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
-              {guides.map((guide) => (
+              {filteredGuides.map((guide) => (
                 <div
                   key={guide.id}
                   className='border shadow-lg rounded-lg hover:scale-105 duration-300 bg-white'
                 >
-                  <div className='p-4'>\
-                    <img src={guide.img_url}></img>
+                  <div className='p-4'>
+                    <img src={guide.profile_image_url} alt={guide.name} />
                     <p className='font-bold'>{guide.name}</p>
-                    <p className='text-sm'>{guide.email}</p>
+                    <p className='text-sm'>{guide.major}</p>
                     <p className='mt-2'>{guide.bio}</p>
                   </div>
                   <div className='flex justify-center p-4'>
@@ -143,8 +179,8 @@ const FindGuide = () => {
                 </div>
               ))}
             </div>
-            <div className="px-6 bg-white py-6 mt-28 shadow rounded-lg border max-w-4xl mx-auto">
-              <p className="text-center">
+            <div className="px-6 bg-white py-6 mt-24 shadow rounded-lg border max-w-4xl mx-auto">
+              <p className="mt-4 text-center">
                 Couldn't find the guide you were looking for? Fill out this {' '}
                 <button onClick={toggleForm} className="text-blue-600 underline">
                   form
@@ -251,110 +287,110 @@ const FindGuide = () => {
             </div>
           </>
         ) : (
-          <div className="bg-white px-6 py-6 m shadow rounded-lg border max-w-4xl mx-auto">
-            <div className="w-full mb-6 text-center">
-              <p>
-                We will match you with a personalized guide. If you would like to tour {school}, 
-                please fill out this form, and we will find a guide there for you based on your input.
-              </p>
-              <div className="mt-4 p-6 bg-white border border-gray-300 rounded-lg">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
-                      School:
-                    </Typography>
-                    <Input
-                      type="text"
-                      name="school"
-                      value={formData.school}
-                      onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                      required
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
-                      Major:
-                    </Typography>
-                    <Input
-                      type="text"
-                      name="major"
-                      value={formData.major}
-                      onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                      required
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
-                      Grade:
-                    </Typography>
-                    <Input
-                      type="text"
-                      name="grade"
-                      value={formData.grade}
-                      onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
-                      Hobbies:
-                    </Typography>
-                    <Input
-                      type="text"
-                      name="hobbies"
-                      value={formData.hobbies}
-                      onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
-                      Clubs:
-                    </Typography>
-                    <Input
-                      type="text"
-                      name="clubs"
-                      value={formData.clubs}
-                      onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
-                      Interests:
-                    </Typography>
-                    <Input
-                      type="text"
-                      name="interests"
-                      value={formData.interests}
-                      onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
-                      Additional Comments:
-                    </Typography>
-                    <Textarea
-                      rows={4}
-                      color="gray"
-                      placeholder="Your comments here..."
-                      name="comments"
-                      value={formData.comments}
-                      onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                    />
-                  </div>
-                  <Button type="submit" className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg">
-                    Request a Guide
-                  </Button>
-                </form>
+            <div className="bg-white px-6 py-6 m shadow rounded-lg border max-w-4xl mx-auto">
+              <div className="w-full mb-6 text-center">
+                <p>
+                  We will match you with a personalized guide. If you would like to tour {school}, 
+                  please fill out this form, and we will find a guide there for you based on your input.
+                </p>
+                <div className="mt-4 p-6 bg-white border border-gray-300 rounded-lg">
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                      <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
+                        School:
+                      </Typography>
+                      <Input
+                        type="text"
+                        name="school"
+                        value={formData.school}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                        required
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
+                        Major:
+                      </Typography>
+                      <Input
+                        type="text"
+                        name="major"
+                        value={formData.major}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                        required
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
+                        Grade:
+                      </Typography>
+                      <Input
+                        type="text"
+                        name="grade"
+                        value={formData.grade}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
+                        Hobbies:
+                      </Typography>
+                      <Input
+                        type="text"
+                        name="hobbies"
+                        value={formData.hobbies}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
+                        Clubs:
+                      </Typography>
+                      <Input
+                        type="text"
+                        name="clubs"
+                        value={formData.clubs}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
+                        Interests:
+                      </Typography>
+                      <Input
+                        type="text"
+                        name="interests"
+                        value={formData.interests}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <Typography variant="small" className="mb-2 text-left font-medium !text-gray-900">
+                        Additional Comments:
+                      </Typography>
+                      <Textarea
+                        rows={4}
+                        color="gray"
+                        placeholder="Your comments here..."
+                        name="comments"
+                        value={formData.comments}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                      />
+                    </div>
+                    <Button type="submit" className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg">
+                      Request a Guide
+                    </Button>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+      )}
     </div>
   );
 };
