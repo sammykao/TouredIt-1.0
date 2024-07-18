@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import {
@@ -18,6 +19,7 @@ function Profile() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const navigate = useNavigate();
+  const email = sessionStorage.username;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,74 +29,54 @@ function Profile() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      const response = await fetch('http://localhost:3001/api/retGuideInfo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
+  //   try {
+  //     const response = await fetch('http://localhost:3001/api/retGuideInfo', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(postData),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+
+  //     const data = await response.json();
+  //     setResponseData(data); // Store response data in state
+  //     setError(null); // Clear any previous errors
+  //     const newImageUrl = `http://localhost:3001/images/${data.guide.profile_image_url}`;
+  //     setImageUrl(newImageUrl);
+  //     setFormSubmitted(true); // Set formSubmitted to true
+  //     // Reset the form after successful submission
+  //     setPostData({
+  //       email: ''
+  //     });
+  //   } catch (error) {
+  //     setError('Error posting data: ' + error.message); // Store error message in state
+  //     setResponseData(null); // Clear response data
+  //   }
+  // };
+
+  useEffect(() => {
+    axios.post("http://localhost:3001/api/retGuideInfo", { email })
+      .then(response => {
+        setResponseData(response.data); // Store response data in state
+        const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
+        setImageUrl(newImageUrl);
+        setFormSubmitted(true); // Set formSubmitted to true
+      })
+      .catch(error => {
+        setError(error);
+        return;
       });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      setResponseData(data); // Store response data in state
-      setError(null); // Clear any previous errors
-      const newImageUrl = `http://localhost:3001/images/${data.guide.profile_image_url}`;
-      setImageUrl(newImageUrl);
-      setFormSubmitted(true); // Set formSubmitted to true
-      // Reset the form after successful submission
-      setPostData({
-        email: ''
-      });
-    } catch (error) {
-      setError('Error posting data: ' + error.message); // Store error message in state
-      setResponseData(null); // Clear response data
-    }
-  };
+  }, [email]);
 
   return (
     <div>
-         {!formSubmitted ? (
-        <div className='max-w-xl mx-auto my-auto bg-white p-8 rounded shadow-lg'>
-      <Typography
-      className='text-xl font-semibold'
-      >Welcome, please login below</Typography>
-      <br/>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <Typography
-          className='text-lg'
-          >Email:</Typography>
-          <input
-            type="text"
-            name="email"
-            placeholder='name@mail.com'
-            className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-            value={postData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <br />
-        <button 
-            type="submit"
-            className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >Submit</button>
-      </form>
-      </div>
-
-        ) :(
-            <div> 
-      {error && <p>{error}</p>}
-
-      {responseData && (
         <div>
             <div className='bg-blue-gray-700 shadow-md' >
             <Typography
@@ -242,9 +224,6 @@ function Profile() {
       </div>
       </div>
       </div>
-      )}
-      </div>
-      )} 
     </div>
 
 

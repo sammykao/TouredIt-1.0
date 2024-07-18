@@ -83,7 +83,7 @@ Footer.defaultProps = {
     "Begin your college career with a headstart",
   socials: [
     {
-      color: "linkedin",
+      color: "black",
       name: "linkedin",
       path: "https://www.linkedin.com/company/touredit",
     },
@@ -93,12 +93,12 @@ Footer.defaultProps = {
       path: "https://www.instagram.com/toured.it/",
     },
     {
-      color: "facebook",
+      color: "black",
       name: "facebook",
       path: "https://www.facebook.com/people/TouredIt/61552313520406/",
     },
     {
-      color: "tiktok",
+      color: "black",
       name: "tiktok",
       path: "https://www.tiktok.com/@toured.it",
     },

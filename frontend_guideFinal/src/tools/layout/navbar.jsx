@@ -9,13 +9,12 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { isAuthenticated } from "../auth/loggedIn";
 
-
-
-
-export function Navbar({ routes, action }) {
+export function Navbar({ routes }) {
   const [openNav, setOpenNav] = React.useState(false);
 
+  
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -31,7 +30,7 @@ export function Navbar({ routes, action }) {
           as="li"
           variant="small"
           color="inherit"
-          className="capitalize"
+          className="capitalize text-lg"
         >
           {href ? (
             <a
@@ -50,6 +49,7 @@ export function Navbar({ routes, action }) {
               to={path}
               target={target}
               className="flex items-center gap-1 p-1 font-bold"
+              onClick={() => setOpenNav(false)}
             >
               {icon &&
                 React.createElement(icon, {
@@ -63,28 +63,52 @@ export function Navbar({ routes, action }) {
     </ul>
   );
 
+
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    window.location.href = '/home';
+  };
+
+
   return (
-    <MTNavbar color="transparent" className="p-1/2">
+    <MTNavbar color="transparent" className="p-1/2 bg-blue-gray-400 px-20">
       <div className="container mx-auto flex items-center justify-between text-white">
         <Link to="/">
-
           <img
-              src="./../public/img/touredit-logo.png"
-              alt="Logo"
-              className="cursor-pointer  w-48 lg:w-60"
-              style={{ padding: 0 }}
-            />
+            src="./../public/img/touredit-logo.png"
+            alt="Logo"
+            className="cursor-pointer w-48 lg:w-60 rounded-lg"
+            style={{ padding: 0 }}
+          />
         </Link>
         <div className="hidden lg:block">{navList}</div>
         <div className="hidden gap-2 ml-20 p-4 lg:flex">
-          <Link to="/sign-in" >
-            <Button variant="text" size="sm" color="white" fullWidth>
-              Sign In
-            </Button>
-          </Link>
-          {React.cloneElement(action, {
-            className: "hidden lg:inline-block",
-          })}
+          {isAuthenticated() ? (
+            <>
+              <Link to="/profile">
+                <Button variant="text" color="white" size="sm" fullWidth>
+                  Profile
+                </Button>
+              </Link>
+              <Button variant="gradient" onClick={handleLogout} size="sm" fullWidth>
+                Log Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="sign-in">
+                <Button variant="text" size="sm" color="white" fullWidth>
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="sign-up">
+                <Button variant="gradient" size="sm" fullWidth>
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
         <IconButton
           variant="text"
@@ -106,33 +130,39 @@ export function Navbar({ routes, action }) {
       >
         <div className="container mx-auto">
           {navList}
-          <Link to="sign-in">
-            <Button variant="text" size="sm" fullWidth>
-              Sign In
-            </Button>
-          </Link>
-          {React.cloneElement(action, {
-            className: "w-full block",
-          })}
+          {isAuthenticated() ? (
+            <>
+              <Link to="/profile">
+                <Button variant="text" color="black" onClick={() => setOpenNav(false)} size="sm" fullWidth>
+                  Profile
+                </Button>
+              </Link>
+              <Button variant="gradient" onClick={handleLogout} size="sm" fullWidth>
+                Log Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="sign-in">
+                <Button variant="text" size="sm" onClick={() => setOpenNav(false)} fullWidth>
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="sign-up">
+                <Button variant="gradient" size="sm" onClick={() => setOpenNav(false)} fullWidth>
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </MobileNav>
     </MTNavbar>
   );
 }
 
-Navbar.defaultProps = {
-  action: (
-    <Link to="sign-up">
-      <Button variant="gradient" size="sm" fullWidth>
-        Sign Up
-      </Button>
-    </Link>
-  ),
-};
-
 Navbar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  action: PropTypes.node,
 };
 
 Navbar.displayName = "/src/widgets/layout/navbar.jsx";
