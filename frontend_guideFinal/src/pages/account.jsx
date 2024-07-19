@@ -14,7 +14,8 @@ export function Account() {
   const email = sessionStorage.username;
 
   useEffect(() => {
-    axios.post("http://localhost:3001/api/accountInfo", { email })
+    console.log(email);
+    axios.post("http://localhost:3001/api/retGuideInfo", { email })
       .then(response => {
         setAccountInfo(response.data.account);
         setFormData(response.data.account);
