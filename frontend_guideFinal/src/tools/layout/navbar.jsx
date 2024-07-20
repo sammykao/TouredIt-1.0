@@ -98,13 +98,8 @@ export function Navbar({ routes }) {
           ) : (
             <>
               <Link to="sign-in">
-                <Button variant="text" size="sm" color="white" fullWidth>
+                <Button variant="gradient" size="sm" fullWidthh>
                   Sign In
-                </Button>
-              </Link>
-              <Link to="sign-up">
-                <Button variant="gradient" size="sm" fullWidth>
-                  Sign Up
                 </Button>
               </Link>
             </>

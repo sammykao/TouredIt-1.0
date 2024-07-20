@@ -19,10 +19,10 @@ export function Home() {
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-               Discover your campus, forge connections
+               Tour guides create the experience
             </h1>
             <p className="mt-6 text-lg leading-8 text-black">
-              Get ahead of the crowd by scheduling 1-on-1 personalized college tours or by calling current students. Your campus, your tours, your conections.
+              We hire guides from campus' across the country to provide our personalized tours. Please consider join our network of passionate guides.
             </p>
             
           </div>

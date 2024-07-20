@@ -54,7 +54,7 @@ export function SignIn() {
       });
       setError("");
       // Redirect to dashboard or another page on successful sign-in
-      navigate("/home");
+      navigate("/profile");
     } catch (error) {
       setError(error.message || "Error signing in");
     }
