@@ -23,8 +23,8 @@ export function SignUp() {
     const { email, password, confirmPassword } = formData;
     const emailRegex = /\S+@\S+\.edu$/;
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-    if (!email || !emailRegex.test(email)) {
+    // || !emailRegex.test(email)
+    if (!email ) {
       return "Invalid email address";
     }
     if (!passwordRegex.test(password)) {

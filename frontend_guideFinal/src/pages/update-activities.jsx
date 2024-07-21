@@ -11,7 +11,7 @@ export function UpdateActivities() {
   const email = sessionStorage.username;
 
   const [activityData, setActivityData] = useState({
-    tourguide_id:'',
+    email:'',
     activity_name: '',
     description: ''
   });
@@ -23,7 +23,7 @@ export function UpdateActivities() {
         setResponseData(response.data);
         const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
         setImageUrl(newImageUrl);
-        activityData.tourguide_id = response.data.guide.id;
+        activityData.email = response.data.guide.email;
         setLoading(false);
       })
       .catch(error => {
@@ -83,7 +83,7 @@ export function UpdateActivities() {
     axios.post("http://localhost:3001/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
-        activityData.tourguide_id = response.data.guide.id;
+        activityData.email = response.data.guide.email;
         setLoading(false);
       })
       .catch(error => {

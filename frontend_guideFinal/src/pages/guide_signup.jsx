@@ -36,6 +36,19 @@ const [postData, setPostData] = useState({
   confirmPassword: "",
   verificationCode: ""
 });
+
+const [hobbyData, setHobbyData] = useState({
+  email:'',
+  hobby_name: '',
+  description: ''
+});
+
+const [activityData, setActivityData] = useState({
+  email:'',
+  activity_name: '',
+  description: ''
+});
+
 const [responseData, setResponseData] = useState(null); // State to hold response data
 const [error, setError] = useState(null); // State to hold error message
 
@@ -106,91 +119,30 @@ const handleInputChange = (e) => {
 const handleFileChange = (e) => {
   const file = e.target.files[0];
   setFile(file)
-  if (file) {
-    console.log('Selected file name:', file.name);
-    
-  }
+  
 };
 
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-
-  
-
-//   try {
-
-//     const result = await postImage({image: file, description})
-//     console.log(result.imagePath)
-//     const updatedPostData = {
-//       ...postData,
-//       profile_image_url: result.imagePath,
-//     };
-
-//     setImages([result.image, ...images])
-
-
-//     const response = await fetch('http://localhost:3001/api/newGuide', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(updatedPostData),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-
-//     const data = await response.json();
-//     setResponseData(data); // Store response data in state
-//     setError(null); // Clear any previous errors
-//     // Reset the form after successful submission
-//     setPostData({
-//       name: '',
-//       email: '',
-//       school: '',
-//       hometown: '',
-//       phone: '',
-//       bio: '',
-//       major: '',
-//       secondary_major: '',
-//       minor: '',
-//       secondary_minor: '',
-//       profile_image_url: '',
-//       instagram: '',
-//       linkedin: '',
-//       password: "",
-//       confirmPassword: "",
-//       verificationCode: ""
-//     });
-//     window.location.href = '/profile'; 
-//   } catch (error) {
-//     setError('Error posting data: ' + error.message); // Store error message in state
-//     console.log(error)
-//     setResponseData(null); // Clear response data
-//   }
-// };
-
 const insertBackend = async () => {
-  // const { email, name, phoneNumber } = formData;
+  const { email }= postData;
   // const newAccount = { email, name, phone: phoneNumber };
   try {
     const result = await postImage({image: file, description})
     console.log(result.imagePath)
-    // const updatedPostData = {
-    //   ...postData,
-    //   profile_image_url: result.imagePath,
-    // };
     postData.profile_image_url = result.imagePath;
 
     setImages([result.image, ...images])
     const response = await axios.post('http://localhost:3001/api/newGuide', postData);
     console.log(response);
+    hobbyData.email = email;
+    activityData.email = email;
+    addHobby();
+    addActivity();
     return;
 
   } catch (error) {
     console.error('Error Inserting Account:', error);
   }
+  
 };
 
 
@@ -217,19 +169,9 @@ const handleSubmit = async (e) => {
 
 
 
-
-
-
-
-
-
-
-
-
 const handleVerification = async (e) => {
   e.preventDefault();
   const { email, verificationCode } = postData;
-
   try {
     await confirmSignUp(email, verificationCode);
     setMessage("Verification successful! You can now sign in.");
@@ -252,6 +194,16 @@ const handleVerification = async (e) => {
       confirmPassword: "",
       verificationCode: ""
     });
+    setHobbyData({
+      email:'',
+      hobby_name: '',
+      description: ''
+    });
+    setActivityData({
+      email:'',
+      activity_name: '',
+      description: ''
+    });
     setIsVerifying(false);
     setError("");
   } catch (error) {
@@ -271,15 +223,57 @@ const handleResendCode = async () => {
   }
 };
 
+const handleHobbyChange = (e) => {
+  const { name, value } = e.target;
+  setHobbyData((prevState) => ({
+    ...prevState,
+    [name]: value,
+  }));
+};
+
+const handleActivityChange = (e) => {
+  const { name, value } = e.target;
+  setActivityData((prevState) => ({
+    ...prevState,
+    [name]: value,
+  }));
+};
+
+const addHobby = async (e) => {
+  e.preventDefault();
+
+  axios.post("http://localhost:3001/api/newHobby", hobbyData)
+   .then(response => {
+     console.log(response);
+   })
+   .catch(error => {
+     setError(error);
+     return;
+   });
+
+};
+
+const addActivity = async (e) => {
+  e.preventDefault();
+  axios.post("http://localhost:3001/api/newActivity", activityData)
+   .then(response => {
+     console.log(response);
+   })
+   .catch(error => {
+     setError(error);
+     return;
+   });
+};
+
   return (
-    <div className="relative isolate px-6 pt-14 lg:px-8 min-h-screen pb-24 bg-gray-100 mb-auto">
+    <div className="relative isolate px-6 pt-14 lg:px-8 pb-12 bg-gray-100 ">
     <div
       className="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
       aria-hidden="true"
     >
     </div>
 
-    <div className="py-24 mt-12 sm:py-32 mb-12">
+    <div className="py-24 mt-12 sm:py-32 mb-5">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:text-center">
               <h2 className="text-base font-semibold leading-7 text-blue-900">We Want You </h2>
@@ -291,7 +285,7 @@ const handleResendCode = async () => {
           </div>
         </div>
 
-    <div className="flex justify-center items-center h-screen mb-12 mt-10">
+    <div className="flex justify-center items-center mb-12 mt-5">
   {!isVerifying ? (
     <form  onSubmit={handleSubmit} className="w-full max-w-lg ">
   <div className="flex flex-wrap -mx-3 mb-6">
@@ -518,6 +512,86 @@ const handleResendCode = async () => {
     </div>
   </div>
 
+  <div className="flex flex-wrap -mx-3 mb-6">
+    <div className="w-full px-3">
+
+    <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
+        Hobbies and activities are a critical part in how guides are selected to give tours. We want to match tourees
+        with the most compatible guide. Please add atleast one hobby and one activity/involvement you participate in on campus.
+        You will have the opportunity to add additional ones later on.
+      </Typography>
+  </div>
+  </div>
+
+
+  <div className="flex flex-wrap -mx-3 mb-6">
+    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_major">
+        Hobby Name:
+      </Typography>
+      <Input 
+          className="appearance-none block  bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+          name="hobby_name" 
+          type="text" 
+          placeholder="Name"
+          value={hobbyData.hobby_name}
+          onChange={handleHobbyChange}
+          required
+          />
+    </div>
+    <div className="w-full md:w-1/2">
+      <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_minor">
+        Description:
+      </Typography>
+      <Textarea 
+        cols="40" 
+        rows="3" 
+        className="appearance-none block  bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+        name="description" 
+        type="text" 
+        placeholder="~50 words maximum"
+        value={hobbyData.description}
+        onChange={handleHobbyChange}
+        required>
+
+    </Textarea>
+    </div>
+  </div>
+
+  <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_major">
+                  Activity Name:
+                </Typography>
+                <Input 
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                    name="activity_name" 
+                    type="text" 
+                    placeholder="Name"
+                    value={activityData.activity_name}
+                    onChange={handleActivityChange}
+                    required
+                    />
+              </div>
+              <div className="w-full md:w-1/2 px-3">
+                <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_minor">
+                  Description:
+                </Typography>
+                <Textarea 
+                  cols="40" 
+                  rows="3" 
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                  name="description" 
+                  type="text" 
+                  placeholder="~50 words maximum"
+                  value={activityData.description}
+                  onChange={handleActivityChange}
+                  required>
+
+              </Textarea>
+              </div>
+            </div>
+
   <Typography variant="small" color="blue-gray" className="mb-2 font-medium">
     Password
   </Typography>
@@ -528,6 +602,7 @@ const handleResendCode = async () => {
     name="password"
     value={postData.password}
     onChange={handleInputChange}
+    required
     className="!border-t-blue-gray-200 focus:!border-t-gray-900"
     labelProps={{
       className: "before:content-none after:content-none",
@@ -543,6 +618,7 @@ const handleResendCode = async () => {
     name="confirmPassword"
     value={postData.confirmPassword}
     onChange={handleInputChange}
+    required
     className="!border-t-blue-gray-200 focus:!border-t-gray-900"
     labelProps={{
       className: "before:content-none after:content-none",

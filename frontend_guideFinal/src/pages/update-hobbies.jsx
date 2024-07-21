@@ -11,7 +11,7 @@ export function UpdateHobbies() {
   const email = sessionStorage.username;
 
   const [hobbyData, setHobbyData] = useState({
-    tourguide_id:'',
+    email:'',
     activity_name: '',
     description: ''
   });
@@ -23,7 +23,7 @@ export function UpdateHobbies() {
         setResponseData(response.data);
         const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
         setImageUrl(newImageUrl);
-        hobbyData.tourguide_id = response.data.guide.id;
+        hobbyData.email = response.data.guide.email;
         setLoading(false);
       })
       .catch(error => {
@@ -84,7 +84,7 @@ export function UpdateHobbies() {
      axios.post("http://localhost:3001/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
-        hobbyData.tourguide_id = response.data.guide.id;
+        hobbyData.email = response.data.guide.email;
         setLoading(false);
       })
       .catch(error => {
@@ -270,14 +270,15 @@ export function UpdateHobbies() {
                         <span className="font-bold w-72">Hobby:</span>
                         <span className="text-gray-700 w-72">{hobby.hobby_name}</span>
                         <span className="text-gray-700 mr-44">{hobby.description}</span>
-                        <span className="ml-auto ">
+                        {/* Wait for mvp 2 */}
+                        {/* <span className="ml-auto ">
                           <button 
                               // type="button"
                               className="bg-gray-700  hover:bg-gray-500 text-white font-bold w-full py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline"
                               value={hobby.hobby_id}
                               // onClick={deleteHobby}
                               >Delete hobby</button>
-                        </span>
+                        </span> */}
                     </li>
                 ))}
               
