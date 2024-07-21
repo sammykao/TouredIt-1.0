@@ -42,7 +42,7 @@ router.post('/newMetrics', portal_controls.addMetrics);
 // router.post('/retAvailability', portal_controls.retrieveAvailability);
 router.post('/retHobby', portal_controls.retrieveHobbies);
 // router.post('/retInvolvement', portal_controls.retrieveInvolvement);
-// router.post('/retTours', portal_controls.retrieveTours);
+router.post('/retTours', portal_controls.retrieveTours);
 // router.post('/retMetrics', portal_controls.retrieveMetrics);
 
 

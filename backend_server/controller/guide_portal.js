@@ -48,8 +48,19 @@ exports.addHobbies = async (req, res) => {
         // }
 
         // Insert the account into the database
-        const query = `INSERT INTO hobbies (tourguide_id, hobby_name, description) VALUES ($1, $2, $3) RETURNING *`;
-            const values = [account.tourguide_id, account.hobby_name, account.description];
+        const query = `
+            WITH guide AS (
+                SELECT id
+                FROM tour_guides
+                WHERE email = $1
+            )
+            INSERT INTO hobbies (tourguide_id, hobby_name, description)
+            SELECT id, $2, $3
+            FROM guide
+            RETURNING *;
+            `;
+
+            const values = [account.email, account.hobby_name, account.description];
 
         const result = await db.query(query, values);
 
@@ -72,8 +83,17 @@ exports.addInvolvement = async (req, res) => {
 
         // Insert the account into the database
         const query = `
-            INSERT INTO campus_involvement (tourguide_id, activity_name, description) VALUES ($1, $2, $3) RETURNING *`;
-            const values = [account.tourguide_id, account.activity_name, account.description];
+            WITH guide AS (
+                SELECT id
+                FROM tour_guides
+                WHERE email = $1
+            )
+            INSERT INTO campus_involvement (tourguide_id, activity_name, description)
+            SELECT id, $2, $3
+            FROM guide
+            RETURNING *;
+            `;
+            const values = [account.email, account.activity_name, account.description];
 
         const result = await db.query(query, values);
 
@@ -284,15 +304,25 @@ exports.retrieveTours = async (req, res) => {
         // }
 
         // Retrieve the account from the database
-        const query = "SELECT event_date, event_time, school, completed, feedback, confirmed FROM tours WHERE tourguide_id = $1";
-        const values = [account.tourguide_id];
+        //const query = "SELECT event_date, event_time, school, completed, feedback, confirmed FROM tours WHERE tourguide_id = $1";
+        const query = `
+            WITH guide AS (
+                SELECT id
+                FROM tour_guides
+                WHERE email = $1
+            )
+            SELECT event_date, event_time, school, completed, feedback, confirmed
+            FROM tours
+            JOIN guide ON tours.tour_guide_id = guide.id;
+            `;
+        const values = [account.email];
 
         const result = await db.query(query, values);
 
         if (result == 0) {
             res.status(404).json({ message: "No tours found"});
         } else {
-            res.status(201).json({ account: result.rows[0] });
+            res.status(201).json({ account: result.rows });
         }
         
     } catch (error) {
