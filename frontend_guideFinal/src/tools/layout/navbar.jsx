@@ -139,13 +139,8 @@ export function Navbar({ routes }) {
           ) : (
             <>
               <Link to="sign-in">
-                <Button variant="text" size="sm" onClick={() => setOpenNav(false)} fullWidth>
-                  Sign In
-                </Button>
-              </Link>
-              <Link to="sign-up">
                 <Button variant="gradient" size="sm" onClick={() => setOpenNav(false)} fullWidth>
-                  Sign Up
+                  Sign In
                 </Button>
               </Link>
             </>

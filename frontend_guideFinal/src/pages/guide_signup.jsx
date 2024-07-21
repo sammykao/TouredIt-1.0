@@ -15,7 +15,6 @@ async function postImage({image, description}) {
   return result.data
 }
 
-
 export function GuideSignUp() {
 
 const [postData, setPostData] = useState({
@@ -134,9 +133,11 @@ const insertBackend = async () => {
     const response = await axios.post('http://localhost:3001/api/newGuide', postData);
     console.log(response);
     hobbyData.email = email;
+    const hobbyresponse = await axios.post('http://localhost:3001/api/newHobby', hobbyData);
+    console.log(hobbyresponse);
     activityData.email = email;
-    addHobby();
-    addActivity();
+    const activityresponse = await axios.post('http://localhost:3001/api/newActivity', activityData);
+    console.log(activityresponse);
     return;
 
   } catch (error) {
@@ -237,32 +238,6 @@ const handleActivityChange = (e) => {
     ...prevState,
     [name]: value,
   }));
-};
-
-const addHobby = async (e) => {
-  e.preventDefault();
-
-  axios.post("http://localhost:3001/api/newHobby", hobbyData)
-   .then(response => {
-     console.log(response);
-   })
-   .catch(error => {
-     setError(error);
-     return;
-   });
-
-};
-
-const addActivity = async (e) => {
-  e.preventDefault();
-  axios.post("http://localhost:3001/api/newActivity", activityData)
-   .then(response => {
-     console.log(response);
-   })
-   .catch(error => {
-     setError(error);
-     return;
-   });
 };
 
 const renderMajorOptions = () => {
@@ -575,38 +550,38 @@ const renderMajorOptions = () => {
   </div>
 
   <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_major">
-                  Activity Name:
-                </Typography>
-                <Input 
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                    name="activity_name" 
-                    type="text" 
-                    placeholder="Name"
-                    value={activityData.activity_name}
-                    onChange={handleActivityChange}
-                    required
-                    />
-              </div>
-              <div className="w-full md:w-1/2 px-3">
-                <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_minor">
-                  Description:
-                </Typography>
-                <Textarea 
-                  cols="40" 
-                  rows="3" 
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                  name="description" 
-                  type="text" 
-                  placeholder="~50 words maximum"
-                  value={activityData.description}
-                  onChange={handleActivityChange}
-                  required>
+    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_major">
+        Activity Name:
+      </Typography>
+      <Input 
+          className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+          name="activity_name" 
+          type="text" 
+          placeholder="Name"
+          value={activityData.activity_name}
+          onChange={handleActivityChange}
+          required
+          />
+    </div>
+    <div className="w-full md:w-1/2 px-3">
+      <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_minor">
+        Description:
+      </Typography>
+      <Textarea 
+        cols="40" 
+        rows="3" 
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+        name="description" 
+        type="text" 
+        placeholder="~50 words maximum"
+        value={activityData.description}
+        onChange={handleActivityChange}
+        required>
 
-              </Textarea>
-              </div>
-            </div>
+    </Textarea>
+    </div>
+  </div>
 
   <Typography variant="small" color="blue-gray" className="mb-2 font-medium">
     Password
@@ -688,11 +663,9 @@ const renderMajorOptions = () => {
         }}
       />
     </div>
-    <Link to="sign-in">
     <Button className="mt-6" fullWidth type="submit">
       Verify Now
     </Button>
-    </Link>
     {error && <Typography color="red" className="mt-4 text-center">{error}</Typography>}
     {message && <Typography color="green" className="mt-4 text-center">{message}</Typography>}
     <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
@@ -703,8 +676,6 @@ const renderMajorOptions = () => {
 )}
 
 </div>
-<br/>
-<br/>
 </div>
   );
 }
