@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Checkbox, Button, Textarea, Typography } from "@material-tailwind/react";
 import { signUp, confirmSignUp, resendConfirmationCode } from './../cognitoConfig';
-
+import majors from './majors.json'; 
 
 async function postImage({image, description}) {
   const formData = new FormData();
@@ -265,6 +265,16 @@ const addActivity = async (e) => {
    });
 };
 
+const renderMajorOptions = () => {
+  const options = [];
+  for (const category in majors) {
+    majors[category].forEach(major => {
+      options.push(<option key={major} value={major}>{major}</option>);
+    });
+  }
+  return options;
+};
+
   return (
     <div className="relative isolate px-6 pt-14 lg:px-8 pb-12 bg-gray-100 ">
     <div
@@ -411,28 +421,31 @@ const addActivity = async (e) => {
       <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="major">
         Major*
       </Typography>
-      <Input 
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-          name="major" 
-          type="text" 
-          placeholder="Economics"
-          value={postData.major}
-          onChange={handleInputChange}
-          required
-          />
+      <select
+        name="major"
+        value={postData.major}
+        onChange={handleInputChange}
+        required
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+      >
+        <option value="">Select a major</option>
+        {renderMajorOptions()}
+      </select>
+
     </div>
     <div className="w-full md:w-1/2 px-3">
       <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="minor">
         Minor
       </Typography>
-      <Input 
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-          name="minor" 
-          type="text" 
-          placeholder="Finance"
-          value={postData.minor}
-          onChange={handleInputChange}
-          />
+      <select
+        name="minor"
+        value={postData.minor}
+        onChange={handleInputChange}
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+      >
+        <option value="">Choose Minor</option>
+        {renderMajorOptions()}
+      </select>
     </div>
   </div>
 
@@ -441,34 +454,37 @@ const addActivity = async (e) => {
       <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_major">
         Secondary Major
       </Typography>
-      <Input 
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-          name="secondary_major" 
-          type="text" 
-          placeholder="Biology"
-          value={postData.secondary_major}
-          onChange={handleInputChange}
-          />
+      <select
+        name="secondary_major"
+        value={postData.secondary_major}
+        onChange={handleInputChange}
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+      >
+        <option value="">Choose Second Major</option>
+        {renderMajorOptions()}
+      </select>
+
     </div>
     <div className="w-full md:w-1/2 px-3">
       <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="secondary_minor">
         Secondary Minor
       </Typography>
-      <Input 
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-          name="secondary_minor" 
-          type="text" 
-          placeholder="Chemistry"
-          value={postData.secondary_minor}
-          onChange={handleInputChange}
-          />
+      <select
+        name="secondary_minor"
+        value={postData.secondary_minor}
+        onChange={handleInputChange}
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+      >
+        <option value="">Second Minor</option>
+        {renderMajorOptions()}
+      </select>
     </div>
   </div>
 
   <div className="flex flex-wrap -mx-3 mb-6">
     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
       <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="instagram">
-        Instagram Username*
+        Instagram Url
       </Typography>
       <Input 
           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
@@ -482,7 +498,7 @@ const addActivity = async (e) => {
     </div>
     <div className="w-full md:w-1/2 px-3">
       <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="linkedin">
-        LinkedIn Username*
+        LinkedIn Url
       </Typography>
       <Input 
           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 

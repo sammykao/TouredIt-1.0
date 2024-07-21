@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-
 export function Home() {
   return (
     <>
@@ -19,16 +18,20 @@ export function Home() {
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-               Tour guides create the experience
+              Tour guides create the experience
             </h1>
             <p className="mt-6 text-lg leading-8 text-black">
-              We hire guides from campus' across the country to provide our personalized tours. Please consider join our network of passionate guides.
+              We hire guides from campus' across the country to provide our personalized tours. Please consider joining our network of passionate guides.
             </p>
-            
+          </div>
+          <div className="mt-8 flex justify-center">
+            <img
+              src="./../../public/img/guide_portal_ex.png"
+              alt="Tour Guide"
+              className="sm:max-w-md lg:max-w-4xl rounded-lg"
+            />
           </div>
         </div>
-        
-
       </div>
     </>
   );
