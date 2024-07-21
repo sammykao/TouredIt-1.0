@@ -58,6 +58,7 @@ export function GuideSignUp() {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isSubmited, setIsSubmited] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -214,6 +215,7 @@ export function GuideSignUp() {
         description: ''
       });
       setIsVerifying(false);
+      setIsSubmited(true);
       setError("");
     } catch (error) {
       setError(error.message || JSON.stringify(error));
@@ -256,6 +258,8 @@ export function GuideSignUp() {
   };
 
   return (
+    <div>
+      {!isSubmited ? (
     <div className="relative isolate px-6 pt-14 lg:px-8 pb-12 bg-gray-100 ">
       <div className="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
       </div>
@@ -672,6 +676,37 @@ export function GuideSignUp() {
           </form>
         )}
       </div>
+    </div>  
+    ) : ( 
+      <div className="relative isolate px-6 pt-14 lg:px-8 pb-12 bg-gray-100 ">
+        <div className="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+        </div>
+
+        <div className="py-24 mt-12 sm:py-32 mb-5">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:text-center">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Regristration Complete!</p>
+              <img
+              src="./../../public/img/verificationCheck.png"
+              alt="Verification Check"
+              className="max-w-xs mx-auto"
+            />
+              <p className="mt-6 mb-6 text-lg leading-8 text-gray-800">
+                Thank you for becoming a guide today. Please sign in to view you profile and to ensure all information is correct.
+                Feel free to update your profile as you see fit. When you are selected for a tour you will receive an email with
+                instructions on what to do. We are excited to have you onboard!
+              </p>
+              <Link to={"/sign-in"}>
+                  <Button className="mt-12" fullWidth type="submit">
+                      Sign In
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+     )} 
     </div>
   );
 }

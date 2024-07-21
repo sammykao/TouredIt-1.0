@@ -6,6 +6,7 @@ import SignIn from "@/pages/sign-in";
 import SignUp from "@/pages/sign-up";
 import Profile from "@/pages/profile";
 import Account from "@/pages/account";
+import Tours from "@/pages/tours";
 import UpdateHobbies from "@/pages/update-hobbies";
 import UpdateActivities from "@/pages/update-activities";
 import GuideSignUp from "@/pages/guide_signup";
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <>
-      {!(pathname == '/sign-in' || pathname == '/sign-up' || pathname == '/update-hobbies' || pathname == '/update-activities' || pathname == '/profile' || pathname == '/why-touredit') && (
+      {!( pathname == '/sign-up' || pathname == '/update-hobbies' || pathname == '/tours'|| pathname == '/update-activities' || pathname == '/profile' || pathname == '/why-touredit') && (
         <div className="container absolute left-2/4 z-10 mx-auto -translate-x-2/4 p-4">
           <Navbar routes={routes} />
         </div>
@@ -36,9 +37,10 @@ function App() {
 
         <Route path="/account" element={isAuthenticated() ?  <Account /> : <Navigate replace to="/home" />} />
         <Route path="/profile" element={isAuthenticated() ?  <Profile /> : <Navigate replace to="/home" />} />
+        <Route path="/tours" element={isAuthenticated() ?  <Tours /> : <Navigate replace to="/home" />} />
         <Route path="/guide-sign-up" element={<GuideSignUp />} />
-        <Route path="/update-hobbies" element={<UpdateHobbies />} />
-        <Route path="/update-activities" element={<UpdateActivities />} />
+        <Route path="/update-hobbies" element={isAuthenticated() ?  <UpdateHobbies /> : <Navigate replace to="/home" />} />
+        <Route path="/update-activities" element={isAuthenticated() ?  <UpdateActivities /> : <Navigate replace to="/home" />} />
       </Routes>
       {!(pathname == '/profile' || pathname == '/why-touredit' || pathname == '/update-hobbies') || pathname == '/update-activities' && (
       <Footer />

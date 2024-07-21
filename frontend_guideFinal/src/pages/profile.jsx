@@ -93,7 +93,7 @@ export function Profile() {
                <span className="mx-1 text-gray-400">•</span>
                <Link to="/update-hobbies" className='hover:text-gray-500' >Update hobbies</Link>
                <span className="mx-1 text-gray-400">•</span>
-               <Link to="/profile" className='hover:text-gray-500' >Tours</Link>
+               <Link to="/tours" className='hover:text-gray-500' >Tours</Link>
                <span className="mx-1 text-gray-400">•</span>
              </div>
            </div>

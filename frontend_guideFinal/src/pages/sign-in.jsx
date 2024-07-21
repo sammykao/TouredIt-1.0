@@ -61,8 +61,8 @@ export function SignIn() {
   };
 
   return (
-    <div className="relative isolate px-6 pt-16 lg:px-8 min-h-screen pb-24 bg-gray-500">
-    <section className="mt-24 flex p-4 gap-4 bg-white rounded-3xl">
+    <div className="relative isolate px-6 pt-16 lg:px-8 pb-24 bg-gray-100">
+    <section className="w-full mt-36 flex p-4 bg-gray-100 rounded-3xl mx-auto">
       <div className="w-full lg:w-3/5 mt-24">
         <div className="text-center">
           <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
