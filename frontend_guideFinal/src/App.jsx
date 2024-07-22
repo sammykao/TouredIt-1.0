@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      {!( pathname == '/sign-up' || pathname == '/update-hobbies' || pathname == '/tours'|| pathname == '/update-activities' || pathname == '/profile' || pathname == '/why-touredit') && (
+      {!( pathname == '/update-hobbies' || pathname == '/tours'|| pathname == '/update-activities' || pathname == '/profile' || pathname == '/why-touredit') && (
         <div className="container absolute left-2/4 z-10 mx-auto -translate-x-2/4 p-4">
           <Navbar routes={routes} />
         </div>
@@ -33,12 +33,9 @@ function App() {
         <Route path="*" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/sign-in" element={isAuthenticated() ?  <Navigate replace to="/home" /> : <SignIn />} />
-        <Route path="/sign-up" element={isAuthenticated() ?  <Navigate replace to="/home" /> : <SignUp />} />
-
         <Route path="/account" element={isAuthenticated() ?  <Account /> : <Navigate replace to="/home" />} />
         <Route path="/profile" element={isAuthenticated() ?  <Profile /> : <Navigate replace to="/home" />} />
         <Route path="/tours" element={isAuthenticated() ?  <Tours /> : <Navigate replace to="/home" />} />
-        <Route path="/guide-sign-up" element={<GuideSignUp />} />
         <Route path="/update-hobbies" element={isAuthenticated() ?  <UpdateHobbies /> : <Navigate replace to="/home" />} />
         <Route path="/update-activities" element={isAuthenticated() ?  <UpdateActivities /> : <Navigate replace to="/home" />} />
       </Routes>

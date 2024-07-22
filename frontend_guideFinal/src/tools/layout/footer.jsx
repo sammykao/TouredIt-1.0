@@ -80,7 +80,7 @@ export function Footer({ title, description, socials, menus, copyright }) {
 Footer.defaultProps = {
   title: "TouredIt",
   description:
-    "Begin your college career with a headstart",
+    "Empowering college students to make money",
   socials: [
     {
       color: "black",
@@ -108,7 +108,7 @@ Footer.defaultProps = {
       name: "useful links",
       items: [
         { name: "Home", path: "/home" },
-        { name: "Find Your Match", path: "/find-match" },
+        { name: "Sign Up", path: "/guide-sign-up" },
         { name: "Why TouredIt?", path: "/why-touredit" }
       ],
     },
@@ -116,12 +116,8 @@ Footer.defaultProps = {
       name: "other resources",
       items: [
         {
-          name: "Touredit Guide Portal",
+          name: "Touredit Main Website",
           path: "https://www.touredit.com",
-        },
-        {
-          name: "Contact Us",
-          path: "/contact-us",
         },
       ],
     },

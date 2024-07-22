@@ -21,7 +21,7 @@ export function Home() {
               Tour guides create the experience
             </h1>
             <p className="mt-6 text-lg leading-8 text-black">
-              We hire guides from campus' across the country to provide our personalized tours. Please consider joining our network of passionate guides.
+              We hire guides from campus' across the country to provide personalized tours. Please consider joining our network of passionate guides and starting earning $$$.
             </p>
           </div>
           <div className="mt-8 flex justify-center">
