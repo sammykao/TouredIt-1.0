@@ -5,6 +5,22 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+// config settings for email
+const transporter = nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
+    },
+    tls: {
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false,
+    }
+});
+  
+
 
 exports.insertClientAccounts = async (req, res) => {
     try {
@@ -283,21 +299,7 @@ exports.getAllSchoolInfos = async (req, res) => {
     }
 };
 
-// config settings for email
-const transporter = nodemailer.createTransport({
-    host: 'smtp.office365.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD
-    },
-    tls: {
-        ciphers: 'SSLv3',
-        rejectUnauthorized: false,
-    }
-  });
-  
+
   
 
 // sending email

@@ -3,7 +3,27 @@
 // and the router points the get/post requests to execute the functions
 // you export from here
 
-const db = require("./../database/db")
+const db = require("./../database/db");
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+
+
+dotenv.config();
+
+// config settings for email
+const transporter = nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
+    },
+    tls: {
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false,
+    }
+});
 
 
 exports.insertGuideAccounts = async (req, res) => {
