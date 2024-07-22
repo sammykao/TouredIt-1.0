@@ -239,6 +239,8 @@ export function SignUp() {
                       className: "before:content-none after:content-none",
                     }}
                   />
+                  {error && <Typography color="red" className="mt-4 text-center">{error}</Typography>}
+                  {message && <Typography color="green" className="mt-4 text-center">{message}</Typography>}
                   <Checkbox
                     label={
                       (
@@ -248,7 +250,7 @@ export function SignUp() {
                           className="flex items-center font-normal"
                         >
                           I agree the
-                          <Link to="/terms" className="font-medium transition-colors hover:text-blue-500">
+                          <Link to="/terms-and-conditions" className="font-medium transition-colors hover:text-blue-500">
                             &nbsp;Terms and Conditions
                           </Link>
                         </Typography>
@@ -259,11 +261,18 @@ export function SignUp() {
                     onChange={handleCheckboxChange}
                   />
                 </div>
+                {!isChecked && 
+                  <div className="mx-auto p-4 h-32 mb-20">
+                    <div className="pdf-viewer-container">
+                      <object data="./../../public/terms.pdf" type="application/pdf" width="100%" height="100%">
+                        <p>Your browser does not support PDFs. <a href="./../../public/terms.pdf">Download the PDF</a>.</p>
+                      </object>
+                    </div>
+                  </div>
+                }
                 <Button className="mt-6" fullWidth type="submit">
                   Register
                 </Button>
-                {error && <Typography color="red" className="mt-4 text-center">{error}</Typography>}
-                {message && <Typography color="green" className="mt-4 text-center">{message}</Typography>}
                 <Typography color="gray" className="mt-4 text-center font-normal">
                   Already have an account?{" "}
                   <Link
