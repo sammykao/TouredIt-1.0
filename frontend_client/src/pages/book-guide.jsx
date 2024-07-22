@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Typography } from '@material-tailwind/react';
+import { isAuthenticated } from "./../tools/auth/loggedIn";
+
 
 const BookGuide = () => {
   const location = useLocation();
@@ -48,11 +50,11 @@ const BookGuide = () => {
     }
     try {
       await axios.post('http://localhost:3001/api/sendBookingRequest', 
-      { data: formData, 
+      { data: bookingData, 
         school: guideInfo.school,
         email: sessionStorage.username, 
         guide_email: email });
-      console.log('Request submitted:', formData);
+      console.log('Request submitted:', bookingData);
       setBookingData({
         date: '',
         comments: ''

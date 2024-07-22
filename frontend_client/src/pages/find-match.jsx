@@ -84,14 +84,14 @@ const FindMatch = () => {
   }
 
   return (
-      <div className="px-4 py-4 overflow-hidden m-24 mb-32 rounded-lg flex flex-col items-center max-w-4xl mx-auto">
+      <div className="px-4 py-4 overflow-hidden shadow bg-gray-100/50  m-24 mb-32 rounded-lg flex flex-col items-center max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-4">Select Your School</h2>
         <div className="w-full mb-4">
           <input
             type="text"
             value={selectedSchool}
             onChange={handleSchoolChange}
-            className="w-full text-xl p-2 text-white bg-gray-600 shadow rounded focus:outline-none focus:bg-gray-800"
+            className="w-full text-xl p-2 shadow rounded focus:outline-none focus:bg-gray-400"
             placeholder="Start typing to search for a school..."
           />
           {filteredSchools.length > 0 && (

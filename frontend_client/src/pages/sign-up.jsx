@@ -26,7 +26,6 @@ export function SignUp() {
       const response = await axios.post('http://localhost:3001/api/newClient', newAccount);
       console.log(response);
       return;
-
     } catch (error) {
       console.error('Error Inserting Account:', error);
     }
@@ -93,7 +92,20 @@ export function SignUp() {
       setIsVerifying(true);
       setError("");
     } catch (error) {
-      setError(error.message || JSON.stringify(error));
+      console.log(error.message);
+      if (error.message === 'User already exists') {
+        console.log("HIII");
+        try {
+          await resendConfirmationCode({ username: email });
+          setMessage("Account already exists but is not confirmed. Resending verification code.");
+          setIsVerifying(true);
+          setError("");
+        } catch (resendError) {
+          setError("Account already exists. Please sign in.");
+        }
+      } else {
+        setError(error.message || JSON.stringify(error));
+      }
     }
   };
 
@@ -116,13 +128,17 @@ export function SignUp() {
       setIsVerifying(false);
       setError("");
     } catch (error) {
+      if (error.message = "User cannot be confirmed. Current status is CONFIRMED") {
+        alert("You already have an account. Please login.");
+        window.location.href = "/sign-in";
+      }
       setError(error.message || JSON.stringify(error));
     }
   };
 
   const handleResendCode = async () => {
     const { email } = formData;
-    
+
     if (window.confirm("Are you sure you want to resend the confirmation code?")) {
       try {
         await resendConfirmationCode({ username: email });

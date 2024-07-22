@@ -109,7 +109,8 @@ Footer.defaultProps = {
       items: [
         { name: "Home", path: "/home" },
         { name: "Find Your Match", path: "/find-match" },
-        { name: "Why TouredIt?", path: "/why-touredit" }
+        { name: "Why TouredIt?", path: "/why-touredit" },
+        { name: "Terms and Conditions", path: "/terms-and-conditions" }
       ],
     },
     {

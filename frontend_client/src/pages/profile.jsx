@@ -248,10 +248,10 @@ export function Profile() {
                   </div>
                 </div>
                 <div className="flex justify-end space-x-4">
-                  <Button variant="text" color="blue-gray" size="md" onClick={() => setIsEditing(false)}>
+                  <Button variant="text" color="blue-gray" className="px-5 py-2 sm:px-4" size="md" onClick={() => setIsEditing(false)}>
                     Cancel
                   </Button>
-                  <Button variant="gradient" color="green" size="md" onClick={handleEditSave}>
+                  <Button variant="gradient" className="px-5 py-2 sm:px-4" color="green" size="md" onClick={handleEditSave}>
                     Save
                   </Button>
                 </div>

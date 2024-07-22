@@ -1,6 +1,9 @@
+import React from 'react';
 import { Typography } from "@material-tailwind/react";
 
-export function ThankYou() {
+export function TermsAndConditions() {
+  const pdfUrl = './../../../public/terms.pdf';
+
   return (
     <>
       <div className="relative isolate px-4 pb-20 pt-14 lg:px-8 min-h-screen bg-gray-500">
@@ -16,18 +19,13 @@ export function ThankYou() {
             }}
           />
         </div>
-        <br />
-        <div className="items-center text-center m-8 sm:m-16 lg:m-32 justify-center px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 lg:pt-14">
-          <h1 className="text-3xl sm:text-4xl font-bold text-black">Thanks for booking</h1>
-          <br />
-          <h4 className="text-lg sm:text-2xl lg:text-3xl text-black">
-            If your guide accepts your request or a match is found, <br />
-            they or a member of our team will reach out to your email. <br />
-            <br />
-            You should additionally get a confirmation in your email. <br />
-            We really appreciate your support. <br />
-            <br />- TouredIt Team
-          </h4>
+        <div className="container mx-auto p-4 bg-white rounded-lg shadow-md mt-32">
+          <Typography variant="h2" className="font-bold mb-4 text-center">Terms and Conditions</Typography>
+          <div className="pdf-viewer-container h-[80vh]">
+            <object data={pdfUrl} type="application/pdf" width="100%" height="100%">
+              <p>Your browser does not support PDFs. <a href={pdfUrl}>Download the PDF</a>.</p>
+            </object>
+          </div>
         </div>
         <div
           className="absolute inset-x-0 top-[calc(100%-100rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-100rem)]"
@@ -46,4 +44,4 @@ export function ThankYou() {
   );
 }
 
-export default ThankYou;
+export default TermsAndConditions;

@@ -10,6 +10,7 @@ import FindGuide from "@/pages/find-guide";
 import BookGuide from "@/pages/book-guide";
 import ThankYou from "@/tools/layout/post-booking";
 import { isAuthenticated } from "./tools/auth/loggedIn";
+import TermsAndConditions from "./tools/layout/terms";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/find-guide" element={<FindGuide />} />
           <Route path="/book-guide" element={isAuthenticated() ?  <BookGuide /> : <Navigate replace to="/sign-in" />} />
           <Route path="/thanks" element={isAuthenticated() ?  <ThankYou /> : <Navigate replace to="/home" />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
         <Footer />
     </>
