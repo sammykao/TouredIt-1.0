@@ -285,10 +285,16 @@ exports.getAllSchoolInfos = async (req, res) => {
 
 // config settings for email
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD
+    },
+    tls: {
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false,
     }
   });
   
@@ -405,7 +411,7 @@ exports.sendcustomtour = async (req, res) => {
         // Send email to the TouredIt team
         mailOptions = {
             from: process.env.EMAIL_USERNAME, // sender address
-            to: "info@touredit.com", // TouredIt team address
+            to: "joshua.bernstein@touredit.com", // TouredIt team address
             subject: "New Custom Tour Request",
             html: `<p>Hi TouredIt Team,<br><br>
             You have a new custom tour request. Here are the details:<br>
@@ -433,16 +439,8 @@ exports.sendcustomtour = async (req, res) => {
             }
         });
 
-        // Optionally, insert the custom tour request into the database
-        const insertQuery = `
-            INSERT INTO custom_tours (email, school, major, grade, hobbies, clubs, interests, comments, date)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
-        `;
-        const values = [email, data.school, data.major, data.grade, data.hobbies, data.clubs, data.interests, data.comments, data.date];
-        
-        const insertResult = await db.query(insertQuery, values);
 
-        res.status(200).json({ message: 'Custom request submitted successfully', tour: insertResult.rows[0] });
+        res.status(200).json({ message: 'Custom request submitted successfully' });
 
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -457,6 +455,7 @@ exports.sendtour = async (req, res) => {
             return;
         }
 
+        
         // Get tour guide and client IDs
         const guideQuery = "SELECT id FROM tour_guides WHERE email = $1";
         const clientQuery = "SELECT id FROM clients WHERE email = $1";
@@ -470,14 +469,14 @@ exports.sendtour = async (req, res) => {
         }
 
         const tour_guide_id = guideResult.rows[0].id;
-        const user_id = clientResult.rows[0].id;
+        const client_id = clientResult.rows[0].id;
 
         // Insert tour details into the Tours table
         const insertQuery = `
-            INSERT INTO Tours (event_date, tour_guide_id, user_id, school, comments)
+            INSERT INTO Tours (event_date, tour_guide_id, client_id, school, comments)
             VALUES ($1, $2, $3, $4, $5) RETURNING *
         `;
-        const values = [data.date, tour_guide_id, user_id, school, data.comments];
+        const values = [data.date, tour_guide_id, client_id, school, data.comments];
 
         const insertResult = await db.query(insertQuery, values);
 
@@ -488,10 +487,10 @@ exports.sendtour = async (req, res) => {
             subject: "Thanks for sending a request",
             html: `<p>Hi!<br><br>
             Thank you for submitting a request for a tour. Our team moves very quickly and will make sure a match 
-            is found, or that the requested guide responds quickly. We appreciate your support and if you ever need anything, 
-            email us at info@touredit.com.<br><br>
+            is found, or that the requested guide responds quickly. We appreciate your support and if you ever 
+            need anything (like cancellations), email us at info@touredit.com.<br><br>
             Warmly,<br>
-            TouredIt Team
+            <strong>TouredIt Team</strong>
             </p>`
         };
 
@@ -508,8 +507,8 @@ exports.sendtour = async (req, res) => {
             subject: "You have a new tour request",
             html: `<p>Hi!<br><br>
             You have a new guide request. Please visit your tour guide portal to accept or decline 
-            the new request, as well as see the next steps. We appreciate your support and if you ever need anything (like cancellations), 
-            email us at info@touredit.com.<br><br>
+            the new request In the portal you will see the details
+            of the tourl and once you accept, you will recieve an email on the next steps.<br><br>
             Warmly,<br>
             TouredIt Team
             </p>`
@@ -524,6 +523,7 @@ exports.sendtour = async (req, res) => {
         res.status(200).json({ message: 'Tour request submitted successfully', tour: insertResult.rows[0] });
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };

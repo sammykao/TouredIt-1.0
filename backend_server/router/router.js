@@ -44,6 +44,10 @@ router.post('/retHobby', portal_controls.retrieveHobbies);
 // router.post('/retInvolvement', portal_controls.retrieveInvolvement);
 router.post('/retTours', portal_controls.retrieveTours);
 // router.post('/retMetrics', portal_controls.retrieveMetrics);
+router.post('/confirmTour', portal_controls.confirmTour);
+router.post('/declineTour', portal_controls.declineTour);
+
+
 
 
 
