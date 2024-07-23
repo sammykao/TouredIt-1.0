@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Input, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { signIn } from "./../cognitoConfig";
@@ -12,6 +12,9 @@ export function SignIn() {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const gEmail = location.state;
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -54,7 +57,12 @@ export function SignIn() {
       });
       setError("");
       // Redirect to dashboard or another page on successful sign-in
-      navigate("/home");
+      // Check if there's a returnTo path in location state
+      if (gEmail) {
+        navigate('/book-guide', { state: gEmail });
+      } else {
+        navigate('/home'); // Default redirection after sign-in
+      }
     } catch (error) {
       setError(error.message || "Error signing in");
     }

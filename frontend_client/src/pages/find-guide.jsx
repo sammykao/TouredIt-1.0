@@ -79,7 +79,12 @@ const FindGuide = () => {
   };
 
   const handleDetails = (email) => {
-    navigate('/book-guide', { state: { email } });
+    if (!isAuthenticated()) {
+      navigate('/sign-in', { state: { email } });
+    } else {
+      // User is authenticated, navigate directly to Book Guide page
+      navigate('/book-guide', { state: { email } });
+    }
   };
 
   const toggleForm = () => {

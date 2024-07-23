@@ -8,6 +8,7 @@ import { isAuthenticated } from "./../tools/auth/loggedIn";
 const BookGuide = () => {
   const location = useLocation();
   const { email } = location.state || {};
+  console.log(email);
   const [guideInfo, setGuideInfo] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(true);
