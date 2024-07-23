@@ -24,10 +24,8 @@ export const signUp = async (email, password) => {
         ],
     };
     try {
-        console.log(config.clientId, config.region);
         const command = new SignUpCommand(params);
         const response = await cognitoClient.send(command);
-        console.log("Sign up success: ", response);
         return response;
     } catch (error) {
         console.error("Error signing up: ", error);

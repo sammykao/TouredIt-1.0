@@ -179,18 +179,30 @@ export function GuideSignUp() {
       return;
     }
 
-    const { email, password, name, phone, hometown, school } = postData;
+    const { email, password } = postData;
 
     try {
-      await signUp(email, password, name, phone, hometown, school);
+      await signUp(email, password);
       setMessage("Registration successful! Please check your email for the verification code.");
       setIsVerifying(true);
       setError("");
     } catch (error) {
-      setError(error.message || JSON.stringify(error));
+      if (error.message === 'User already exists') {
+        try {
+          await resendConfirmationCode({ username: email });
+          setMessage("Account already exists but is not confirmed. Resending verification code.");
+          setIsVerifying(true);
+          setError("");
+        } catch (resendError) {
+          setError("Account already exists. Please sign in.");
+        }
+      } else {
+        setError(error.message || JSON.stringify(error));
+      }
     }
   };
 
+  
   const handleVerification = async (e) => {
     e.preventDefault();
     const { email, verificationCode } = postData;

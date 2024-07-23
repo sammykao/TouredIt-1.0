@@ -184,7 +184,7 @@ export function Tours() {
 
   return tourDateOnly > currentDateOnly ? (
     <button 
-      className="bg-red-400 hover:bg-red-200 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mr-1"
+      className="bg-red-400 hover:bg-red-200 text-white font-bold py-1 px-3 rounded-lg focus:outline-none focus:shadow-outline mr-1"
       onClick={() => {
         const confirmBox = window.confirm(
           `Are you sure you want to CANCEL this tour on ${tourDate.toLocaleDateString()}?`
@@ -229,7 +229,7 @@ export function Tours() {
                         <h3 className="text-md font-medium">{tour.guide}</h3>
                         <p className="text-lg text-gray-700">{new Date(tour.date).toLocaleDateString()}</p>
                         <p><button 
-                        className="bg-green-400 hover:bg-green-200 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mr-1"
+                        className="bg-green-400 hover:bg-green-200 text-white font-bold py-1 px-3 rounded-lg focus:outline-none focus:shadow-outline mr-1"
                         onClick={() => {
                             const confirmBox = window.confirm(
                                 `Are you sure you want to CONFIRM this tour on ${new Date(tour.date).toLocaleDateString()}?`
@@ -240,7 +240,7 @@ export function Tours() {
                         }}>Confirm
                         </button> 
                         <button 
-                        className="bg-red-400 hover:bg-red-200 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+                        className="bg-red-400 hover:bg-red-200 text-white font-bold py-1 px-3 rounded-lg focus:outline-none focus:shadow-outline"
                         onClick={() => {
                             const confirmBox = window.confirm(
                                 `Are you sure you want to REJECT this tour on ${new Date(tour.date).toLocaleDateString()}?`
