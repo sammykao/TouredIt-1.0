@@ -737,7 +737,7 @@ exports.deleteTour = async (req, res) => {
             to this email or text 305-206-7966 for a quicker response.
             Thank you for your dedication and enthusiasm!<br><br>
             Warmly,<br>
-            <strong>TouredIt Team<strong>
+            <strong>TouredIt Team</strong>
             </p>`
         };
 
@@ -759,8 +759,8 @@ exports.deleteTour = async (req, res) => {
             - <strong> Client name:</strong> ${clientResult.rows[0].name}<br>\t\t
             - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
             - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${tourResult.rows[0].event_date}
-            - <strong> Tour comments: <strong> ${deleteResult.rows[0].comments} <br><br>
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].event_date}<br>\t\t
+            - <strong> Tour comments: </strong> ${deleteResult.rows[0].comments} <br><br>
             \t - <strong> The guide details </strong><br>\t\t
             - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
             - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
@@ -856,7 +856,7 @@ exports.cancelTour = async (req, res) => {
             to this email or text 305-206-7966 for a quicker response.
             Thank you for your dedication and enthusiasm!<br><br>
             Warmly,<br>
-            <strong>TouredIt Team<strong>
+            <strong>TouredIt Team</strong>
             </p>`
         };
 
@@ -879,7 +879,7 @@ exports.cancelTour = async (req, res) => {
             - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
             - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
             - <strong> Tour Date: </strong> ${tourResult.rows[0].event_date} <br>\t\t
-            - <strong> Tour comments: <strong> ${deleteResult.rows[0].comments} <br><br>
+            - <strong> Tour comments: </strong> ${deleteResult.rows[0].comments} <br><br>
             \t- <strong> The guide details </strong><br>\t\t
             - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
             - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t

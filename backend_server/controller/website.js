@@ -91,9 +91,7 @@ exports.updateClientInfo = async (req, res) => {
         const query = "UPDATE clients SET name = COALESCE($2, name), \
         phone = COALESCE($3, phone) WHERE email = $1 RETURNING *";
         const values = [account.email, account.name, account.phone];
-        console.log("PRE_QUERY");
         const result = await db.query(query, values);
-        console.log("POSRT");
         if (result.rows.length === 0) {
             res.status(404).json({ message: "Account Not Found" });
         } else {
@@ -333,7 +331,6 @@ exports.sendEmail = async (req, res) => {
 exports.getClientTours = async (req, res) => {
     try {
         const { email } = req.body; // Assuming req.body contains the client email
-        console.log(email);
         if (!email) {
             res.status(400).json({ message: 'Invalid client email' });
             return;
@@ -510,9 +507,9 @@ exports.sendtour = async (req, res) => {
             html: `<p>Hi!<br><br>
             You have a new guide request. Please visit your tour guide portal to accept or decline 
             the new request In the portal you will see the details
-            of the tourl and once you accept, you will recieve an email on the next steps.<br><br>
+            of the tour and once you accept, you will recieve an email on the next steps.<br><br>
             Warmly,<br>
-            TouredIt Team
+            <strong>TouredIt Team</strong>
             </p>`
         };
 
