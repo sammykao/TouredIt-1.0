@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import { signUp, confirmSignUp, resendConfirmationCode, removeUser } from './../cognitoConfig';
+import { signUp, confirmSignUp, resendConfirmationCode } from './../cognitoConfig';
 
 export function SignUp() {
   const [formData, setFormData] = useState({
@@ -14,25 +14,10 @@ export function SignUp() {
     verificationCode: "",
   });
 
-  
-
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
-  const [verified, setVerified] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      alert("TRYING TO LEAVE");
-      if (isVerifying && !verified && formData.email) {
-        if (removeUser(formData.email)) {
-          alert("User Removed");
-        }
-      }
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-  }, [isVerifying, verified, formData.email]);
 
   const insertBackend = async () => {
     const { email, name, phoneNumber } = formData;
@@ -107,7 +92,20 @@ export function SignUp() {
       setIsVerifying(true);
       setError("");
     } catch (error) {
-      setError(error.message || JSON.stringify(error));
+      console.log(error.message);
+      if (error.message === 'User already exists') {
+        console.log("HIII");
+        try {
+          await resendConfirmationCode({ username: email });
+          setMessage("Account already exists but is not confirmed. Resending verification code.");
+          setIsVerifying(true);
+          setError("");
+        } catch (resendError) {
+          setError("Account already exists. Please sign in.");
+        }
+      } else {
+        setError(error.message || JSON.stringify(error));
+      }
     }
   };
 
@@ -118,7 +116,6 @@ export function SignUp() {
     try {
       await confirmSignUp(email, verificationCode);
       setMessage("Verification successful! You can now sign in.");
-      setVerified(true);
       insertBackend();
       setFormData({
         email: "",
