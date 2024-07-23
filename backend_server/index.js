@@ -27,11 +27,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS middleware
-app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
-  methods: ['GET', 'POST'], // Allow these HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
-}));
+// app.use(cors({
+//   origin: 'http://localhost:5173', // Allow requests from this origin
+//   methods: ['GET', 'POST'], // Allow these HTTP methods
+//   allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+// }));
 
 // Connect to PostgreSQL db
 db.connect((err) => {
