@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Checkbox, Button, Textarea, Typography } from "@material-tailwind/react";
-import { signUp, confirmSignUp, resendConfirmationCode, removeUser } from './../cognitoConfig';
+import { signUp, confirmSignUp, resendConfirmationCode } from './../cognitoConfig';
 import majors from './majors.json'; 
 
 async function postImage({ image, description }) {
@@ -66,7 +66,7 @@ export function GuideSignUp() {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.post('http://localhost:3001/api/schoolNames');
+        const response = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/schoolNames');
         setSchools(response.data.schools);
         setLoading(false);
       } catch (error) {
@@ -81,19 +81,7 @@ export function GuideSignUp() {
 
   }, []);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (isVerifying && !verified && formData.email) {
-        removeUser(formData.email);
-      }
-    };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isVerifying, verified, formData.email]);
 
   const handleSchoolChange = (e) => {
     const inputValue = e.target.value;
@@ -725,7 +713,8 @@ export function GuideSignUp() {
               className="max-w-xs mx-auto"
             />
               <p className="mt-6 mb-6 text-lg leading-8 text-gray-800">
-                Thank you for becoming a guide today. Please sign in to view you profile and to ensure all information is correct.
+                Thank you for becoming a guide today. Guides get paid $40 per tour, and these tours
+                normally last for 90 minutes. Please sign in to view you profile and to ensure all information is correct.
                 Feel free to update your profile as you see fit. When you are selected for a tour you will receive an email with
                 instructions on what to do. We are excited to have you onboard!
               </p>

@@ -14,10 +14,10 @@ export function Tours() {
   const [pendingTours, setPendingTours] = useState([]);
 
   useEffect(() => {
-    axios.post("http://localhost:3001/api/retGuideInfo", { email })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
-        const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
+        const newImageUrl = `https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/images/${response.data.guide.profile_image_url}`;
         setImageUrl(newImageUrl);
       })
       .catch(error => {
@@ -25,7 +25,7 @@ export function Tours() {
         return;
       });
 
-      axios.post("http://localhost:3001/api/retTours", { email })
+      axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/retTours", { email })
       .then(tourResponse => {
         setConfirmedTours(tourResponse.data.confirmedTours);
         setPendingTours(tourResponse.data.nonConfirmedTours);
@@ -40,7 +40,7 @@ export function Tours() {
   }, [email]);
 
   const handleConfirm = (id) => {
-    axios.post("http://localhost:3001/api/confirmTour", { id })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/confirmTour", { id })
       .then(confResponse => {
         console.log(confResponse);
       })
@@ -52,7 +52,7 @@ export function Tours() {
   };
 
   const handleCancel = (id) => {
-    axios.post("http://localhost:3001/api/cancelTour", { id })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/cancelTour", { id })
       .then(confResponse => {
         console.log(confResponse);
       })
@@ -64,7 +64,7 @@ export function Tours() {
   };
 
   const handleReject = (id) => {
-    axios.post("http://localhost:3001/api/declineTour", { id })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/declineTour", { id })
       .then(decResponse => {
         console.log(decResponse);
       })

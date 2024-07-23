@@ -18,10 +18,10 @@ export function UpdateActivities() {
 
   useEffect(() => {
     console.log(email);
-    axios.post("http://localhost:3001/api/retGuideInfo", { email })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
-        const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
+        const newImageUrl = `https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/images/${response.data.guide.profile_image_url}`;
         setImageUrl(newImageUrl);
         activityData.email = response.data.guide.email;
         setLoading(false);
@@ -51,7 +51,7 @@ export function UpdateActivities() {
     e.preventDefault();
     console.log(activityData);
     try {
-      const response = await fetch('http://localhost:3001/api/newActivity', {
+      const response = await fetch('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/newActivity', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ export function UpdateActivities() {
       setResponseData(null); // Clear response data
     }
 
-    axios.post("http://localhost:3001/api/retGuideInfo", { email })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
         activityData.email = response.data.guide.email;

@@ -18,10 +18,10 @@ export function UpdateHobbies() {
 
   useEffect(() => {
     console.log(email);
-    axios.post("http://localhost:3001/api/retGuideInfo", { email })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
-        const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
+        const newImageUrl = `https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/images/${response.data.guide.profile_image_url}`;
         setImageUrl(newImageUrl);
         hobbyData.email = response.data.guide.email;
         setLoading(false);
@@ -52,7 +52,7 @@ export function UpdateHobbies() {
      e.preventDefault();
  
      try {
-       const response = await fetch('http://localhost:3001/api/newHobby', {
+       const response = await fetch('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/newHobby', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export function UpdateHobbies() {
        setResponseData(null); // Clear response data
      }
  
-     axios.post("http://localhost:3001/api/retGuideInfo", { email })
+     axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
         hobbyData.email = response.data.guide.email;
@@ -116,7 +116,7 @@ export function UpdateHobbies() {
    //   console.log(hobbyId);
  
    //   try {
-   //     const response = await fetch('http://localhost:3001/api/remHobby', {
+   //     const response = await fetch('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/remHobby', {
    //       method: 'POST',
    //       headers: {
    //         'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ export function UpdateHobbies() {
    //   }
  
    //   try {
-   //     const response = await fetch('http://localhost:3001/api/retGuideInfo', {
+   //     const response = await fetch('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/retGuideInfo', {
    //       method: 'POST',
    //       headers: {
    //         'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ export function UpdateHobbies() {
    //     const data = await response.json();
    //     setResponseData(data); // Store response data in state
    //     setError(null); // Clear any previous errors
-   //     const newImageUrl = `http://localhost:3001/images/${data.guide.profile_image_url}`;
+   //     const newImageUrl = `https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/images/${data.guide.profile_image_url}`;
    //     setImageUrl(newImageUrl);
    //     setFormSubmitted(true); // Set formSubmitted to true
    //     // Reset the form after successful submission
