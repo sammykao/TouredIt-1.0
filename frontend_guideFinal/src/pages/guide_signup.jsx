@@ -138,18 +138,14 @@ export function GuideSignUp() {
     const { email } = postData;
     try {
       const result = await postImage({ image: file, description });
-      console.log(result.imagePath);
       postData.profile_image_url = result.imagePath;
 
       setImages([result.image, ...images]);
       const response = await axios.post('http://localhost:3001/api/newGuide', postData);
-      console.log(response);
       hobbyData.email = email;
       const hobbyresponse = await axios.post('http://localhost:3001/api/newHobby', hobbyData);
-      console.log(hobbyresponse);
       activityData.email = email;
       const activityresponse = await axios.post('http://localhost:3001/api/newActivity', activityData);
-      console.log(activityresponse);
       return;
 
     } catch (error) {
@@ -179,7 +175,6 @@ export function GuideSignUp() {
     e.preventDefault();
     const validationError = validateForm();
     if (validationError) {
-      console.log(validationError);
       setError(validationError);
       return;
     }

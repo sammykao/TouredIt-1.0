@@ -1,6 +1,4 @@
-import WhyTouredIt from "./pages/why-touredit";
-import ContactUs from "./pages/contact-us";
-import FindMatch from "./pages/find-match";
+
 import GuideSignUp from "./pages/guide_signup";
 import Home from "@/pages/home"
 import Stats from "./pages/stats";
