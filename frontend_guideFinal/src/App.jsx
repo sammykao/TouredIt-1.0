@@ -8,7 +8,6 @@ import Account from "@/pages/account";
 import Tours from "@/pages/tours";
 import UpdateHobbies from "@/pages/update-hobbies";
 import UpdateActivities from "@/pages/update-activities";
-import GuideSignUp from "@/pages/guide_signup";
 import Footer from "@/tools/layout/footer";
 import { isAuthenticated } from "./tools/auth/loggedIn";
 

@@ -636,14 +636,22 @@ export function GuideSignUp() {
               checked={isChecked}
               onChange={handleCheckboxChange}
             />
-
+            {!isChecked && 
+              <div className="mx-auto p-4 mb-20">
+                <div className="pdf-viewer-container h-60">
+                  <object data="./../../public/terms.pdf" type="application/pdf" width="100%" height="100%">
+                    <p>Your browser does not support PDFs. <a href="./../../public/terms.pdf">Download the PDF</a>.</p>
+                  </object>
+                </div>
+              </div>
+            }
+            {error && <Typography color="red" className="mt-4 text-center">{error}</Typography>}
+            {message && <Typography color="green" className="mt-4 text-center">{message}</Typography>}
             <Button
               type="submit"
               className="bg-gray-900 hover:bg-gray-800 text-white font-bold w-full py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >Submit
             </Button>
-            {error && <Typography color="red" className="mt-4 text-center">{error}</Typography>}
-            {message && <Typography color="green" className="mt-4 text-center">{message}</Typography>}
           </form>
 
         ) : (
