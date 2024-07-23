@@ -262,8 +262,8 @@ export function SignUp() {
                   />
                 </div>
                 {!isChecked && 
-                  <div className="mx-auto p-4 h-32 mb-20">
-                    <div className="pdf-viewer-container">
+                  <div className="mx-auto p-4 mb-20">
+                    <div className="pdf-viewer-container h-60">
                       <object data="./../../public/terms.pdf" type="application/pdf" width="100%" height="100%">
                         <p>Your browser does not support PDFs. <a href="./../../public/terms.pdf">Download the PDF</a>.</p>
                       </object>

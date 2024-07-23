@@ -574,7 +574,7 @@ exports.confirmTour = async (req, res) => {
             subject: "A guide has accepted your tour request",
             html: `<p>Hi ${clientResult.rows[0].name}<br><br>
             \t${guideResult.rows[0].name} has accepted your tour request for ${guideResult.rows[0].school}
-            on ${tourResult.rows[0].date}. They will reach out to arrange and coordinate on logistics and timing.<br><br>
+            on ${tourResult.rows[0].event_date}. They will reach out to arrange and coordinate on logistics and timing.<br><br>
             Warmly,<br>
             <strong>TouredIt Team</strong>
             </p>`
@@ -600,23 +600,24 @@ exports.confirmTour = async (req, res) => {
             - <strong> Client name:</strong> ${clientResult.rows[0].name} (Can be either parent/adult or student)<br>\t\t
             - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
             - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
-            - <strong> Tour comments: <strong> ${insertResult.rows[0].comments} <br><br>
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].event_date}<br>\t\t
+            - <strong> Tour comments: </strong> ${insertResult.rows[0].comments} <br><br>
 
             \t 2. <strong> Introduce yourself via text or email </strong><br>\t\t
             - Start by sending a text to {introducing yoursel. Here's a script to help you:<br>\t\t\t
-            - <strong> Your Name:<strong> "Hi, ${clientResult.rows[0].name} my name is __."<br>\t\t\t
-            - <strong> Date and School:<strong>"I'm excited to show you or your child around ${guideResult.rows[0].school} on ${tourResult.rows[0].date}."<br>\t\t\t
+            - <strong> Your Name:</strong> "Hi, ${clientResult.rows[0].name} my name is __."<br>\t\t\t
+            - <strong> Date and School:</strong>"I'm excited to show you or your child around ${guideResult.rows[0].school} on ${tourResult.rows[0].event_date}."<br>\t\t\t
             - <strong> Major and Interests:</strong> Share your major, any notable clubs, or activities you participate in that might interest them.<br>\t\t
             - Coordinate timing, meeting, and special request logistics<br>\t\t\t
             - <strong>Time:</strong> This is the most important. See when they would prefer or can tour on that date. If you cannot make ends meet
             for the date or any other date, email info@touredit.com and we can cancel the tour.<br>\t\t\t
             - <strong> Meeting Point:</strong> Suggest a convenient meeting point on campus.<br>\t\t\t
-            - <strong> Special Requests: Ask if there are any specific buildings or parts of campus they would like to see in particular.<br><br>
+            - <strong> Special Requests: </strong> Ask if there are any specific buildings or parts of 
+            campus they would like to see in particular.<br><br>
             If you have any questions, feel free to respond to this email or text 305-206-7966 for a quicker response.
             Thank you for your dedication and enthusiasm!<br><br>
             Warmly,<br>
-            <strong>TouredIt Team<strong>
+            <strong>TouredIt Team</strong>
             </p>`
         };
 
@@ -633,18 +634,18 @@ exports.confirmTour = async (req, res) => {
             subject: "A guide has accepted a tour request",
             html: `<p>Hi Josh,<br><br>
             \t${guideResult.rows[0].name} has accepted a tour request from ${clientResult.rows[0].name}
-            on ${tourResult.rows[0].date} for ${guideResult.rows[0].school}.<br><br>
+            on ${tourResult.rows[0].event_date} for ${guideResult.rows[0].school}.<br><br>
             \t - <strong> The client and tour details </strong><br>\t\t
             - <strong> Client name:</strong> ${clientResult.rows[0].name} <br>\t\t
             - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
             - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].event_date}
             - <strong> Tour comments: <strong> ${insertResult.rows[0].comments} <br><br>
             \t - <strong> The guide details </strong><br>\t\t
             - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
             - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
-            - <strong> Guide School: <strong> ${guideResult.rows[0].school} <br><br>
-            Please monitor. Thanks. $$$!!!!!!!
+            - <strong> Guide School: </strong> ${guideResult.rows[0].school} <br><br>
+            Please monitor. Thanks. $$$!!!!!!!<br><br>
 
             Warmly,<br>
             <strong>TouredIt Team</strong>
@@ -712,7 +713,7 @@ exports.deleteTour = async (req, res) => {
             subject: "A guide has declined your tour request",
             html: `<p>Hi ${clientResult.rows[0].name}<br><br>
             \t${guideResult.rows[0].name} has declined your tour request for ${guideResult.rows[0].school}
-            on ${tourResult.rows[0].date}. A member of our team will reach out to make sure you have a new match for that date.<br><br>
+            on ${tourResult.rows[0].event_date}. A member of our team will reach out to make sure you have a new match for that date.<br><br>
             Warmly,<br>
             <strong>TouredIt Team</strong>
             </p>`
@@ -753,18 +754,18 @@ exports.deleteTour = async (req, res) => {
             subject: "A guide has declined a tour request",
             html: `<p>Hi Josh,<br><br>
             \t${guideResult.rows[0].name} has declined a tour request from ${clientResult.rows[0].name}
-            on ${tourResult.rows[0].date} for ${guideResult.rows[0].school}.<br><br>
+            on ${tourResult.rows[0].event_date} for ${guideResult.rows[0].school}.<br><br>
             \t - <strong> The client and tour details </strong><br>\t\t
             - <strong> Client name:</strong> ${clientResult.rows[0].name}<br>\t\t
             - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
             - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].event_date}
             - <strong> Tour comments: <strong> ${deleteResult.rows[0].comments} <br><br>
             \t - <strong> The guide details </strong><br>\t\t
             - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
             - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
-            - <strong> Guide School: <strong> ${guideResult.rows[0].school} <br><br>
-            Let's get to work and secure some $$$!
+            - <strong> Guide School: </strong> ${guideResult.rows[0].school} <br><br>
+            Let's get to work and secure some $$$!<br><br>
 
             Warmly,<br>
             <strong>TouredIt Team</strong>
@@ -831,7 +832,7 @@ exports.cancelTour = async (req, res) => {
             subject: "A guide has canceld your tour request",
             html: `<p>Hi ${clientResult.rows[0].name}<br><br>
             \t${guideResult.rows[0].name} has canceled your tour request for ${guideResult.rows[0].school}
-            on ${tourResult.rows[0].date}. A member of our team will reach out to make sure you have a new match for that date.<br><br>
+            on ${tourResult.rows[0].event_date}. A member of our team will reach out to make sure you have a new match for that date.<br><br>
             Warmly,<br>
             <strong>TouredIt Team</strong>
             </p>`
@@ -872,18 +873,18 @@ exports.cancelTour = async (req, res) => {
             subject: "A guide has canceled a tour request",
             html: `<p>Hi Josh,<br><br>
             \t${guideResult.rows[0].name} has canceled a tour request from ${clientResult.rows[0].name}
-            on ${tourResult.rows[0].date} for ${guideResult.rows[0].school}.<br><br>
+            on ${tourResult.rows[0].event_date} for ${guideResult.rows[0].school}.<br><br>
             \t - <strong> The client and tour details </strong><br>\t\t
             - <strong> Client name:</strong> ${clientResult.rows[0].name}<br>\t\t
             - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
             - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].event_date} <br>\t\t
             - <strong> Tour comments: <strong> ${deleteResult.rows[0].comments} <br><br>
-            \t - <strong> The guide details </strong><br>\t\t
+            \t- <strong> The guide details </strong><br>\t\t
             - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
             - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
-            - <strong> Guide School: <strong> ${guideResult.rows[0].school} <br><br>
-            Let's get to work and secure some $$$!
+            - <strong> Guide School: </strong> ${guideResult.rows[0].school} <br><br>
+            Let's get to work and secure some $$$!<br><br>
 
             Warmly,<br>
             <strong>TouredIt Team</strong>
