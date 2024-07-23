@@ -7,6 +7,7 @@ import {
         ResendConfirmationCodeCommand,
         DeleteUserCommand,
         GetUserCommand,
+        AdminDeleteUserCommand,
     } from "@aws-sdk/client-cognito-identity-provider";
 import config from "./config.json";
 export const cognitoClient = new CognitoIdentityProviderClient({
@@ -111,13 +112,11 @@ export const deleteUser = async () => {
 
         await cognitoClient.send(command);
         console.log("User Deleted");
-        sess
         return true;
     } catch (error) {
         console.error("Error deleting user: ", error);
         throw error;
     }
-
 };
 
 export const getUser = async () => {
@@ -138,4 +137,22 @@ export const getUser = async () => {
       throw error;
   }
 
+};
+
+export const removeUser = async (email) => {
+  const params = {
+      UserPoolId: config.userPoolId,
+      Username: email,
+  };
+  try {
+      const command = new AdminDeleteUserCommand(params);
+
+      await cognitoClient.send(command);
+      console.log("User Deleted");
+      
+      return true;
+  } catch (error) {
+      console.error("Error deleting user: ", error);
+      throw error;
+  }
 };
