@@ -4,7 +4,6 @@ import routes from "@/routes";
 import Home from "@/pages/home"
 import SignIn from "@/pages/sign-in";
 import Profile from "@/pages/profile";
-import Account from "@/pages/account";
 import Tours from "@/pages/tours";
 import UpdateHobbies from "@/pages/update-hobbies";
 import UpdateActivities from "@/pages/update-activities";
@@ -31,7 +30,6 @@ function App() {
         <Route path="*" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/sign-in" element={isAuthenticated() ?  <Navigate replace to="/home" /> : <SignIn />} />
-        <Route path="/account" element={isAuthenticated() ?  <Account /> : <Navigate replace to="/home" />} />
         <Route path="/profile" element={isAuthenticated() ?  <Profile /> : <Navigate replace to="/home" />} />
         <Route path="/tours" element={isAuthenticated() ?  <Tours /> : <Navigate replace to="/home" />} />
         <Route path="/update-hobbies" element={isAuthenticated() ?  <UpdateHobbies /> : <Navigate replace to="/home" />} />

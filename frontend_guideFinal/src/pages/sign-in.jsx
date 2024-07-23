@@ -39,7 +39,6 @@ export function SignIn() {
 
     try {
       const session = await signIn(email, password);
-      console.log('Sign in successful', session);
       if (session && typeof session.AccessToken !== 'undefined') {
         sessionStorage.setItem('accessToken', session.AccessToken);
         if (!sessionStorage.getItem('accessToken')) {

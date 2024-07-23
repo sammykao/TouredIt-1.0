@@ -11,7 +11,6 @@ export function Profile() {
   const email = sessionStorage.username;
 
   useEffect(() => {
-    console.log(email);
     axios.post("http://localhost:3001/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);

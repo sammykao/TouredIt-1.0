@@ -14,13 +14,11 @@ export function Tours() {
   const [pendingTours, setPendingTours] = useState([]);
 
   useEffect(() => {
-    console.log(email);
     axios.post("http://localhost:3001/api/retGuideInfo", { email })
       .then(response => {
         setResponseData(response.data);
         const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
         setImageUrl(newImageUrl);
-        
       })
       .catch(error => {
         setError(error);
@@ -42,7 +40,6 @@ export function Tours() {
   }, [email]);
 
   const handleConfirm = (id) => {
-    console.log("tour confirmed");
     axios.post("http://localhost:3001/api/confirmTour", { id })
       .then(confResponse => {
         console.log(confResponse);
@@ -51,11 +48,11 @@ export function Tours() {
         setError(error);
         return;
       });
+      window.location.href = "/profile";
   };
 
   const handleCancel = (id) => {
-    console.log("tour confirmed");
-    axios.post("http://localhost:3001/api/", { id })
+    axios.post("http://localhost:3001/api/cancelTour", { id })
       .then(confResponse => {
         console.log(confResponse);
       })
@@ -63,10 +60,10 @@ export function Tours() {
         setError(error);
         return;
       });
+      window.location.href = "/profile";
   };
 
   const handleReject = (id) => {
-    console.log("tour rejected");
     axios.post("http://localhost:3001/api/declineTour", { id })
       .then(decResponse => {
         console.log(decResponse);
@@ -75,6 +72,7 @@ export function Tours() {
         setError(error);
         return;
       });
+      window.location.href = "/profile";
   };
 
 
@@ -126,7 +124,7 @@ export function Tours() {
           className="bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline"
         >
           Log Out
-        </Button>
+        </Button> 
       </div>
            </div>
         <div className='min-h-screen bg-gray-100'>
@@ -174,19 +172,36 @@ export function Tours() {
                   <li key={index} className="py-4 flex space-x-3">
                     <div className="flex-1 sm:px-6">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-md font-medium">{tour.guide}</h3>
+                        <h3 className="text-md font-medium">{tour.guide}</h3> 
                         <p className="text-lg text-gray-700">{new Date(tour.date).toLocaleDateString()}</p>
-                        <button 
-                        className="bg-red-400 hover:bg-red-200 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mr-1"
-                        onClick={() => {
-                            const confirmBox = window.confirm(
-                                `Are you sure you want to CANCEL this tour on ${new Date(tour.date).toLocaleDateString()}?`
-                            )
-                            if (confirmBox === true) {
-                                handleCancel(tour.id);
-                            }
-                        }}>Cancel
-                        </button> 
+                        {(() => {
+  const tourDate = new Date(tour.date);
+  const currentDate = new Date();
+
+  // Reset time to midnight for date-only comparison
+  const tourDateOnly = new Date(tourDate.setHours(0, 0, 0, 0));
+  const currentDateOnly = new Date(currentDate.setHours(0, 0, 0, 0));
+
+  return tourDateOnly > currentDateOnly ? (
+    <button 
+      className="bg-red-400 hover:bg-red-200 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mr-1"
+      onClick={() => {
+        const confirmBox = window.confirm(
+          `Are you sure you want to CANCEL this tour on ${tourDate.toLocaleDateString()}?`
+        );
+        if (confirmBox) {
+          handleCancel(tour.id);
+        }
+      }}
+    >
+      Cancel
+    </button>
+  ) : (
+    <h3 className="text-md font-medium">Completed</h3>
+  );
+})()}
+
+                     
                       </div>
                       <p className="text-md text-gray-500">{tour.school}</p>
                     </div>
@@ -266,3 +281,4 @@ export function Tours() {
 }
 
 export default Tours;
+
