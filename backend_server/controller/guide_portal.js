@@ -315,41 +315,51 @@ exports.retrieveInvolvement = async (req, res) => {
 
 exports.retrieveTours = async (req, res) => {
     try {
-        const account = req.body; // Assuming req.body contains the new account data
-
+        const { email } = req.body; // Assuming req.body contains the client email
+        console.log(email);
+        if (!email) {
+            res.status(400).json({ message: 'Invalid guide email' });
+            return;
+        }
         // Perform validation on the  account
         // if (!account.email) {
         //     res.status(400).json({ message: 'Invalid account data' });
         //     return;
         // }
-
+ 
+ 
         // Retrieve the account from the database
         //const query = "SELECT event_date, event_time, school, completed, feedback, confirmed FROM tours WHERE tourguide_id = $1";
-        const query = `
-            WITH guide AS (
-                SELECT id
-                FROM tour_guides
-                WHERE email = $1
-            )
-            SELECT event_date, event_time, school, completed, feedback, confirmed
-            FROM tours
-            JOIN guide ON tours.tour_guide_id = guide.id;
-            `;
-        const values = [account.email];
-
-        const result = await db.query(query, values);
-
-        if (result == 0) {
-            res.status(404).json({ message: "No tours found"});
-        } else {
-            res.status(201).json({ account: result.rows });
-        }
-        
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-
-};
+       
+            const query = `
+            SELECT
+                t.event_date AS date, t.school, c.name AS guide, t.confirmed, t.id AS id
+            FROM
+                tours t
+            INNER JOIN
+                tour_guides tg ON t.tour_guide_id = tg.id
+            INNER JOIN
+                clients c ON t.client_id = c.id
+            WHERE
+                tg.email = $1`;
+                const values = [email];
+                const result = await db.query(query, values);
+                if (result.rows.length === 0) {
+                    res.status(404).json({ message: "No tours found for the specified client" });
+                } else {
+                    // Separate the tours into confirmed and non-confirmed arrays
+                    const confirmedTours = result.rows.filter(tour => tour.confirmed);
+                    const nonConfirmedTours = result.rows.filter(tour => !tour.confirmed);
+                   
+                    res.status(200).json({ confirmedTours, nonConfirmedTours });
+                }
+            } catch (error) {
+                res.status(500).json({ message: error.message });
+            }
+ 
+ 
+ };
+ 
 
 exports.retrieveMetrics = async (req, res) => {
     try {
@@ -524,7 +534,7 @@ exports.confirmTour = async (req, res) => {
         }
         // data should be dict or json with date field and tour_id field
         
-        const tourQuery = "SELECT tourguide_id, client_id, date, FROM tours WHERE id = $1";
+        const tourQuery = "SELECT tour_guide_id, client_id, event_date FROM tours WHERE id = $1";
         const tourResult = await db.query(tourQuery, [id]);
         if (tourResult.rows.length === 0) {
             res.status(404).json({ message: 'Tour not found' });
@@ -532,11 +542,11 @@ exports.confirmTour = async (req, res) => {
         }
 
 
-        const guideQuery = "SELECT email, name, school FROM tour_guides WHERE id = $1";
+        const guideQuery = `SELECT email, name, school FROM tour_guides WHERE id = $1;`;
         const clientQuery = "SELECT email, name, phone FROM clients WHERE id = $1";
 
 
-        const guideResult = await db.query(guideQuery, [tourResult.rows[0].tourguide_id]);
+        const guideResult = await db.query(guideQuery, [tourResult.rows[0].tour_guide_id]);
         if (guideResult.rows.length === 0) {
             res.status(404).json({ message: 'Guide not found' });
             return;
@@ -664,7 +674,7 @@ exports.deleteTour = async (req, res) => {
             return;
         }
 
-        const tourQuery = "SELECT tourguide_id, client_id, date, FROM tours WHERE id = $1";
+        const tourQuery = "SELECT tour_guide_id, client_id, event_date FROM tours WHERE id = $1";
         const tourResult = await db.query(tourQuery, [id]);
         if (tourResult.rows.length === 0) {
             res.status(404).json({ message: 'Tour not found' });
@@ -676,7 +686,7 @@ exports.deleteTour = async (req, res) => {
         const clientQuery = "SELECT email, name, phone FROM clients WHERE id = $1";
 
 
-        const guideResult = await db.query(guideQuery, [tourResult.rows[0].tourguide_id]);
+        const guideResult = await db.query(guideQuery, [tourResult.rows[0].tour_guide_id]);
         if (guideResult.rows.length === 0) {
             res.status(404).json({ message: 'Guide not found' });
             return;
@@ -749,7 +759,7 @@ exports.deleteTour = async (req, res) => {
             - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
             - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
             - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
-            - <strong> Tour comments: <strong> ${insertResult.rows[0].comments} <br><br>
+            - <strong> Tour comments: <strong> ${deleteResult.rows[0].comments} <br><br>
             \t - <strong> The guide details </strong><br>\t\t
             - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
             - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
@@ -767,7 +777,126 @@ exports.deleteTour = async (req, res) => {
             }
         });
 
-        res.status(200).json({ message: 'Tour request submitted successfully', tour: insertResult.rows[0] });
+        res.status(200).json({ message: 'Tour request submitted successfully', tour: deleteResult.rows[0] });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.cancelTour = async (req, res) => {
+    try {
+        const { id } = req.body; // Assuming req.body contains the client email
+        if (!id) {
+            res.status(400).json({ message: 'Invalid request: Missing required fields' });
+            return;
+        }
+
+        const tourQuery = "SELECT tour_guide_id, client_id, event_date FROM tours WHERE id = $1";
+        const tourResult = await db.query(tourQuery, [id]);
+        if (tourResult.rows.length === 0) {
+            res.status(404).json({ message: 'Tour not found' });
+            return;
+        }
+
+
+        const guideQuery = "SELECT email, name, school FROM tour_guides WHERE id = $1";
+        const clientQuery = "SELECT email, name, phone FROM clients WHERE id = $1";
+
+
+        const guideResult = await db.query(guideQuery, [tourResult.rows[0].tour_guide_id]);
+        if (guideResult.rows.length === 0) {
+            res.status(404).json({ message: 'Guide not found' });
+            return;
+        }
+        const clientResult = await db.query(clientQuery, [tourResult.rows[0].client_id]);
+        if (clientResult.rows.length === 0) {
+            res.status(404).json({ message: 'Client not found' });
+            return;
+        }
+
+        const deleteQuery = `DELETE FROM tours WHERE id = $1 RETURNING *`;
+        const deleteResult = await db.query(deleteQuery, [id]);
+        if (deleteResult.rows.length === 0) {
+            res.status(404).json({ message: 'Tour not found' });
+            return;
+        }
+
+
+        // Send email to the client
+        let mailOptions = {
+            from: process.env.EMAIL_USERNAME, // sender address
+            to: clientResult.rows[0].email, // receiver address
+            subject: "A guide has canceld your tour request",
+            html: `<p>Hi ${clientResult.rows[0].name}<br><br>
+            \t${guideResult.rows[0].name} has canceled your tour request for ${guideResult.rows[0].school}
+            on ${tourResult.rows[0].date}. A member of our team will reach out to make sure you have a new match for that date.<br><br>
+            Warmly,<br>
+            <strong>TouredIt Team</strong>
+            </p>`
+        };
+
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+        // Send email to the guide
+        mailOptions = {
+            from: process.env.EMAIL_USERNAME, // sender address
+            to: guideResult.rows[0].email, // receiver address
+            subject: "You have canceled a tour request",
+            html: `<p>Hi! ${guideResult.rows[0].name}<br><br>
+            <em>Unfortunate to see you cancel a tour</em>, 
+            but thank you for being proactive. <br><br>
+            If you know anybody that could possibly give a tour like this on your campus respond 
+            to this email or text 305-206-7966 for a quicker response.
+            Thank you for your dedication and enthusiasm!<br><br>
+            Warmly,<br>
+            <strong>TouredIt Team<strong>
+            </p>`
+        };
+
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+        // Send email to the client
+        mailOptions = {
+            from: process.env.EMAIL_USERNAME, // sender address
+            to: "joshua.bernstein@touredit.com", // receiver address
+            subject: "A guide has canceled a tour request",
+            html: `<p>Hi Josh,<br><br>
+            \t${guideResult.rows[0].name} has canceled a tour request from ${clientResult.rows[0].name}
+            on ${tourResult.rows[0].date} for ${guideResult.rows[0].school}.<br><br>
+            \t - <strong> The client and tour details </strong><br>\t\t
+            - <strong> Client name:</strong> ${clientResult.rows[0].name}<br>\t\t
+            - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
+            - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
+            - <strong> Tour comments: <strong> ${deleteResult.rows[0].comments} <br><br>
+            \t - <strong> The guide details </strong><br>\t\t
+            - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
+            - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
+            - <strong> Guide School: <strong> ${guideResult.rows[0].school} <br><br>
+            Let's get to work and secure some $$$!
+
+            Warmly,<br>
+            <strong>TouredIt Team</strong>
+            </p>`
+        };
+
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+        res.status(200).json({ message: 'Tour request submitted successfully', tour: deleteResult.rows[0] });
 
     } catch (error) {
         console.log(error);

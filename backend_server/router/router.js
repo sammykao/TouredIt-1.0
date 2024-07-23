@@ -46,6 +46,7 @@ router.post('/retTours', portal_controls.retrieveTours);
 // router.post('/retMetrics', portal_controls.retrieveMetrics);
 router.post('/confirmTour', portal_controls.confirmTour);
 router.post('/declineTour', portal_controls.deleteTour);
+router.post('/cancelTour', portal_controls.cancelTour);
 
 
 
