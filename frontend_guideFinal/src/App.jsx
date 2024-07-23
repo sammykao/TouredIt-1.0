@@ -3,7 +3,6 @@ import { Navbar } from "@/tools/layout";
 import routes from "@/routes";
 import Home from "@/pages/home"
 import SignIn from "@/pages/sign-in";
-import SignUp from "@/pages/sign-up";
 import Profile from "@/pages/profile";
 import Account from "@/pages/account";
 import Tours from "@/pages/tours";
@@ -39,7 +38,7 @@ function App() {
         <Route path="/update-hobbies" element={isAuthenticated() ?  <UpdateHobbies /> : <Navigate replace to="/home" />} />
         <Route path="/update-activities" element={isAuthenticated() ?  <UpdateActivities /> : <Navigate replace to="/home" />} />
       </Routes>
-      {!(pathname == '/profile' || pathname == '/why-touredit' || pathname == '/update-hobbies') || pathname == '/update-activities' && (
+      {!(pathname == '/why-touredit') && (
       <Footer />
       )
       }

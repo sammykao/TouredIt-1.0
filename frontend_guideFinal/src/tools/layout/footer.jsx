@@ -5,7 +5,7 @@ const year = new Date().getFullYear();
 
 export function Footer({ title, description, socials, menus, copyright }) {
   return (
-    <footer className="bg-gray-500 relative px-4 pt-8 pb-6">
+    <footer className="bg-gray-100 relative px-4 pt-8 pb-6">
       <div className="container mx-auto">
         <div className="flex flex-wrap pt-6 text-center lg:text-left">
           <div className="w-full px-4 lg:w-6/12">
@@ -109,7 +109,7 @@ Footer.defaultProps = {
       items: [
         { name: "Home", path: "/home" },
         { name: "Sign Up", path: "/guide-sign-up" },
-        { name: "Why TouredIt?", path: "/why-touredit" }
+        { name: "Sign In", path: "/sign-in" }
       ],
     },
     {

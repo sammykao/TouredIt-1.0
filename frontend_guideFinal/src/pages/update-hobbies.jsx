@@ -253,7 +253,7 @@ export function UpdateHobbies() {
         </div>
       </div>
       
-      <div className="bg-gray-100 p-4">
+      <div className="bg-gray-100 min-h-screen p-4">
         <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-8">
 
           <div className="mt-2">
