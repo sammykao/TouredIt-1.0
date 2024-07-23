@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Checkbox, Button, Textarea, Typography } from "@material-tailwind/react";
-import { signUp, confirmSignUp, resendConfirmationCode } from './../cognitoConfig';
+import { signUp, confirmSignUp, resendConfirmationCode, removeUser } from './../cognitoConfig';
 import majors from './majors.json'; 
 
 async function postImage({ image, description }) {
@@ -49,6 +49,7 @@ export function GuideSignUp() {
   });
 
   const [responseData, setResponseData] = useState(null);
+  const [verified, setVerified] = useState(false);
   const [error, setError] = useState(null);
   const [schools, setSchools] = useState([]);
   const [filteredSchools, setFilteredSchools] = useState([]);
@@ -76,7 +77,23 @@ export function GuideSignUp() {
     };
 
     fetchSchools();
+
+
   }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isVerifying && !verified && formData.email) {
+        removeUser(formData.email);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isVerifying, verified, formData.email]);
 
   const handleSchoolChange = (e) => {
     const inputValue = e.target.value;
@@ -185,6 +202,7 @@ export function GuideSignUp() {
     try {
       await confirmSignUp(email, verificationCode);
       setMessage("Verification successful! You can now sign in.");
+      setVerified(true);
       insertBackend();
       setPostData({
         name: '',
