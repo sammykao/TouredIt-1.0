@@ -517,23 +517,31 @@ exports.retrieveGuideInfo = async (req, res) => {
 
 exports.confirmTour = async (req, res) => {
     try {
-        const { data, email, guide_email } = req.body; // Assuming req.body contains the client email
-        if (!email || !data.tour_id || !data.date || !guide_email) {
+        const { id } = req.body; // Assuming req.body contains the client email
+        if (!id) {
             res.status(400).json({ message: 'Invalid request: Missing required fields' });
             return;
         }
         // data should be dict or json with date field and tour_id field
         
-        const guideQuery = "SELECT name, school FROM tour_guides WHERE email = $1";
-        const clientQuery = "SELECT name, phone FROM clients WHERE email = $1";
+        const tourQuery = "SELECT tourguide_id, client_id, date, FROM tours WHERE id = $1";
+        const tourResult = await db.query(tourQuery, [id]);
+        if (tourResult.rows.length === 0) {
+            res.status(404).json({ message: 'Tour not found' });
+            return;
+        }
 
 
-        const guideResult = await db.query(guideQuery, [guide_email]);
+        const guideQuery = "SELECT email, name, school FROM tour_guides WHERE id = $1";
+        const clientQuery = "SELECT email, name, phone FROM clients WHERE id = $1";
+
+
+        const guideResult = await db.query(guideQuery, [tourResult.rows[0].tourguide_id]);
         if (guideResult.rows.length === 0) {
             res.status(404).json({ message: 'Guide not found' });
             return;
         }
-        const clientResult = await db.query(clientQuery, [email]);
+        const clientResult = await db.query(clientQuery, [tourResult.rows[0].client_id]);
         if (clientResult.rows.length === 0) {
             res.status(404).json({ message: 'Client not found' });
             return;
@@ -541,7 +549,7 @@ exports.confirmTour = async (req, res) => {
 
         // Update in db to confirmed
         const updateQuery = `UPDATE tours SET confirmed = true WHERE id = $1 RETURNING *`;
-        const insertResult = await db.query(updateQuery, [data.tour_id]);
+        const insertResult = await db.query(updateQuery, [id]);
         if (insertResult.rows.length === 0) {
             res.status(404).json({ message: 'Tour not found' });
             return;
@@ -552,11 +560,11 @@ exports.confirmTour = async (req, res) => {
         // Send email to the client
         let mailOptions = {
             from: process.env.EMAIL_USERNAME, // sender address
-            to: email, // receiver address
+            to: clientResult.rows[0].email, // receiver address
             subject: "A guide has accepted your tour request",
-            html: `<p>Hi ${clientResult.row[0].name}<br><br>
-            \t${guideResult.row[0].name} has accepted your tour request for ${guideResult.row[0].school}
-            on ${data.date}. They will reach out to arrange and coordinate on logistics and timing.<br><br>
+            html: `<p>Hi ${clientResult.rows[0].name}<br><br>
+            \t${guideResult.rows[0].name} has accepted your tour request for ${guideResult.rows[0].school}
+            on ${tourResult.rows[0].date}. They will reach out to arrange and coordinate on logistics and timing.<br><br>
             Warmly,<br>
             <strong>TouredIt Team</strong>
             </p>`
@@ -571,7 +579,7 @@ exports.confirmTour = async (req, res) => {
         // Send email to the guide
         mailOptions = {
             from: process.env.EMAIL_USERNAME, // sender address
-            to: guide_email, // receiver address
+            to: guideResult.rows[0].email, // receiver address
             subject: "Thanks for accepting a tour",
             html: `<p>Hi!<br><br>
             <em>Congrats on being selected to give a tour </em>, 
@@ -579,16 +587,16 @@ exports.confirmTour = async (req, res) => {
             Here are your next steps to ensure a smooth and 
             successful tour experience. <br><br>
             \t 1. <strong> The client and tour details </strong><br>\t\t
-            - <strong> Client name:</strong> ${clientResult.row[0].name} (Can be either parent/adult or student)<br>\t\t
-            - <strong> Client email:</strong> ${email}<br>\t\t
-            - <strong> Client phone:</strong> ${clientResult.row[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${data.date}
-            - <strong> Tour comments: <strong> ${insertResult.row[0].comments} <br><br>
+            - <strong> Client name:</strong> ${clientResult.rows[0].name} (Can be either parent/adult or student)<br>\t\t
+            - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
+            - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
+            - <strong> Tour comments: <strong> ${insertResult.rows[0].comments} <br><br>
 
             \t 2. <strong> Introduce yourself via text or email </strong><br>\t\t
             - Start by sending a text to {introducing yoursel. Here's a script to help you:<br>\t\t\t
-            - <strong> Your Name:<strong> "Hi, ${clientResult.row[0].name} my name is __."<br>\t\t\t
-            - <strong> Date and School:<strong>"I'm excited to show you or your child around ${guideResult.row[0].school} on ${data.date}."<br>\t\t\t
+            - <strong> Your Name:<strong> "Hi, ${clientResult.rows[0].name} my name is __."<br>\t\t\t
+            - <strong> Date and School:<strong>"I'm excited to show you or your child around ${guideResult.rows[0].school} on ${tourResult.rows[0].date}."<br>\t\t\t
             - <strong> Major and Interests:</strong> Share your major, any notable clubs, or activities you participate in that might interest them.<br>\t\t
             - Coordinate timing, meeting, and special request logistics<br>\t\t\t
             - <strong>Time:</strong> This is the most important. See when they would prefer or can tour on that date. If you cannot make ends meet
@@ -614,18 +622,18 @@ exports.confirmTour = async (req, res) => {
             to: "joshua.bernstein@touredit.com", // receiver address
             subject: "A guide has accepted a tour request",
             html: `<p>Hi Josh,<br><br>
-            \t${guideResult.row[0].name} has accepted a tour request from ${clientResult.row[0].name}
-            on ${data.date} for ${guideResult.row[0].school}.<br><br>
+            \t${guideResult.rows[0].name} has accepted a tour request from ${clientResult.rows[0].name}
+            on ${tourResult.rows[0].date} for ${guideResult.rows[0].school}.<br><br>
             \t - <strong> The client and tour details </strong><br>\t\t
-            - <strong> Client name:</strong> ${clientResult.row[0].name} <br>\t\t
-            - <strong> Client email:</strong> ${email}<br>\t\t
-            - <strong> Client phone:</strong> ${clientResult.row[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${data.date}
-            - <strong> Tour comments: <strong> ${insertResult.row[0].comments} <br><br>
+            - <strong> Client name:</strong> ${clientResult.rows[0].name} <br>\t\t
+            - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
+            - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
+            - <strong> Tour comments: <strong> ${insertResult.rows[0].comments} <br><br>
             \t - <strong> The guide details </strong><br>\t\t
-            - <strong> Guide name:</strong> ${guideResult.row[0].name}<br>\t\t
-            - <strong> Guide email:</strong> ${guide_email}<br>\t\t
-            - <strong> Guide School: <strong> ${guideResult.row[0].school} <br><br>
+            - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
+            - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
+            - <strong> Guide School: <strong> ${guideResult.rows[0].school} <br><br>
             Please monitor. Thanks. $$$!!!!!!!
 
             Warmly,<br>
@@ -650,28 +658,37 @@ exports.confirmTour = async (req, res) => {
 
 exports.deleteTour = async (req, res) => {
     try {
-        const { data, email, guide_email } = req.body; // Assuming req.body contains the client email
-        if (!email || !data.tour_id || !data.date || !guide_email) {
+        const { id } = req.body; // Assuming req.body contains the client email
+        if (!id) {
             res.status(400).json({ message: 'Invalid request: Missing required fields' });
             return;
         }
 
-        // data should be dict or json with date field and tour_id field
-        
-        const guideResult = await db.query(guideQuery, [guide_email]);
+        const tourQuery = "SELECT tourguide_id, client_id, date, FROM tours WHERE id = $1";
+        const tourResult = await db.query(tourQuery, [id]);
+        if (tourResult.rows.length === 0) {
+            res.status(404).json({ message: 'Tour not found' });
+            return;
+        }
+
+
+        const guideQuery = "SELECT email, name, school FROM tour_guides WHERE id = $1";
+        const clientQuery = "SELECT email, name, phone FROM clients WHERE id = $1";
+
+
+        const guideResult = await db.query(guideQuery, [tourResult.rows[0].tourguide_id]);
         if (guideResult.rows.length === 0) {
             res.status(404).json({ message: 'Guide not found' });
             return;
         }
-
-        const clientResult = await db.query(clientQuery, [email]);
+        const clientResult = await db.query(clientQuery, [tourResult.rows[0].client_id]);
         if (clientResult.rows.length === 0) {
             res.status(404).json({ message: 'Client not found' });
             return;
         }
 
         const deleteQuery = `DELETE FROM tours WHERE id = $1 RETURNING *`;
-        const deleteResult = await db.query(deleteQuery, [data.tour_id]);
+        const deleteResult = await db.query(deleteQuery, [id]);
         if (deleteResult.rows.length === 0) {
             res.status(404).json({ message: 'Tour not found' });
             return;
@@ -681,11 +698,11 @@ exports.deleteTour = async (req, res) => {
         // Send email to the client
         let mailOptions = {
             from: process.env.EMAIL_USERNAME, // sender address
-            to: email, // receiver address
+            to: clientResult.rows[0].email, // receiver address
             subject: "A guide has declined your tour request",
-            html: `<p>Hi ${clientResult.row[0].name}<br><br>
-            \t${guideResult.row[0].name} has declined your tour request for ${guideResult.row[0].school}
-            on ${data.date}. A member of our team will reach out to make sure you have a new match for that date.<br><br>
+            html: `<p>Hi ${clientResult.rows[0].name}<br><br>
+            \t${guideResult.rows[0].name} has declined your tour request for ${guideResult.rows[0].school}
+            on ${tourResult.rows[0].date}. A member of our team will reach out to make sure you have a new match for that date.<br><br>
             Warmly,<br>
             <strong>TouredIt Team</strong>
             </p>`
@@ -700,9 +717,9 @@ exports.deleteTour = async (req, res) => {
         // Send email to the guide
         mailOptions = {
             from: process.env.EMAIL_USERNAME, // sender address
-            to: guide_email, // receiver address
+            to: guideResult.rows[0].email, // receiver address
             subject: "You have declined a tour request",
-            html: `<p>Hi! ${guideResult.row[0].name}<br><br>
+            html: `<p>Hi! ${guideResult.rows[0].name}<br><br>
             <em>Unfortunate to see you decline a tour</em>, 
             but thank you for being proactive. <br><br>
             If you know anybody that could possibly give a tour like this on your campus respond 
@@ -725,18 +742,18 @@ exports.deleteTour = async (req, res) => {
             to: "joshua.bernstein@touredit.com", // receiver address
             subject: "A guide has declined a tour request",
             html: `<p>Hi Josh,<br><br>
-            \t${guideResult.row[0].name} has declined a tour request from ${clientResult.row[0].name}
-            on ${data.date} for ${guideResult.row[0].school}.<br><br>
+            \t${guideResult.rows[0].name} has declined a tour request from ${clientResult.rows[0].name}
+            on ${tourResult.rows[0].date} for ${guideResult.rows[0].school}.<br><br>
             \t - <strong> The client and tour details </strong><br>\t\t
-            - <strong> Client name:</strong> ${clientResult.row[0].name}<br>\t\t
-            - <strong> Client email:</strong> ${email}<br>\t\t
-            - <strong> Client phone:</strong> ${clientResult.row[0].phone}<br>\t\t
-            - <strong> Tour Date: </strong> ${data.date}
-            - <strong> Tour comments: <strong> ${insertResult.row[0].comments} <br><br>
+            - <strong> Client name:</strong> ${clientResult.rows[0].name}<br>\t\t
+            - <strong> Client email:</strong> ${clientResult.rows[0].email}<br>\t\t
+            - <strong> Client phone:</strong> ${clientResult.rows[0].phone}<br>\t\t
+            - <strong> Tour Date: </strong> ${tourResult.rows[0].date}
+            - <strong> Tour comments: <strong> ${insertResult.rows[0].comments} <br><br>
             \t - <strong> The guide details </strong><br>\t\t
-            - <strong> Guide name:</strong> ${guideResult.row[0].name}<br>\t\t
-            - <strong> Guide email:</strong> ${guide_email}<br>\t\t
-            - <strong> Guide School: <strong> ${guideResult.row[0].school} <br><br>
+            - <strong> Guide name:</strong> ${guideResult.rows[0].name}<br>\t\t
+            - <strong> Guide email:</strong> ${guideResult.rows[0].email}<br>\t\t
+            - <strong> Guide School: <strong> ${guideResult.rows[0].school} <br><br>
             Let's get to work and secure some $$$!
 
             Warmly,<br>
