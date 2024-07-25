@@ -51,8 +51,7 @@ export function ContactUs() {
         }
 
         try {
-            await axios.post('http://localhost:3001/api/sendMail', formData);
-            console.log('Message sent');
+            await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/sendMail', formData);
         } catch (error) {
             console.error('Error sending message:', error);
         }

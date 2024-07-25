@@ -17,7 +17,7 @@ export const routes = [
   },
   {
     name: "Guide Portal",
-    href: "https://www.touredit.com",
+    href: "https://www.toureditguides.com",
     element: "",
   }
 ];

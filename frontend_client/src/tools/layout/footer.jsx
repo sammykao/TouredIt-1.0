@@ -118,7 +118,7 @@ Footer.defaultProps = {
       items: [
         {
           name: "Touredit Guide Portal",
-          path: "https://www.touredit.com",
+          path: "https://www.toureditguides.com",
         },
         {
           name: "Contact Us",

@@ -23,7 +23,7 @@ export function TermsAndConditions() {
           <Typography variant="h2" className="font-bold mb-4 text-center">Terms and Conditions</Typography>
           <div className="pdf-viewer-container h-[80vh]">
             <object data={pdfUrl} type="application/pdf" width="100%" height="100%">
-              <p>Your browser does not support PDFs. <a href={pdfUrl}>Download the PDF</a>.</p>
+              <p>Your browser does not support PDFs. <a href="https://touredit-logos.s3.us-east-2.amazonaws.com/terms.pdf">Download the PDF</a>.</p>
             </object>
           </div>
         </div>

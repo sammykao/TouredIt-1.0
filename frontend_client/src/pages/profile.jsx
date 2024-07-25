@@ -15,7 +15,7 @@ export function Profile() {
   const email = sessionStorage.username;
 
   useEffect(() => {
-    axios.post("http://localhost:3001/api/accountInfo", { email })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/accountInfo", { email })
       .then(response => {
         setAccountInfo(response.data.account);
         setFormData(response.data.account);
@@ -27,7 +27,7 @@ export function Profile() {
         return;
       });
 
-    axios.post("http://localhost:3001/api/clientTours", { email })
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/clientTours", { email })
       .then(response => {
         setConfirmedTours(response.data.confirmedTours);
         setPendingTours(response.data.nonConfirmedTours);
@@ -52,7 +52,7 @@ export function Profile() {
   };
 
   const handleEditSave = () => {
-    axios.post("http://localhost:3001/api/updateClient", formData)
+    axios.post("https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/updateClient", formData)
       .then(response => {
         setAccountInfo(response.data.account);
         setIsEditing(false);

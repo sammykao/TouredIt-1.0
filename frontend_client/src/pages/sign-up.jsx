@@ -23,15 +23,13 @@ export function SignUp() {
     const { email, name, phoneNumber } = formData;
     const newAccount = { email, name, phone: phoneNumber };
     try {
-      const response = await axios.post('http://localhost:3001/api/newClient', newAccount);
-      console.log(response);
+      const response = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/newClient', newAccount);
       return;
     } catch (error) {
       console.error('Error Inserting Account:', error);
     }
     try {
-      const response = await axios.post('http://localhost:3001/api/updateClient', newAccount);
-      console.log(response);
+      const response = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/updateClient', newAccount);
       return;
     } catch (error) {
       console.error('Error Updating Account:', error);
@@ -54,7 +52,6 @@ export function SignUp() {
       return "Name is required";
     }
     if (!passwordRegex.test(password)) {
-      console.log(password);
       return "Password must be at least 8 characters long, contain a number and an uppercase letter";
     }
     if (password !== confirmPassword) {
@@ -79,7 +76,6 @@ export function SignUp() {
     e.preventDefault();
     const validationError = validateForm();
     if (validationError) {
-      console.log(validationError);
       setError(validationError);
       return;
     }
@@ -92,9 +88,7 @@ export function SignUp() {
       setIsVerifying(true);
       setError("");
     } catch (error) {
-      console.log(error.message);
       if (error.message === 'User already exists') {
-        console.log("HIII");
         try {
           await resendConfirmationCode({ username: email });
           setMessage("Account already exists but is not confirmed. Resending verification code.");
@@ -128,7 +122,7 @@ export function SignUp() {
       setIsVerifying(false);
       setError("");
     } catch (error) {
-      if (error.message = "User cannot be confirmed. Current status is CONFIRMED") {
+      if (error.message == "User cannot be confirmed. Current status is CONFIRMED") {
         alert("You already have an account. Please login.");
         window.location.href = "/sign-in";
       }
@@ -140,13 +134,9 @@ export function SignUp() {
     const { email } = formData;
 
     if (window.confirm("Are you sure you want to resend the confirmation code?")) {
-      try {
         await resendConfirmationCode({ username: email });
         setMessage("Verification code resent. Please check your email.");
         setError("");
-      } catch (error) {
-        setError(error.message || JSON.stringify(error));
-      }
     }
   };
 

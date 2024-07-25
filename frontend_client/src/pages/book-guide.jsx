@@ -10,7 +10,6 @@ const BookGuide = () => {
   const { email } = location.state || {};
   console.log(email);
   const [guideInfo, setGuideInfo] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
@@ -28,10 +27,8 @@ const BookGuide = () => {
       }
 
       try {
-        const response = await axios.post('http://localhost:3001/api/guideInfo', { email });
+        const response = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/guideInfo', { email });
         setGuideInfo(response.data.guide);
-        const newImageUrl = `http://localhost:3001/images/${response.data.guide.profile_image_url}`;
-        setImageUrl(newImageUrl);
       } catch (err) {
         setError('Error fetching guide information');
         console.error(err);
@@ -50,12 +47,11 @@ const BookGuide = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:3001/api/sendBookingRequest', 
+      await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/sendBookingRequest', 
       { data: bookingData, 
         school: guideInfo.school,
         email: sessionStorage.username, 
         guide_email: email });
-      console.log('Request submitted:', bookingData);
       setBookingData({
         date: '',
         comments: ''
@@ -142,7 +138,7 @@ const BookGuide = () => {
         />
       </div>
       <div className="bg-white mt-24 shadow rounded-lg max-w-5xl mx-auto p-6 flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
-        <img src={imageUrl} alt={`${guideInfo?.name}'s profile`} className="rounded-full w-36 h-36 border border-gray-300 mx-auto md:mx-0" />
+        <img src={guideInfo?.profile_image_url} alt={`${guideInfo?.name}'s profile`} className="rounded-full w-36 h-36 border border-gray-300 mx-auto md:mx-0" />
         <div className="flex-1">
           <h2 className="text-3xl font-bold mb-2 text-center md:text-left">{guideInfo?.name}</h2>
           <div className="text-gray-700 text-center md:text-left">

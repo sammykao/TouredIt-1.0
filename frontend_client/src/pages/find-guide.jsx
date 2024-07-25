@@ -30,7 +30,7 @@ const FindGuide = () => {
       if (!school) return;
 
       try {
-        const response = await axios.post('http://localhost:3001/api/allGuides', { school });
+        const response = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/allGuides', { school });
         setGuides(response.data.guides);
         setFilteredGuides(response.data.guides);
       } catch (error) {
@@ -58,7 +58,7 @@ const FindGuide = () => {
       return;
     } 
     try {
-      await axios.post('http://localhost:3001/api/sendCustomRequest', { data: formData, email: sessionStorage.username });
+      await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/sendCustomRequest', { data: formData, email: sessionStorage.username });
       console.log('Request submitted:', formData);
       setFormData({
         school: school,
@@ -174,7 +174,7 @@ const FindGuide = () => {
               >
                 <div className="flex p-4 items-center justify-center">
                   <img 
-                    src={`http://localhost:3001/images/${guide.profile_image_url}`} 
+                    src={guide.profile_image_url} 
                     alt={guide.name} 
                     className="rounded-full w-24 h-24 border border-gray-300" 
                   />

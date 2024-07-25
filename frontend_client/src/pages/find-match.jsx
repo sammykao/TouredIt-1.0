@@ -13,7 +13,7 @@ const FindMatch = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.post('http://localhost:3001/api/schoolNames');
+        const response = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/schoolNames');
         setSchools(response.data.schools);
         setLoading(false);
       } catch (error) {
