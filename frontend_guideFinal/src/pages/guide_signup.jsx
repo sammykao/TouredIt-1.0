@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Checkbox, Button, Textarea, Typography } from "@material-tailwind/react";
 import { signUp, confirmSignUp, resendConfirmationCode } from './../cognitoConfig';
-import majors from './majors.json'; 
-
-async function postImage({ image }) {
-  const formData = new FormData();
-  formData.append("image", image);
-
-  const result = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/images', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
-  return result.data;
-}
-
+import majors from './majors.json';
+import ProfileUpload from './ProfileUpload';
 
 export function GuideSignUp() {
-
   const [postData, setPostData] = useState({
     name: '',
     email: '',
@@ -32,21 +21,21 @@ export function GuideSignUp() {
     profile_image_url: '',
     instagram: '',
     linkedin: '',
-    password: "",
-    confirmPassword: "",
-    verificationCode: ""
+    password: '',
+    confirmPassword: '',
+    verificationCode: '',
   });
 
   const [hobbyData, setHobbyData] = useState({
     email: '',
     hobby_name: '',
-    description: ''
+    description: '',
   });
 
   const [activityData, setActivityData] = useState({
     email: '',
     activity_name: '',
-    description: ''
+    description: '',
   });
 
   const [responseData, setResponseData] = useState(null);
@@ -56,13 +45,10 @@ export function GuideSignUp() {
   const [filteredSchools, setFilteredSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState('');
   const [loading, setLoading] = useState(true);
-  const [file, setFile] = useState();
-  const [description, setDescription] = useState("");
-  const [images, setImages] = useState([]);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchSchools = async () => {
@@ -114,18 +100,9 @@ export function GuideSignUp() {
     }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFile(file);
-  };
-
   const insertBackend = async () => {
     const { email } = postData;
     try {
-      const result = await postImage({ image: file });
-      postData.profile_image_url = result.imagePath;
-
-      setImages([result.imagePath, ...images]);
       const response = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/newGuide', postData);
       hobbyData.email = email;
       const hobbyresponse = await axios.post('https://zytxastigf5jf3p5qhcb472ba40icqyo.lambda-url.us-east-2.on.aws/api/newHobby', hobbyData);
@@ -145,13 +122,13 @@ export function GuideSignUp() {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (!emailPattern.test(email) || !eduPattern.test(email)) {
-      return "Please enter a valid .edu email address.";
+      return 'Please enter a valid .edu email address.';
     }
     if (!passwordPattern.test(password)) {
-      return "Password must be at least 8 characters long and include an upper case letter, a lower case letter, and a number.";
+      return 'Password must be at least 8 characters long and include an upper case letter, a lower case letter, and a number.';
     }
     if (password !== confirmPassword) {
-      return "Passwords do not match.";
+      return 'Passwords do not match.';
     }
     return null;
   };
@@ -168,18 +145,18 @@ export function GuideSignUp() {
 
     try {
       await signUp(email, password);
-      setMessage("Registration successful! Please check your email for the verification code.");
+      setMessage('Registration successful! Please check your email for the verification code.');
       setIsVerifying(true);
-      setError("");
+      setError('');
     } catch (error) {
       if (error.message === 'User already exists') {
         try {
           await resendConfirmationCode({ username: email });
-          setMessage("Account already exists but is not confirmed. Resending verification code.");
+          setMessage('Account already exists but is not confirmed. Resending verification code.');
           setIsVerifying(true);
-          setError("");
+          setError('');
         } catch (resendError) {
-          setError("Account already exists. Please sign in.");
+          setError('Account already exists. Please sign in.');
         }
       } else {
         setError(error.message || JSON.stringify(error));
@@ -192,7 +169,7 @@ export function GuideSignUp() {
     const { email, verificationCode } = postData;
     try {
       await confirmSignUp(email, verificationCode);
-      setMessage("Verification successful! You can now sign in.");
+      setMessage('Verification successful! You can now sign in.');
       setVerified(true);
       await insertBackend();
       setPostData({
@@ -209,27 +186,27 @@ export function GuideSignUp() {
         profile_image_url: '',
         instagram: '',
         linkedin: '',
-        password: "",
-        confirmPassword: "",
-        verificationCode: ""
+        password: '',
+        confirmPassword: '',
+        verificationCode: '',
       });
       setHobbyData({
         email: '',
         hobby_name: '',
-        description: ''
+        description: '',
       });
       setActivityData({
         email: '',
         activity_name: '',
-        description: ''
+        description: '',
       });
       setIsVerifying(false);
       setIsSubmited(true);
-      setError("");
+      setError('');
     } catch (error) {
-      if (error.message == "User cannot be confirmed. Current status is CONFIRMED") {
-        alert("You already have an account. Please login.");
-        window.location.href = "/sign-in";
+      if (error.message == 'User cannot be confirmed. Current status is CONFIRMED') {
+        alert('You already have an account. Please login.');
+        window.location.href = '/sign-in';
       }
       setError(error.message || JSON.stringify(error));
     }
@@ -238,10 +215,10 @@ export function GuideSignUp() {
   const handleResendCode = async () => {
     const { email } = postData;
 
-    if (window.confirm("Are you sure you want to resend the confirmation code?")) {
-        await resendConfirmationCode({ username: email });
-        setMessage("Verification code resent. Please check your email.");
-        setError("");
+    if (window.confirm('Are you sure you want to resend the confirmation code?')) {
+      await resendConfirmationCode({ username: email });
+      setMessage('Verification code resent. Please check your email.');
+      setError('');
     }
   };
 
@@ -263,7 +240,7 @@ export function GuideSignUp() {
 
   const renderMajorOptions = () => {
     const sortedMajors = Object.values(majors).flat().sort();
-    return sortedMajors.map(major => (
+    return sortedMajors.map((major) => (
       <option key={major} value={major}>{major}</option>
     ));
   };
@@ -508,13 +485,10 @@ export function GuideSignUp() {
                     <Typography className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
                       Profile Picture*
                     </Typography>
-                    <Input
-                      name="profile_image_url"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      required
-                    />
+                    <ProfileUpload setProfileImageUrl={(url) => setPostData((prevState) => ({
+                      ...prevState,
+                      profile_image_url: url,
+                    }))} />
                   </div>
                 </div>
 
