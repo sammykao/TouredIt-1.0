@@ -1,0 +1,41 @@
+import React, { useState } from 'react';
+import { InlineShareButtons } from 'sharethis-reactjs';
+
+const ShareButtons = (school) => {
+  const [showButtons, setShowButtons] = useState(false);
+
+  const toggleShareButtons = () => {
+    setShowButtons(!showButtons);
+  };
+  const desc = "Find guides at " + school; 
+  const shareConfig = {
+    alignment: 'center',  // alignment of buttons (left, center, right)
+    color: 'social',      // set the color of buttons (social, white)
+    enabled: true,        // show/hide buttons (true, false)
+    font_size: 16,        // font size for the buttons
+    labels: 'cta',        // button labels (cta, counts, null)
+    language: 'en',       // which language to use (see LANGUAGES)
+    networks: [           // which networks to include (see SHARING NETWORKS)
+      'sms',
+      'wechat',
+      'facebook',
+      'whatsapp',
+      'email',
+      'linkedin',
+      'messenger',
+      'twitter',
+      'reddit',
+    ],
+    padding: 4,           // padding within buttons (INTEGER)
+    radius: 8,            // the corner radius on each button (INTEGER)
+    show_total: false,
+              size: 32              // the size of each button (INTEGER)
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ShareButtons;

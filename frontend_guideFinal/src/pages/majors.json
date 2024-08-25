@@ -22,7 +22,11 @@
     "Equine Studies",
     "Entomology",
     "Agricultural Communication",
-    "Agricultural Engineering"
+    "Agricultural Engineering",
+    "Sustainable Agriculture",
+    "Agroecology",
+    "Urban Agriculture",
+    "Agricultural Technology and Innovation"
   ],
   "Arts": [
     "Fine Arts",
@@ -32,21 +36,25 @@
     "Commercial Art and Graphic Design",
     "Film Video and Photographic Arts",
     "Studio Arts",
-    "Miscellaneous Fine Arts",
     "Art History",
     "Dance",
     "Photography",
     "Ceramics",
     "Sculpture",
     "Textile Arts",
-    "Interior Design",
     "Art Therapy",
     "Printmaking",
     "Metal and Jewelry Arts",
     "Illustration",
     "Animation",
     "Fashion Design",
-    "Theater Design and Technology"
+    "Theater Design and Technology",
+    "Art Conservation",
+    "Creative Writing",
+    "Art Education",
+    "Digital Arts",
+    "Music Production",
+    "Visual Effects"
   ],
   "Biology & Life Science": [
     "Environmental Science",
@@ -61,7 +69,6 @@
     "Physiology",
     "Zoology",
     "Neuroscience",
-    "Miscellaneous Biology",
     "Cognitive Science and Biopsychology",
     "Marine Biology",
     "Wildlife Biology",
@@ -73,7 +80,11 @@
     "Cell Biology",
     "Developmental Biology",
     "Human Biology",
-    "Systems Biology"
+    "Systems Biology",
+    "Genomics",
+    "Conservation Biology",
+    "Evolutionary Biology",
+    "Biostatistics"
   ],
   "Business": [
     "General Business",
@@ -88,7 +99,6 @@
     "International Business",
     "Hospitality Management",
     "Management Information Systems and Statistics",
-    "Miscellaneous Business & Medical Administration",
     "Entrepreneurship",
     "Real Estate",
     "Supply Chain Management",
@@ -99,7 +109,10 @@
     "Retail Management",
     "Sales",
     "Nonprofit Management",
-    "Corporate Communication"
+    "Corporate Communication",
+    "Project Management",
+    "Risk Management",
+    "E-Business"
   ],
   "Communications & Journalism": [
     "Communications",
@@ -116,7 +129,11 @@
     "Organizational Communication",
     "Technical Communication",
     "Visual Communication",
-    "Communication and Media Studies"
+    "Social Media Management",
+    "Public Affairs",
+    "Media Ethics",
+    "News Writing and Editing",
+    "Interactive Media"
   ],
   "Computers & Mathematics": [
     "Communication Technologies",
@@ -134,14 +151,18 @@
     "Data Science",
     "Artificial Intelligence",
     "Software Engineering",
-    "Bioinformatics",
     "Game Design and Development",
     "Human-Computer Interaction",
     "Information Technology",
-    "Robotics",
     "Theoretical Computer Science",
     "Computational Mathematics",
-    "Cryptography"
+    "Cryptography",
+    "Data Analytics",
+    "Quantum Computing",
+    "Machine Learning",
+    "Big Data",
+    "Augmented Reality",
+    "Virtual Reality"
   ],
   "Education": [
     "General Education",
@@ -158,7 +179,6 @@
     "Teacher Education: Multiple Levels",
     "Language and Drama Education",
     "Art and Music Education",
-    "Miscellaneous Education",
     "Library Science",
     "Higher Education Administration",
     "Curriculum and Instruction",
@@ -169,7 +189,10 @@
     "Gifted and Talented Education",
     "Educational Psychology",
     "Distance Education",
-    "Education Policy"
+    "Education Policy",
+    "Instructional Design",
+    "Early Literacy",
+    "School Leadership"
   ],
   "Engineering": [
     "Architecture",
@@ -177,7 +200,6 @@
     "Aerospace Engineering",
     "Biological Engineering",
     "Architectural Engineering",
-    "Biomedical Engineering",
     "Chemical Engineering",
     "Civil Engineering",
     "Computer Engineering",
@@ -193,15 +215,10 @@
     "Naval Architecture and Marine Engineering",
     "Nuclear Engineering",
     "Petroleum Engineering",
-    "Miscellaneous Engineering",
     "Engineering Technologies",
     "Engineering and Industrial Management",
     "Electrical Engineering Technology",
     "Industrial Production Technologies",
-    "Mechanical Engineering Related Technologies",
-    "Miscellaneous Engineering Technologies",
-    "Materials Science",
-    "Robotics",
     "Mechatronics",
     "Systems Engineering",
     "Structural Engineering",
@@ -212,7 +229,9 @@
     "Chemical and Biomolecular Engineering",
     "Construction Engineering",
     "Control Engineering",
-    "Engineering Physics"
+    "Nanotechnology",
+    "Sustainable Engineering",
+    "Telecommunications Engineering"
   ],
   "Health": [
     "Nutrition Sciences",
@@ -226,7 +245,6 @@
     "Pharmacy Pharmaceutical Sciences and Administration",
     "Treatment Therapy Professions",
     "Community and Public Health",
-    "Miscellaneous Health Medical Professions",
     "Occupational Therapy",
     "Physical Therapy",
     "Respiratory Therapy",
@@ -244,7 +262,10 @@
     "Surgical Technology",
     "Veterinary Medicine",
     "Healthcare Management",
-    "Medical Laboratory Science"
+    "Medical Laboratory Science",
+    "Clinical Research",
+    "Genetic Counseling",
+    "Epidemiology"
   ],
   "Humanities & Liberal Arts": [
     "Area Ethnic and Civilization Studies",
@@ -272,7 +293,6 @@
     "United States History",
     "Classics",
     "Cultural Studies",
-    "Gender Studies",
     "American Studies",
     "Medieval and Renaissance Studies",
     "Ethnic Studies",
@@ -284,8 +304,12 @@
     "Latin American Studies",
     "African Studies",
     "Jewish Studies",
-    "Russian and Eastern European Studies",
-    "Comparative Literature"
+    "Comparative Literature",
+    "Philosophy",
+    "Classical Studies",
+    "Folklore and Mythology",
+    "Postcolonial Studies",
+    "Critical Theory"
   ],
   "Industrial Arts & Consumer Services": [
     "Cosmetology Services and Culinary Arts",
@@ -297,7 +321,6 @@
     "Transportation Sciences and Technologies",
     "Hospitality and Tourism Management",
     "Event Management",
-    "Fashion Design",
     "Interior Design",
     "Aviation Technology",
     "Automotive Technology",
@@ -309,14 +332,17 @@
     "Heating, Air Conditioning, Ventilation, and Refrigeration",
     "Landscaping",
     "Plumbing",
-    "Welding Technology"
+    "Welding Technology",
+    "Marine Technology",
+    "Furniture Design",
+    "Textile Manufacturing",
+    "Woodworking"
   ],
   "Interdisciplinary": [
     "Multi/Interdisciplinary Studies",
     "Cognitive Science",
     "Environmental Studies",
     "Global Studies",
-    "Urban Studies",
     "Peace and Conflict Studies",
     "Sustainability Studies",
     "Liberal Studies",
@@ -324,7 +350,11 @@
     "Science, Technology, and Society",
     "Gender and Sexuality Studies",
     "Disability Studies",
-    "Human Rights"
+    "Human Rights",
+    "Ethnic and Cultural Studies",
+    "Community Studies",
+    "Public Humanities",
+    "Digital Humanities"
   ],
   "Law & Public Policy": [
     "Court Reporting",
@@ -341,7 +371,11 @@
     "Emergency Management",
     "Corrections",
     "Security Management",
-    "Dispute Resolution"
+    "Dispute Resolution",
+    "Cyber Law",
+    "Health Law",
+    "Environmental Law",
+    "Immigration Law"
   ],
   "Physical Sciences": [
     "Physical Sciences",
@@ -352,7 +386,6 @@
     "Geosciences",
     "Oceanography",
     "Physics",
-    "Multi-Disciplinary or General Science",
     "Nuclear, Industrial Radiology, and Biological Technologies",
     "Planetary Science",
     "Environmental Chemistry",
@@ -360,21 +393,21 @@
     "Materials Science",
     "Hydrology",
     "Seismology",
-    "Meteorology",
     "Space Sciences",
     "Climatology",
     "Geochemistry",
     "Astrobiology",
-    "Volcanology"
+    "Volcanology",
+    "Geophysics",
+    "Quantum Mechanics",
+    "Thermodynamics"
   ],
   "Psychology & Social Work": [
     "Psychology",
-    "Educational Psychology",
     "Clinical Psychology",
     "Counseling Psychology",
     "Industrial and Organizational Psychology",
     "Social Psychology",
-    "Miscellaneous Psychology",
     "Human Services and Community Organization",
     "Social Work",
     "Child Development",
@@ -386,7 +419,10 @@
     "Health Psychology",
     "Neuropsychology",
     "Rehabilitation Counseling",
-    "Substance Abuse Counseling"
+    "Substance Abuse Counseling",
+    "Behavioral Neuroscience",
+    "Mental Health Services",
+    "Community Psychology"
   ],
   "Social Science": [
     "Interdisciplinary Social Sciences",
@@ -397,16 +433,17 @@
     "International Relations",
     "Political Science and Government",
     "Sociology",
-    "Miscellaneous Social Sciences",
-    "Urban Studies",
     "Development Studies",
     "Demography",
     "Peace Studies",
-    "Gender Studies",
     "Public Sociology",
     "Behavioral Science",
     "Human Geography",
     "Political Economy",
-    "Rural Sociology"
+    "Rural Sociology",
+    "Cultural Anthropology",
+    "Social Policy",
+    "Global Health",
+    "Conflict Resolution"
   ]
 }
