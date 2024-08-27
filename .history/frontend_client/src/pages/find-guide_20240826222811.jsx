@@ -3,13 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Typography } from '@material-tailwind/react';
 import GuideCard from './guideHelper/GuideCard';
-import GuideFilters from './guideHelper/GuideFilters';
 import GuideForm from './guideHelper/GuideForm';
 import { Helmet } from 'react-helmet';
 import ShareButtons from '@/tools/widgets/socialbuttons';
 import { isAuthenticated } from "./../tools/auth/loggedIn";
-import categoriesData from "./guideHelper/majors.json";
-
+import categoriesData from './majors.json';
 const FindGuide = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -122,7 +120,6 @@ const FindGuide = () => {
   };
 
   const handleCategoryChange = (value) => {
-    console.log("HERREE;")
     setSelectedCategory(value);
     if (value === '') {
       setFilteredGuides(guides);
@@ -178,10 +175,37 @@ const FindGuide = () => {
       </div>
       {guides.length > 0 ? (
         <>
-          <GuideFilters 
-            selectedCategory={selectedCategory} 
-            handleCategoryChange={handleCategoryChange} 
-          />
+          <div className="mb-4 bg-white max-w-md mx-auto p-4 rounded-xl">
+            <Select label="Filter by Major" onChange={handleCategoryChange}>
+              <Option value="" selected>
+                All Categories
+              </Option>
+              {Object.keys(categoriesData).map((category) => (
+                <Option key={category} value={category} selected={category === selectedCategory}>
+                  {category}
+                </Option>
+              ))}
+            </Select>
+            <div className="mt-4">
+              <Typography variant="medium text-bold" className="text-center font-medium text-gray-700 mb-2">
+                Icons:
+              </Typography>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center">
+                  <SportsBarIcon className="text-[#ca8a04] mr-2" />
+                  <Typography variant="small" className="text-gray-700"> Greek Life</Typography>
+                </div>
+                <div className="flex items-center">
+                  <EmojiEventsIcon className="text-[#eab308] mr-2" />
+                  <Typography variant="small" className="text-gray-700">Student Athlete</Typography>
+                </div>
+                <div className="flex items-center">
+                  <WorkIcon className="text-[#4d7c0f] mr-2" />
+                  <Typography variant="small" className="text-gray-700">Paid Internship Experience</Typography>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pt-4">
             {filteredGuides.map((guide) => (
               <GuideCard 

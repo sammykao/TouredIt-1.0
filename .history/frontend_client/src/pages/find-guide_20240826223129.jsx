@@ -8,7 +8,6 @@ import GuideForm from './guideHelper/GuideForm';
 import { Helmet } from 'react-helmet';
 import ShareButtons from '@/tools/widgets/socialbuttons';
 import { isAuthenticated } from "./../tools/auth/loggedIn";
-import categoriesData from "./guideHelper/majors.json";
 
 const FindGuide = () => {
   const navigate = useNavigate();
@@ -122,7 +121,6 @@ const FindGuide = () => {
   };
 
   const handleCategoryChange = (value) => {
-    console.log("HERREE;")
     setSelectedCategory(value);
     if (value === '') {
       setFilteredGuides(guides);

@@ -6,6 +6,10 @@ import WorkIcon from '@mui/icons-material/Work';
 import categoriesData from './majors.json';
 
 const GuideFilters = ({ selectedCategory, handleCategoryChange }) => {
+  const handleChange = (e) => {
+    const selectedValue = e.target.value;
+    handleCategoryChange(selectedValue);
+  };
 
   return (
     <div className="mb-4 bg-white max-w-md mx-auto p-4 rounded-xl">
