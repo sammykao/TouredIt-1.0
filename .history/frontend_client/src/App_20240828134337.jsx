@@ -13,23 +13,22 @@ import { isAuthenticated } from "@/tools/auth/loggedIn";
 import TermsAndConditions from "@/tools/layout/terms";
 import LandingPageModal from "@/tools/layout/landing-modal";
 import { Helmet } from 'react-helmet';
-import discount_clients from "@/pages/bookingHelper/discount_clients";
+import discount_clients from "@/pages/bookingHelper/discount_client";
+
 
 function App() {
   const { pathname, search } = useLocation();
   const [isRefClient, setIsRefClient] = useState(false);
-  const [refData, setRefData] = useState({"name": "", code: "", discount: 0});
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
-    if (discount_clients[queryParams.get('referral')]) {
-      setIsRefClient(true);
-      setRefData(discount_clients[queryParams.get('referral')]);
+    if (queryParams.get('referral') === 'friendsfrombespoke') {
+      setIsBespokeClient(true);
     }
   }, [search]);
 
   const handleCloseModal = () => {
-    setIsRefClient(false);
+    setIsBespokeClient(false);
   };
 
   return (
@@ -58,12 +57,7 @@ function App() {
         </Routes>
         <Footer />
         {/* Render the modal conditionally */}
-        {isRefClient && <LandingPageModal 
-        open={isRefClient} 
-        onClose={handleCloseModal} 
-        name={refData.name} 
-        value={refData.discount} 
-        code={refData.code}/>}
+        {isBespokeClient && <BespokeModal open={isBespokeClient} onClose={handleCloseModal} />}
     </>
   );
 }

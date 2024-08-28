@@ -13,7 +13,7 @@ import { isAuthenticated } from "@/tools/auth/loggedIn";
 import TermsAndConditions from "@/tools/layout/terms";
 import LandingPageModal from "@/tools/layout/landing-modal";
 import { Helmet } from 'react-helmet';
-import discount_clients from "@/pages/bookingHelper/discount_clients";
+import discount_clients from "@/pages/bookingHelper/discount_client";
 
 function App() {
   const { pathname, search } = useLocation();
@@ -60,10 +60,7 @@ function App() {
         {/* Render the modal conditionally */}
         {isRefClient && <LandingPageModal 
         open={isRefClient} 
-        onClose={handleCloseModal} 
-        name={refData.name} 
-        value={refData.discount} 
-        code={refData.code}/>}
+        onClose={handleCloseModal} name={refData.name} value={refData.discount} code={refData.code}/>}
     </>
   );
 }

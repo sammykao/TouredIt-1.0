@@ -1,0 +1,21 @@
+{
+    "friendsfrombespoke" : 
+        { 
+            "name": "Bespoke Education", 
+            "code": "BESPOKECLIENT25", 
+            "discount": 25 
+        },
+    "concordeedu" : 
+        { 
+            "name": "Concorde Education", 
+            "code": "CONCORDEFRIEND25", 
+            "discount": 25 
+        },
+    "campusboundfriend":
+        {
+            "name": "Campus Bound",
+            "code": "25C"
+        }
+    "Concorde Education": "CONCORDEFRIEND25",
+    "Campus Bound": "25CAMPUSBOUND"
+}

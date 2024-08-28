@@ -1,0 +1,7 @@
+{
+    "friendsfrombespoke" : 
+        { "name": "Bespoke Education", 
+        "code": "BESPOKECLIENT25", "discount": 25 },
+    "Concorde Education": "CONCORDEFRIEND25",
+    "Campus Bound": "25CAMPUSBOUND"
+}
