@@ -4,7 +4,7 @@ import { BriefcaseIcon, LockClosedIcon, ServerIcon, UserPlusIcon } from '@heroic
 
 const stats = [
   { id: 1, name: 'Guides available to choose from', value: '1,000+' },
-  { id: 2, name: 'Colleges available to choose from', value: '1,200+' },
+  { id: 2, name: 'Colleges available to choose from', value: '500+' },
   { id: 3, name: "If your fit isn't available on the website, we'll hand deliver the perfect match for you", value: 'Any Request' },
 ]
 
@@ -29,10 +29,12 @@ export function WhyTouredIt() {
         <div class="py-24 mt-12 sm:py-32">
           <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center">
-              <h2 class="text-base font-semibold leading-7 text-blue-900">Why You Need Us </h2>
-              <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Personalize your pre-college experience</p>
-              <p class="mt-6 text-lg leading-8 text-gray-800">College isn't like what it used to be - It's a hypercompetitive atmosphere. Nowadays, students must
-              find the best fit to really succeed once they get on campus. Here is what TouredIt offers to you or your child:
+              <h2 class="text-base font-semibold leading-7 text-blue-900">Why TouredIt? </h2>
+              <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Personalize your college visit</p>
+              <p class="mt-6 text-lg leading-8 text-gray-800">Choosing where you want to attend school is harder than it has ever been. 
+              Students are not getting the information they need on campus visits to make well-informed decisions about their future. 
+              Today, students need to fully immerse themselves in the college they hope to attend before their freshman year to make 
+              the best decision. Here's how TouredIt helps students visualize their college experience:
               </p>
             </div>
             <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -47,8 +49,9 @@ export function WhyTouredIt() {
                     </div>
                     1-on-1 On-Campus Tours
                   </dt>
-                  <dd class="mt-2 text-base leading-7 text-gray-800">Personalized college tours with a current student. These students are matched based on you or your child's
-                    interests to enhance the experience.
+                  <dd class="mt-2 text-base leading-7 text-gray-800">Personalize your college tour by hand-picking your guide. 
+                  Touring campus with a guide who shares your interests provides a better picture of what your first year 
+                  at school could look like.
                   </dd>
                 </div>
                 <div class="relative pl-16">
@@ -61,8 +64,9 @@ export function WhyTouredIt() {
                     </div>
                     A Connection to Success
                   </dt>
-                  <dd class="mt-2 text-base leading-7 text-gray-800">Connect with your guide and future classmate.
-                    They can help you or your child succeed once they get on campus. This is the first step to you or your child's networking journey.
+                  <dd class="mt-2 text-base leading-7 text-gray-800">TouredIt tour guides aren't just tour guides — they are 
+                  your future classmates. This means you'll have someone on campus to help with class selection, 
+                  dorm choices, and any other advice you might need.
                   </dd>
                 </div>
               </dl>
@@ -91,10 +95,10 @@ export function WhyTouredIt() {
               <div className="lg:pr-4">
                 <div className="lg:max-w-lg">
                   <p className="text-base font-semibold leading-7 text-indigo-600">Our Recommendation</p>
-                  <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Getting the most out of the booking</h1>
+                  <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Getting the Most Out of Your Tour</h1>
                   <p className="mt-6 text-xl leading-8 text-gray-900">
-                    To get the most value out of your tour, we advise to ask as many questions as possible. Don't hold back! The time
-                    is yours and the guide is meant to serve all your pre-college needs. 
+                  To get the most value out of your tour, we advise to ask as many questions as possible. 
+                  Don't hold back! The time is yours and the guide is meant to serve all your pre-college needs.
                   </p>
                 </div>
               </div>
@@ -110,11 +114,10 @@ export function WhyTouredIt() {
               <div className="lg:pr-4">
                 <div className="max-w-xl text-base leading-7 text-gray-850 lg:max-w-lg">
                   <p>
-                  Don't be afraid to ask non-traditional questions on 
-                  your tour. The last thing we want is for the experience. We also advise you
-                  to establish a professional or social connection with the guide. Whether that's exchanging
-                  social media or connecting on LinkedIn, there's an enumerable amount of benefits from 
-                  having that connection.
+                  Feel free to ask non-traditional questions during your tour. We want your experience to be unique and engaging, 
+                  not cookie-cutter or bland. We also encourage you to establish a professional or social connection with your guide. 
+                  Whether it's exchanging social media handles or connecting on LinkedIn, there are countless benefits to building that 
+                  connection.
                   </p>
                   <ul role="list" className="mt-8 space-y-8 text-gray-700">
                     <li className="flex gap-x-3">
@@ -132,7 +135,8 @@ export function WhyTouredIt() {
                     <li className="flex gap-x-3">
                       <ServerIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
                       <span>
-                        <strong className="font-semibold text-gray-900">Learn how to maximize your experience.</strong> Your guide can give you insights on what classes to take, what dorms are best, and how to get good jobs.
+                        <strong className="font-semibold text-gray-900">Learn how to maximize your experience.</strong> Your guide can give you insights on what classes to take, the best dorms, 
+                        and how to get started recruiting for an internship.
                       </span>
                     </li>
                   </ul>

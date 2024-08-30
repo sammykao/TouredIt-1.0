@@ -4,7 +4,7 @@ import { BriefcaseIcon, LockClosedIcon, ServerIcon, UserPlusIcon } from '@heroic
 
 const stats = [
   { id: 1, name: 'Guides available to choose from', value: '1,000+' },
-  { id: 2, name: 'Colleges available to choose from', value: '1,200+' },
+  { id: 2, name: 'Colleges available to choose from', value: '500+' },
   { id: 3, name: "If your fit isn't available on the website, we'll hand deliver the perfect match for you", value: 'Any Request' },
 ]
 
