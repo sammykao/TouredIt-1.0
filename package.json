@@ -5,9 +5,12 @@
     "tailwindcss": "^3.4.4"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@google-apps/meet": "^0.3.0",
     "@google-cloud/local-auth": "^2.1.0",
     "google-auth-library": "^9.14.1",
+=======
+>>>>>>> refs/remotes/origin/main
     "react-router-dom": "^6.24.0"
   }
 }
