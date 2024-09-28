@@ -1,0 +1,88 @@
+/* Style the session container to be responsive */
+#sessionContainer {
+    width: 100%;
+    height: auto; /* Auto height allows the container to adjust to content */
+    padding: 0px 10px;
+}
+
+@media (min-width: 768px) {
+    #sessionContainer {
+        width: 75%; /* Container is 60% of the screen width on larger screens */
+    }
+}
+
+/* Style the buttons inside the session container */
+#sessionContainer button {
+    font-size: 16px; /* Smaller font size for a more compact layout */
+    border-radius: 4px;
+    padding: 20px 8px;
+}
+
+/* Full-width buttons on smaller screens */
+@media (max-width: 768px) {
+    #sessionContainer button {
+        width: 100%;
+        font-size: 12px;
+    }
+}
+
+
+
+/* Style mat-form-field for responsive forms */
+mat-form-field {
+    font-size: 12px; /* Smaller font for a more compact form */
+    width: 30px;
+    box-sizing: border-box;
+}
+
+/* Style mat-sliders for a more compact size */
+mat-slider {
+    margin: 4px;
+    width: 100%;
+    height: 2px;
+    box-sizing: border-box;
+}
+
+/* Customize slider elements */
+mat-slider .mat-slider-thumb {
+    font-size: 6px;
+    width: 10px;
+    height: 10px; /* Smaller thumb size for a sleeker look */
+}
+
+mat-slider .mat-slider-track {
+    height: 4px; /* Thinner slider track for a cleaner appearance */
+}
+
+/* Style the previewcontrols div to be smaller */
+.previewcontrols {
+    display: flex;                   /* Align buttons horizontally */
+    justify-content: space-evenly;    /* Spread the buttons evenly */
+    align-items: center;              /* Center the buttons vertically */
+    padding: 5px 0;                   /* Smaller padding for compact layout */
+    max-width: 5    0%;                   /* Limit the width of the button container */
+    margin: 0 auto;                   /* Center the container */
+}
+
+/* Style the buttons inside the previewcontrols */
+.previewcontrols button {
+    padding: 5px 8px;                /* Reduce button size */
+    font-size: 10px;                 /* Smaller font size */
+    margin: 0 3px;                   /* Reduce space between buttons */
+    border-radius: 3px;              /* Rounded corners */
+    flex-grow: 0;                    /* Keep buttons from expanding too much */
+    max-width: 100px;                /* Limit the width of the buttons */
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .previewcontrols {
+        max-width: 100%;             /* Use full width on smaller screens */
+        padding: 5px 0;
+    }
+
+    .previewcontrols button {
+        font-size: 9px;              /* Even smaller font size on mobile */
+        padding: 4px 6px;            /* Reduce button padding */
+    }
+}

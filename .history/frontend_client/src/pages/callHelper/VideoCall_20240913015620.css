@@ -1,0 +1,72 @@
+/* Style the session container to be responsive */
+#sessionContainer {
+    width: 100%;
+    height: auto; /* Auto height to adjust to content */
+    padding: 5px; /* Smaller padding */
+    margin: 0; /* Reset default margin */
+}
+
+@media (min-width: 768px) {
+    #sessionContainer {
+        width: 60%; /* 60% width for larger screens */
+    }
+}
+
+/* Style the buttons inside the session container */
+#sessionContainer button {
+    margin: 2px; /* Tighten button spacing */
+    padding: 4px 6px; /* Smaller padding */
+    font-size: 12px; /* Reduce font size */
+    line-height: 1.2; /* Reduce line height */
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    #sessionContainer button {
+        width: 100%; /* Full-width buttons for mobile */
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Button group class for better button alignment */
+#sessionContainer .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px; /* Reduce gap between buttons */
+}
+
+/* Style mat-form-field for responsive forms */
+mat-form-field {
+    margin: 2px 0; /* Smaller margin between form fields */
+    padding: 2px; /* Tight padding */
+    font-size: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Style mat-sliders for smaller size */
+mat-slider {
+    margin: 2px;
+    width: 100%;
+    height: 18px; /* Slightly smaller slider height */
+}
+
+mat-slider .mat-slider-thumb {
+    width: 10px;
+    height: 10px;
+}
+
+mat-slider .mat-slider-track {
+    height: 3px; /* Thinner track for a cleaner appearance */
+}
+
+/* Override default form element margins for tighter layout */
+form * {
+    margin: 4px 0; /* Tighten vertical margin on all form elements */
+}
+
+/* Reduce vertical spacing between elements */
+* {
+    margin-bottom: 4px; /* General rule to tighten vertical spacing */
+}

@@ -1,0 +1,83 @@
+/* Style the container to be responsive */
+#sessionContainer {
+    width: 100%;
+    height: 1000px;
+}
+
+@media (min-width: 768px) {
+    #sessionContainer {
+        width: 60%; /* Container is 60% of the screen width on larger screens */
+    }
+}
+
+/* Style the buttons inside the session container */
+#sessionContainer button {
+    margin: 10px;
+    padding: 10px 10px;
+    font-size: 14px; /* Make buttons smaller */
+    border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+    #sessionContainer button {
+        width: 100%; /* Full-width buttons on mobile */
+        padding: 8px 4px; /* Larger padding for touch-friendly UI */
+        font-size: 12px;
+    }
+}
+
+/* Add space between buttons */
+#sessionContainer .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px; /* Space between buttons */
+}
+
+/* General style for buttons globally */
+button {
+    margin: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 40px;
+    height: 40px; /* Make the button smaller */
+    border-radius: 50%; /* Keep the circular shape */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content in the button */
+}
+
+/* Style for all mat-form-fields to reduce their size */
+mat-form-field {
+    margin: 5px;
+    padding: 8px;
+    font-size: 12px; /* Make the form field's text smaller */
+    width: 100%; /* Ensure full-width form field */
+    box-sizing: border-box; /* Prevent padding from overflowing */
+}
+
+/* Style for all mat-sliders to reduce their size */
+mat-slider {
+    margin: 5px;
+    padding: 8px;
+    width: 100%; /* Make sure the slider takes full width */
+    height: 20px; /* Reduce the height of the slider */
+    box-sizing: border-box; /* Ensure consistent padding behavior */
+}
+
+/* Style for all button elements inside a mat-form-field */
+.mat-form-field button {
+    font-size: 12px;
+    padding: 6px 12px; /* Smaller padding for buttons inside form fields */
+    width: auto;
+    height: auto; /* Adjust size for form field buttons */
+}
+
+/* Style for all slider elements */
+mat-slider .mat-slider-thumb {
+    width: 12px;
+    height: 12px; /* Make the slider thumb smaller */
+}
+
+mat-slider .mat-slider-track {
+    height: 5px; /* Make the slider track thinner */
+}

@@ -1,0 +1,54 @@
+/* Style the session container to be responsive */
+#sessionContainer {
+    width: 100%;
+    height: auto; /* Auto height allows the container to adjust to content */
+    padding: 10px 0px;
+}
+
+@media (min-width: 768px) {
+    #sessionContainer {
+        width: 60%; /* Container is 60% of the screen width on larger screens */
+    }
+}
+
+/* Style the buttons inside the session container */
+#sessionContainer button {
+    font-size: 12px; /* Smaller font size for a more compact layout */
+    border-radius: 4px;
+}
+
+/* Full-width buttons on smaller screens */
+@media (max-width: 768px) {
+    #sessionContainer button {
+        width: 100%;
+        font-size: 12px;
+    }
+}
+
+
+
+/* Style mat-form-field for responsive forms */
+mat-form-field {
+    font-size: 12px; /* Smaller font for a more compact form */
+    width: 30px;
+    box-sizing: border-box;
+}
+
+/* Style mat-sliders for a more compact size */
+mat-slider {
+    margin: 4px;
+    width: 100%;
+    height: 20px;
+    box-sizing: border-box;
+}
+
+/* Customize slider elements */
+mat-slider .mat-slider-thumb {
+    font-size: 6px;
+    width: 10px;
+    height: 10px; /* Smaller thumb size for a sleeker look */
+}
+
+mat-slider .mat-slider-track {
+    height: 4px; /* Thinner slider track for a cleaner appearance */
+}
