@@ -102,7 +102,8 @@ const FindGuide = () => {
             student_athlete: false,
             paid_internship: false,
             source: '',
-            additionalInfo: ''
+            additionalInfo: '',
+            referral_code: '',
         });
         window.location.href = "/thanks";
     } catch (error) {
@@ -132,7 +133,8 @@ const FindGuide = () => {
             student_athlete: false,
             paid_internship: false,
             source: '',
-            additionalInfo: ''
+            additionalInfo: '',
+            referral_code: '',
         });
         window.location.href = "/thanks";
     } catch (error) {
