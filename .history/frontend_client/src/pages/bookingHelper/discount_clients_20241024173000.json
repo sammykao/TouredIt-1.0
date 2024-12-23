@@ -1,0 +1,42 @@
+{
+    "friendsfrombespoke" : 
+        { 
+            "name": "Bespoke Education", 
+            "code": "BESPOKECLIENT15", 
+            "discount": 15 
+        },
+    "concordeedu" : 
+        { 
+            "name": "Concorde Education", 
+            "code": "CONCORDEFRIEND25", 
+            "discount": 25 
+        },
+    "campusboundfriend":
+        {
+            "name": "Campus Bound",
+            "code": "25CAMPUSBOUND",
+            "discount": 25
+        },
+    "maureencscudder":
+        {
+            "name": "Maureen C. Scudder",
+            "code": "MaureenScudder",
+            "discount": 10
+        },
+    "jennashulmanclient":
+        {
+            "name": "Jenna Shulman",
+            "code": "JennaShulman",
+            "discount": 25
+        },
+    "johannyangclient":
+        {
+            "name": "Johann Yang",
+            "code": "JohannYang",
+            "discount": 15
+        },
+    "solutionprepclient":
+        {
+            "name"
+        }
+}

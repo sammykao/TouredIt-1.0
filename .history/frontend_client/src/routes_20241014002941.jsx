@@ -1,0 +1,31 @@
+import WhyTouredIt from "./pages/why-touredit";
+import ContactUs from "./pages/contact-us";
+import BuildTrip from "./pages/build-trip";
+
+
+
+
+export const routes = [
+  {
+    name: "Why TouredIt",
+    path: "/why-touredit",
+    element: <WhyTouredIt />,
+  },
+  {
+    name: "Build a Trip",
+    path: "/build-trip",
+    element:{isAuthenticated() ?  <BuildTrip /> : <Navigate replace to="/sign-in" />} ,
+  },
+  {
+    name: "Contact Us",
+    path:  "/contact-us",
+    element: <ContactUs />,
+  },
+  {
+    name: "Guide Portal",
+    href: "https://www.toureditguides.com",
+    element: "",
+  }
+];
+
+export default routes;
