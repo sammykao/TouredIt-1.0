@@ -43,7 +43,8 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "6.17.0",
     "react-select": "^5.8.0",
-    "sharethis-reactjs": "^1.6.0"
+    "sharethis-reactjs": "^1.6.0",
+    "swiper": "^11.1.15"
   },
   "devDependencies": {
     "@types/react": "18.2.31",
