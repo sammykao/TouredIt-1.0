@@ -6,9 +6,6 @@
 **/.env
 
 backend_server/.env
-
-frontend_client/.env
-
 # Ignore all node_modules folders
 node_modules/
 
